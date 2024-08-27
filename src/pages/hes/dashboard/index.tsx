@@ -1,6 +1,7 @@
 import EmptyScreen from "@/components/customUI/EmptyScreen";
 import ErrorScreen from "@/components/customUI/ErrorScreen";
 import Graph from "@/components/customUI/Graph";
+import HesFilters from "@/components/customUI/HesFilters";
 import FullScreen from "@/components/customUI/Loaders/FullScreen";
 import { useGetDeviceMetaInfoMetricsQuery } from "@/store/hes/hesApi";
 
@@ -20,6 +21,7 @@ const Dashboard = () => {
   
   return (
     <div className="px-5 py-3 w-full">
+      <HesFilters />
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
       {
           deviceMetaInfoMetricsResponse.data.records.map(recordItem => {
