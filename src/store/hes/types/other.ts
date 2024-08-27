@@ -1,3 +1,13 @@
+export type GraphItem = {
+  name: string;
+  count: number;
+  totalCount: number;
+  percentage: number;
+  color?: string;
+}
+
+export type GraphData = GraphItem[];
+
 export type FilterPayload = {
   start_date?: string;
   meter_type?: string;

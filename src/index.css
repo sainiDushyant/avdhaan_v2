@@ -236,19 +236,18 @@
       #c7efe8 100%
     );
   }
-
   .custom-header {
     position: fixed;
     top: 0;
     right: 0;
     z-index: 20;
-    width: calc(100% - 0px);
+    width: calc(100% - 100px);
     align-self: flex-end;
   }
-
+  
   .custom-main {
     @apply flex-1 flex self-end;
-    width: calc(100% - 0px);
+    width: calc(100% - 320px);
     margin-top: 75px;
   }
 
@@ -262,7 +261,10 @@
 
   .custom-sidebar:hover ~ .custom-main,
   .custom-sidebar:hover ~ .custom-header {
-    width: calc(100% - 22vw);
+    width: calc(100% - (22vw));
+  }
+  .custom-sidebar:hover ~ .custom-navbar{
+    display: none;
   }
 
   .current-route-sidebar {
@@ -369,6 +371,12 @@
   .pagination-container .pagination-item.disabled:hover {
     background-color: transparent;
     cursor: default;
+  }
+
+  @media (max-width: 1023px) { /* Tailwind lg breakpoint is 1024px */
+    .custom-main {
+      width: calc(100% - 110px);
+    }
   }
 
   @keyframes spin {

@@ -70,3 +70,42 @@ export const onMouseSidebarLeave = (val: number) => {
     newItem.style.backgroundColor = 'transparent'
   })
 }
+
+function createUniqueColorGenerator() {
+  let counter = 0; // Initialize counter
+
+  function getRandomChannelValue(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function getUniqueColor() {
+    let red, green, blue;
+
+    // Ensure colors are not too dark or too light
+    do {
+      // Generate random values for the RGB channels
+      red = getRandomChannelValue(50, 205);  // Avoid too dark (min=50) and too light (max=205)
+      green = getRandomChannelValue(50, 205);
+      blue = getRandomChannelValue(50, 205);
+
+      // Adjust based on counter to ensure uniqueness
+      red = (red + (counter * 1234567)) & 0xFF;
+      green = (green + (counter * 2345678)) & 0xFF;
+      blue = (blue + (counter * 3456789)) & 0xFF;
+
+      // Increment counter
+      counter++;
+
+      // Ensure the color is not too dark or too light
+    } while ((red + green + blue) < 150 || (red + green + blue) > 600);
+
+    // Convert RGB to hex color
+    const color = `#${red.toString(16).padStart(2, '0')}${green.toString(16).padStart(2, '0')}${blue.toString(16).padStart(2, '0')}`;
+    return color;
+  }
+
+  return getUniqueColor;
+}
+
+// Example usage
+export const getUniqueColor = createUniqueColorGenerator();

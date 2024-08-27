@@ -14,6 +14,8 @@ const BlockLoad = lazy(() => import("@/pages/hes/live-data/block-load"));
 const DailyLoad = lazy(() => import("@/pages/hes/live-data/daily-load"));
 const MonthlyBilling = lazy(() => import("@/pages/hes/live-data/monthly-billing"));
 const InstantaneousProfile = lazy(() => import("@/pages/hes/live-data/instantaneous-profile"));
+const ScheduledReads = lazy(() => import("@/pages/hes/scheduled-reads"));
+const CommandExecution = lazy(() => import("@/pages/hes/command-execution"));
 
 const NotFound = lazy(() => import("@/pages/not-found"));
 
@@ -34,6 +36,9 @@ function Navigation() {
               <Route path="monthly-billing" element={<MonthlyBilling />} />
               <Route path="instantaneous-profile" element={<InstantaneousProfile />} />
             </Route>
+
+            <Route path="scheduled-reads" element={<ScheduledReads />} />
+            <Route path="command-execution" element={<CommandExecution />} />
 
           </Route>
 
