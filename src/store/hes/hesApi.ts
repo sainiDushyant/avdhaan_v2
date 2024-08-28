@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { customBaseQuery, HES_TAG_TYPES } from "../utils";
 import { dashboardEndpoints } from "./endpoints/dashboard";
+import { liveDataEndPoints } from "./endpoints/live-data";
 
 const hesApi = createApi({
   reducerPath: "hesApi",
@@ -8,13 +9,14 @@ const hesApi = createApi({
   tagTypes: HES_TAG_TYPES,
   endpoints: (builder) => ({
     ...dashboardEndpoints(builder),
+    ...liveDataEndPoints(builder)
   }),
 });
 
 export const { 
   useGetDeviceMetaInfoMetricsQuery,
-
-  usePrefetch 
+useGetLiveDataMetricsQuery
+ , usePrefetch 
 } = hesApi;
 
 export default hesApi;

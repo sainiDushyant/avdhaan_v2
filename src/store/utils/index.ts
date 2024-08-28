@@ -12,7 +12,7 @@ export const customBaseQuery = (baseUrl: string) => {
     credentials: "same-origin",
     prepareHeaders(headers) {
       headers.set("Content-Type", "application/json");
-      headers.set("Authorization", import.meta.env.VITE_AUTH_TOKEN );
+      headers.set("Authorization", import.meta.env.VITE_AUTH_TOKEN || localStorage.getItem('token') );
       return headers;
     },
   });
