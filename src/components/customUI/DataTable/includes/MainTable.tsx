@@ -34,7 +34,7 @@ function MainTable<T>({
                 ))}
             </TableHeader>
 
-            <TableBody>
+            <TableBody className="bg-white">
                 {table.getRowModel().rows?.length ? (
                     table.getRowModel().rows.map((row, index) => (
                         <TableRow

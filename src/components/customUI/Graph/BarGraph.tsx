@@ -1,15 +1,30 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 
-// type BarGraphProps = {
-//   data: number[{title:string}]; // Adjust this type based on the actual structure of your data
-// };
+interface GraphType {
+  series: ApexAxisChartSeries; // or any other specific type depending on your data
+  options: ApexCharts.ApexOptions; // or a custom type if you have one
+}
 
-const BarGraph = ({ data }:any) => {
-    
+interface BarGraphProps {
+  data: GraphType;
+  title:string;
+}
 
+const BarGraph: React.FC<BarGraphProps> = ({ data,title }) => {
   return (
-    <Chart options={data.options} series={data.series} type="bar" width={1000} height={320} />
+    <div className="w-full max-w-full mx-auto sm:h-64 md:h-72 lg:h-96 xl:h-96 lg:w-5/6 xl:w-full">
+      <div style={{
+        color:'#0A3690'
+      }} className='font-bold mb-2'>{title&&title}</div>
+      <div className='w-full h-0 border border-1'></div>
+      <Chart 
+        options={data.options} 
+        series={data.series} 
+        width="100%" 
+        height="100%" 
+      />
+    </div>
   );
 };
 

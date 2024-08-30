@@ -23,10 +23,10 @@ export const navbarLinkData = [
   { to: "/scheduled-reads", title: "Scheduled Reads" },
   {
     to: "/live-data", title: "Live Data", children: [
-      { to: "/block-load", title: "Block Load" },
-      { to: "/daily-load", title: "Daily Load" },
-      { to: "/monthly-billing", title: "Monthly Billing" },
-      { to: "/instantaneous-profile", title: "Instantaneous Profile" },
+      { to: "live-data/block-load", title: "Block Load" },
+      { to: "live-data/daily-load", title: "Daily Load" },
+      { to: "live-data/monthly-billing", title: "Monthly Billing" },
+      { to: "live-data/instantaneous-profile", title: "Instantaneous Profile" },
     ]
   },
   { to: "/command-execution", title: "Command Execution" },

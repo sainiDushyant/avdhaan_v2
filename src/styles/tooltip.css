@@ -1,0 +1,21 @@
+.arrow_box {
+    position: relative;
+    background: linear-gradient(45deg,#00C4B4, #70EFDE);
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 8px;
+    display: inline-block;
+  }
+  
+  .arrow_box::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* Position the arrow below the tooltip */
+    left: 0; /* Align the arrow with the left edge */
+    margin-left: 5px; /* Slight adjustment to center the arrow */
+    border-width: 5px;
+    border-style: solid;
+    border-color: #00C4B4 transparent transparent transparent; /* Arrow pointing down */
+  }
+  

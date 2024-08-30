@@ -2,6 +2,7 @@ import { type ComponentType } from "react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { type Table } from "@tanstack/react-table";
 import { type Pagination } from "@/store/vee/types/other";
+import React from "react";
 
 type BaseTableProps<T> = { table: Table<T> };
 
@@ -41,12 +42,16 @@ export interface DataTableProps<T> extends DataProps<T>, Partial<SelectProps<T>>
         onSelectSubmit?: (selectedItemIds: string[]) => void;
         onLoadMoreDataCb?: (pageNo: number, data?: T[]) => void;
         hasInternalPagination?: boolean;
+        refresh?:boolean
+        refreshFn?:()=>void;
 }
 
 export interface HeaderProps<T> extends BaseTableProps<T>, Partial<SearchProps>, 
     Partial<FilterProps> {
         dataLength: number;
         showFilter?: boolean;
+        refresh?:boolean;
+        refreshFn?:()=>void;
 }
 
 export interface MainTableProps<T> extends BaseTableProps<T> {

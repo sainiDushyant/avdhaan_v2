@@ -9,13 +9,15 @@ const hesApi = createApi({
   tagTypes: HES_TAG_TYPES,
   endpoints: (builder) => ({
     ...dashboardEndpoints(builder),
-    ...liveDataEndPoints(builder)
+    ...liveDataEndPoints(builder),
+    
   }),
 });
 
 export const { 
   useGetDeviceMetaInfoMetricsQuery,
-useGetLiveDataMetricsQuery
+useGetLiveDataMetricsQuery,
+useGetBlockLoadPushDataQuery
  , usePrefetch 
 } = hesApi;
 
