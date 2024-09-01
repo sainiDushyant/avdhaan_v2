@@ -1,3 +1,4 @@
+import { ApexOptions } from 'apexcharts';
 import React from 'react';
 import Chart from 'react-apexcharts';
 
@@ -9,9 +10,10 @@ interface GraphType {
 interface BarGraphProps {
   data: GraphType;
   title:string;
+  type?:any
 }
 
-const BarGraph: React.FC<BarGraphProps> = ({ data,title }) => {
+const BarGraph: React.FC<BarGraphProps> = ({ data,title,type }) => {
   return (
     <div className="w-full max-w-full mx-auto sm:h-64 md:h-72 lg:h-96 xl:h-96 lg:w-5/6 xl:w-full">
       <div style={{
@@ -21,6 +23,7 @@ const BarGraph: React.FC<BarGraphProps> = ({ data,title }) => {
       <Chart 
         options={data.options} 
         series={data.series} 
+        type={type&&type || 'line'}
         width="100%" 
         height="100%" 
       />

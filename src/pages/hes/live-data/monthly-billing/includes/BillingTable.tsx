@@ -6,17 +6,17 @@ import CaretLeft from "@/components/svg/CaretLeft";
 import CaretRight from "@/components/svg/CaretRight";
 import  Button  from "@/components/ui/button";
 import BoxContainer from "@/components/customUI/BoxContainer";
-import { useGetBlockLoadPushDataQuery } from "@/store/hes/hesApi";
+import { useGetMonthlyBillingDataQuery } from "@/store/hes/hesApi";
 interface TableProps {
     groupName: string;
     search: string,
 }
 
-const BlockLoadTable: FC<TableProps> = ({ groupName, search }) => {
+const BillingTable: FC<TableProps> = ({ groupName, search }) => {
     const [query, setQuery] = useState(search);
     const [pageCursor, setPageCursor] = useState("");
 
-    const { data: response, isLoading, isFetching, isError, refetch:refresh } = useGetBlockLoadPushDataQuery({
+    const { data: response, isLoading, isFetching, isError, refetch:refresh } = useGetMonthlyBillingDataQuery({
         searchQuery: `?${query}${pageCursor}`
     });
 
@@ -86,4 +86,4 @@ const BlockLoadTable: FC<TableProps> = ({ groupName, search }) => {
     )
 }
 
-export default BlockLoadTable
+export default BillingTable

@@ -2,6 +2,8 @@ import { EndpointBuilder } from "@reduxjs/toolkit/query";
 import { FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from "@reduxjs/toolkit/query";
 import { BaseQueryFn } from "@reduxjs/toolkit/query";
 import { BlockLoadEndPoints } from "./blockload";
+import { DailyLoadEndPoints } from "./dailyload";
+import { MonthlyBillingEndPoints } from "./monthlyBilling";
 
 export const liveDataEndPoints = (
   builder: EndpointBuilder<
@@ -28,5 +30,5 @@ export const liveDataEndPoints = (
       }
     },
   }),
-  ...BlockLoadEndPoints(builder)
+  ...BlockLoadEndPoints(builder),...DailyLoadEndPoints(builder),...MonthlyBillingEndPoints(builder)
 });

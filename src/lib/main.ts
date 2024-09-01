@@ -22,7 +22,7 @@ export const navbarLinkData = [
   { to: "/", title: "Dashboard" },
   { to: "/scheduled-reads", title: "Scheduled Reads" },
   {
-    to: "/live-data", title: "Live Data", children: [
+    to:'#', title: "Live Data", children: [
       { to: "live-data/block-load", title: "Block Load" },
       { to: "live-data/daily-load", title: "Daily Load" },
       { to: "live-data/monthly-billing", title: "Monthly Billing" },

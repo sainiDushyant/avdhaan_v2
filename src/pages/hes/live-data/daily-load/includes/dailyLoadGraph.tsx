@@ -18,7 +18,7 @@ const prepareChartData = (data: any) => {
     const sortedData = [...data].sort((a, b) => new Date(a.data_timestamp).getTime() - new Date(b.data_timestamp).getTime());
   
     return {
-      dates: sortedData.map(item => moment(item.data_timestamp).format('h:mm A')),
+      dates: sortedData.map(item => moment(item.data_timestamp).format('D MMMM')),
       values: sortedData.map(item => item.value)
     };
   };
@@ -104,7 +104,7 @@ const options: ApexOptions = {
   return { series, options };
 };
 
-const LiveData = () => {
+const DailyLoadGraph = () => {
   const [searchParams] = useSearchParams();
   const trail = searchParams.get('trail') || '7';
 
@@ -167,7 +167,7 @@ const LiveData = () => {
 
   useEffect(() => {
     if (data) {
-      const transformedData = prepareChartData(data[0].blockLoadMetrics);
+      const transformedData = prepareChartData(data[0].dailyLoadMetrics);
       setChartData(transformedData);
     }
   }, [data]);
@@ -177,7 +177,7 @@ const LiveData = () => {
   if (!data) return <EmptyScreen title="No data found" />;
 
   return (
-    <div className="px-5 py-3 w-full">
+    <div className="px-2 w-full">
       <div className="flex justify-center items-center">
         {isFetching ? (
           <div className='h-[70vh] flex items-center justify-center'>
@@ -188,11 +188,8 @@ const LiveData = () => {
           <div className="flex relative flex-col md:flex-row mt-8">
               
               <div className="flex-1 overflow-x-scroll">
-                  <h1 className="capitalize secondary-title lg:main-title pb-5">
-                      <span className="font-bold text-[#0A3690] p-2">Block Load</span>
-                  </h1>
                 <div>
-                  {chartData && <div className='p-5 rounded-lg bg-white h-[70vh] graph-border'><BarGraph title={'Time Range'} data={chartData} /></div>}
+                  {chartData && <div className='p-5 rounded-lg bg-white h-[70vh] graph-border'><BarGraph title={'Day Range'} data={chartData} /></div>}
                   </div>
               </div>
           </div>
@@ -204,4 +201,4 @@ const LiveData = () => {
   );
 };
 
-export default LiveData;
+export default DailyLoadGraph;

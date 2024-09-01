@@ -17,7 +17,9 @@ const hesApi = createApi({
 export const { 
   useGetDeviceMetaInfoMetricsQuery,
 useGetLiveDataMetricsQuery,
-useGetBlockLoadPushDataQuery
+useGetBlockLoadPushDataQuery,
+useGetDailyLoadPushDataQuery,
+useGetMonthlyBillingDataQuery
  , usePrefetch 
 } = hesApi;
 
