@@ -1,4 +1,5 @@
 import { DeviceMetaInfoMetricsRecord } from "./records/dashboard";
+import { FiltersRecord } from "./records/supplementary";
 
 type ResponseBase<T> = {
   data: {
@@ -19,7 +20,7 @@ export type ResponseBaseWithOutPagination<T> = {
 };
 
 export type DeviceMetaInfoMetricsResponse = ResponseBaseWithOutPagination<DeviceMetaInfoMetricsRecord>;
-
+export type FiltersResponse = ResponseBaseWithOutPagination<FiltersRecord>;
 
 
 export interface CustomAPIError {

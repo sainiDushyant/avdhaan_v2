@@ -8,14 +8,12 @@ export type GraphItem = {
 
 export type GraphData = GraphItem[];
 
-export type FilterPayload = {
-  start_date?: string;
-  meter_type?: string;
-  load_type?: string;
-  end_date?: string;
-  next_cursor?: string;
-  prev_cursor?: string;
-  group_name?: string;
+export type HesFilterPayload = {
+  site?: string[];
+  pss?: string[];
+  feeder?: string[];
+  dtr?: string[];
+  pole?: string[];
 };
 
 export interface DateTimeProps {
