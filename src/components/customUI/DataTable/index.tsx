@@ -17,8 +17,6 @@ function DataTable<T>({
   data, columns,
   showFilter,
   filterBy,
-  refresh,
-  refreshFn,
   search,
   selectComponent: SelectComponent,
   hasInternalPagination,
@@ -72,8 +70,6 @@ function DataTable<T>({
             showFilter={showFilter}
             filterBy={filterBy}
             table={table}
-            refresh={refresh}
-            refreshFn={refreshFn}
           />
         }
 

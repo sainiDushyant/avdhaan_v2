@@ -1,19 +1,20 @@
 import moment from "moment";
 import { ApexOptions } from "apexcharts";
+import { MetricGroup } from "@/store/hes/types/live-data-metrics";
 
-type ChartData = {
-  collectedData: { value: number; count: number; data_timestamp: string }[];
-  missedData: { value: number; count: number; data_timestamp: string }[];
-};
 
-export const prepareChartData = (data: ChartData, chartType: 'bar' | 'line') => {
-  const transformDataForChart = (data: ChartData['collectedData']) => {
+
+
+export const prepareChartData = (data: MetricGroup, chartType: 'bar' | 'line',parent:'blockload'|'dailyload'|'billing') => {
+  const transformDataForChart = (data: MetricGroup['collectedData']) => {
+
+    console.log(data,"data")
     // Sort the data array by the data_timestamp in ascending order
     const sortedData = [...data].sort((a, b) => new Date(a.data_timestamp).getTime() - new Date(b.data_timestamp).getTime());
 
     return {
       dates: sortedData.map(item => 
-        chartType === 'bar' ? moment(item.data_timestamp).format('MMM YYYY') : moment(item.data_timestamp).format('h:mm A')
+        chartType === 'bar' ? moment(item.data_timestamp).format('MMM YYYY'):parent ==='dailyload'?moment(item.data_timestamp).format('D MMM'): moment(item.data_timestamp).format('h:mm A')
       ),
       values: sortedData.map(item => item.value)
     };
@@ -82,6 +83,7 @@ export const prepareChartData = (data: ChartData, chartType: 'bar' | 'line') => 
       colors: ["transparent"],
       width: 5
     },
+    colors:['#0A3690','#B9CDF4'],
     grid: {
       show: true,
       xaxis: {
@@ -105,6 +107,7 @@ export const prepareChartData = (data: ChartData, chartType: 'bar' | 'line') => 
       shape: 'circle',
       size: 5
     },
+    colors:['#0A3690','#02C9A8'],
     grid: {
       show: true,
       xaxis: {

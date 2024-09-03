@@ -15,7 +15,7 @@ const BillingGraph = () => {
 
   const { data, isFetching, isError, error } = useGetLiveDataMetricsQuery({ searchQuery: `?trail=${trail}` });
 
-  const chartData = data && prepareChartData(data[0].billingMetrics,'bar')
+  const chartData = data && prepareChartData(data.billingMetrics,'bar','billing')
 
 
   if (isFetching) return <FullScreen hasSpinner={true} />;

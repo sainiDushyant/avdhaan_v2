@@ -4,6 +4,9 @@ import { BaseQueryFn } from "@reduxjs/toolkit/query";
 import { BlockLoadEndPoints } from "./blockload";
 import { DailyLoadEndPoints } from "./dailyload";
 import { MonthlyBillingEndPoints } from "./monthlyBilling";
+import { LiveDataMetricsResponse } from "../../types";
+import { LiveDataMetricsRecord } from "../../types/live-data-metrics";
+
 
 export const liveDataEndPoints = (
   builder: EndpointBuilder<
@@ -18,16 +21,13 @@ export const liveDataEndPoints = (
     "hesApi"
   >
 ) => ({
-  getLiveDataMetrics: builder.query<any, { searchQuery: string }>({
+  getLiveDataMetrics: builder.query<LiveDataMetricsRecord, { searchQuery: string }>({
     query: ({ searchQuery }) => ({
       url: `/push-data/metrics${searchQuery}`,
       method: "GET",
     }),
-    transformResponse: (response: any) => {
-      if (response && response.data && response.data.records) {
-        const item = response.data.records;
-        return item;
-      }
+    transformResponse: (response:LiveDataMetricsResponse):LiveDataMetricsRecord => {
+        return response.data.records[0] ;
     },
   }),
   ...BlockLoadEndPoints(builder),...DailyLoadEndPoints(builder),...MonthlyBillingEndPoints(builder)
