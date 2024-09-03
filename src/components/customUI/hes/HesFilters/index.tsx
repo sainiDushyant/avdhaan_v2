@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import SubmitButton from "@/components/customUI/Button/SubmitButton";
-import { convertHesFiltersToSearchParams } from "@/lib/hes";
+import { hesFiltersStateToObject } from "@/lib/hes";
 import useHesPrimaryFilterState from "@/hooks/hes/useHesPrimaryFilterState";
 import { useSearchParams } from "react-router-dom";
 import PrimaryFilters from "./PrimaryFilters";
@@ -16,7 +16,7 @@ const HesFilters = () => {
 
     const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const newParams = convertHesFiltersToSearchParams(primaryFilters);
+        const newParams = hesFiltersStateToObject(primaryFilters);
         setSearchParams(newParams);
     }, [primaryFilters, setSearchParams]);
 

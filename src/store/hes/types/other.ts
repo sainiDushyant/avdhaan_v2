@@ -9,11 +9,10 @@ export type GraphItem = {
 export type GraphData = GraphItem[];
 
 export type HesFilterPayload = {
-  site?: string[];
-  pss?: string[];
-  feeder?: string[];
-  dtr?: string[];
-  pole?: string[];
+  pss_id?: string[];
+  feeder_id?: string[];
+  dtr_id?: string[];
+  device_identifier?: string[];
 };
 
 export interface DateTimeProps {

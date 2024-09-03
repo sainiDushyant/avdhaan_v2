@@ -1,7 +1,7 @@
 import { DeviceMetaInfoMetricsRecord } from "./records/dashboard";
-import { FiltersRecord } from "./records/supplementary";
+import { DeviceInfoRecord, LocationHierarchyRecord } from "./records/device-management";
 
-type ResponseBase<T> = {
+export type ResponseBase<T> = {
   data: {
     records: T extends null ? null : T[];
     count: number;
@@ -20,8 +20,8 @@ export type ResponseBaseWithOutPagination<T> = {
 };
 
 export type DeviceMetaInfoMetricsResponse = ResponseBaseWithOutPagination<DeviceMetaInfoMetricsRecord>;
-export type FiltersResponse = ResponseBaseWithOutPagination<FiltersRecord>;
-
+export type LocationHierarchyResponse = ResponseBaseWithOutPagination<LocationHierarchyRecord>;
+export type DeviceInfoResponse = ResponseBaseWithOutPagination<DeviceInfoRecord>;
 
 export interface CustomAPIError {
   description?: string;

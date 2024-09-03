@@ -3,7 +3,7 @@ import { FC, useCallback } from "react";
 import { MultiValue } from "react-select";
 import { Option } from "@/store/vee/types/other";
 import AsyncMultiOptionSelect from "@/components/customUI/Select/AsyncMultiOptionSelect";
-import { HesFilterState } from "@/store/hes/types/records/supplementary";
+import { HesFilterState } from "@/store/hes/types/records/device-management";
 
 interface PrimaryFiltersProps {
     primaryFilters: HesFilterState;
@@ -15,61 +15,45 @@ const PrimaryFilters: FC<PrimaryFiltersProps> = ({
 }) => {
 
     const {
-        poleOptions, dtrOptions, feederOptions, pssOptions, siteOptions
+        deviceIdentifierOptions, dtrOptions, feederOptions, pssOptions,
     } = useHesPrimaryFilterOptions(primaryFilters);
 
-    const handleChangePole = useCallback((selected: MultiValue<Option>) => {
-        setPrimaryFilters(prevData => ({ 
-            ...prevData, "pole": selected 
-        }));
+    const handleChangeDeviceIdentifier = useCallback((selected: MultiValue<Option>) => {
+        setPrimaryFilters(prevData => ({ ...prevData, device_identifier: selected }));
     }, []);
 
     const handleChangeDtr = useCallback((selected: MultiValue<Option>) => {
         setPrimaryFilters(prevData => ({ 
-            ...prevData, "dtr": selected, pole: []
+            ...prevData, dtr_id: selected, device_identifier: []
         }));
     }, []);
 
     const handleChangeFeeder = useCallback((selected: MultiValue<Option>) => {
         setPrimaryFilters(prevData => ({ 
-            ...prevData, "feeder": selected, dtr: [], pole: []
+            ...prevData, feeder_id: selected, dtr_id: [], device_identifier: []
         }));
     }, []);
 
     const handleChangePss = useCallback((selected: MultiValue<Option>) => {
         setPrimaryFilters(prevData => ({ 
-            ...prevData, "pss": selected, feeder: [], dtr: [], pole: [] 
+            ...prevData, pss_id: selected, feeder: [], dtr_id: [], device_identifier: []
         }));
-    }, []);
-
-    const handleChangeSite = useCallback((selected: MultiValue<Option>) => {
-        setPrimaryFilters({ 
-            "site": selected, pss: [],  feeder: [],  dtr: [], pole: [] 
-        });
     }, []);
     
     return (
         <>
             <AsyncMultiOptionSelect
-                loadOptions={siteOptions}
-                handleChange={handleChangeSite}
-                value={primaryFilters.site}
-                loading={false}
-                customCss="flex-none md:min-w-[220px]"
-                placeholder={"Site"}
-            />
-            <AsyncMultiOptionSelect
                 loadOptions={pssOptions}
                 handleChange={handleChangePss}
-                value={primaryFilters.pss}
+                value={primaryFilters.pss_id}
                 loading={false}
                 customCss="flex-none md:min-w-[220px]"
-                placeholder={"Pss"}
+                placeholder={"Sub-Station"}
             />
             <AsyncMultiOptionSelect
                 loadOptions={feederOptions}
                 handleChange={handleChangeFeeder}
-                value={primaryFilters.feeder}
+                value={primaryFilters.feeder_id}
                 loading={false}
                 customCss="flex-none md:min-w-[220px]"
                 placeholder={"Feeder"}
@@ -77,18 +61,18 @@ const PrimaryFilters: FC<PrimaryFiltersProps> = ({
             <AsyncMultiOptionSelect
                 loadOptions={dtrOptions}
                 handleChange={handleChangeDtr}
-                value={primaryFilters.dtr}
+                value={primaryFilters.dtr_id}
                 loading={false}
                 customCss="flex-none md:min-w-[220px]"
-                placeholder={"Dtr"}
+                placeholder={"DTR"}
             />
             <AsyncMultiOptionSelect
-                loadOptions={poleOptions}
-                handleChange={handleChangePole}
-                value={primaryFilters.pole}
+                loadOptions={deviceIdentifierOptions}
+                handleChange={handleChangeDeviceIdentifier}
+                value={primaryFilters.device_identifier}
                 loading={false}
                 customCss="flex-none md:min-w-[220px]"
-                placeholder={"Pole"}
+                placeholder={"Meter"}
             />
         </>
     )

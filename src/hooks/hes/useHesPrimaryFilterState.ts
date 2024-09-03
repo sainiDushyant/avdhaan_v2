@@ -1,22 +1,21 @@
 import { useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom';
-import { convertSearchParamsToHesFilters } from '@/lib/hes';
-import { HesFilterState } from '@/store/hes/types/records/supplementary';
+import { searchParamsToHesFilters } from '@/lib/hes';
+import { HesFilterState } from '@/store/hes/types/records/device-management';
 
 const useHesPrimaryFilterState = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ searchParams, _ ] = useSearchParams();
     
     const defaultFilters = useMemo(() => {
-        return convertSearchParamsToHesFilters(searchParams)
+        return searchParamsToHesFilters(searchParams)
     }, []);
 
     const [selectedFilters, setSelectedFilters] = useState<HesFilterState>({
-        pole: defaultFilters.pole || [],
-        dtr: defaultFilters.dtr || [],
-        feeder: defaultFilters.feeder || [],
-        pss: defaultFilters.pss || [],
-        site: defaultFilters.site || []
+        dtr_id: defaultFilters.dtr_id || [],
+        feeder_id: defaultFilters.feeder_id || [],
+        pss_id: defaultFilters.pss_id || [],
+        device_identifier: defaultFilters.device_identifier || []
     });
 
     return {
