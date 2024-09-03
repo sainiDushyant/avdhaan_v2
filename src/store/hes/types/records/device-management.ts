@@ -1,5 +1,6 @@
 import { Option } from "../other";
 import { MultiValue } from "react-select";
+import { GraphData } from "../other";
 
 export type LocationHierarchyRecord = {
     pss?: Option[];
@@ -26,6 +27,10 @@ export type DeviceInfoRecord = {
     simInformation: string | null;
     isRegistered: boolean;
 }
+
+export type DeviceMetaInfoMetricsRecord = {
+    [key: string]: GraphData;
+};
 
 export type HesFilterRecord = {
     pss_id?: Option[];

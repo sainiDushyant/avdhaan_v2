@@ -1,5 +1,7 @@
-import { DeviceMetaInfoMetricsRecord } from "./records/dashboard";
-import { DeviceInfoRecord, LocationHierarchyRecord } from "./records/device-management";
+import { 
+  DeviceInfoRecord, LocationHierarchyRecord, 
+  DeviceMetaInfoMetricsRecord 
+} from "./records/device-management";
 
 export type ResponseBase<T> = {
   data: {
