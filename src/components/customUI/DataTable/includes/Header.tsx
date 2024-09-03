@@ -3,13 +3,10 @@ import BaseModal from '@/components/customUI/Modals';
 import FilterLogo from '@/components/svg/FilterLogo';
 import { type HeaderProps } from '../types';
 import { useState, useCallback, ChangeEvent } from 'react';
-import RefreshButton from '@/components/svg/RefreshButton';
 
 function Header<T>({
   search,
   showFilter,
-  refresh,
-  refreshFn,
   filterBy,
   table,
   dataLength
@@ -37,9 +34,6 @@ function Header<T>({
           value={searchQuery}
           onChange={handleInputChange}
         />
-      )}
-      {refresh && (
-       <div className='mb-3 cursor-pointer' onClick={refreshFn}> <RefreshButton/> </div> 
       )}
       {showFilter && filterBy && (
         <BaseModal

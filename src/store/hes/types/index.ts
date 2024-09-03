@@ -1,3 +1,4 @@
+import { LiveDataMetricsRecord } from "./live-data-metrics";
 import { DeviceMetaInfoMetricsRecord } from "./records/dashboard";
 
 type ResponseBase<T> = {
@@ -18,8 +19,10 @@ export type ResponseBaseWithOutPagination<T> = {
   };
 };
 
+
 export type DeviceMetaInfoMetricsResponse = ResponseBaseWithOutPagination<DeviceMetaInfoMetricsRecord>;
 
+export type LiveDataMetricsResponse = ResponseBaseWithOutPagination<LiveDataMetricsRecord>;
 
 
 export interface CustomAPIError {

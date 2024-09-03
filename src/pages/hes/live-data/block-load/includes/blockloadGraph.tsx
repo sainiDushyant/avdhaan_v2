@@ -16,10 +16,8 @@ const BlockLoadGraph = () => {
 
   const { data, isFetching, isError, error } = useGetLiveDataMetricsQuery({ searchQuery: `?trail=${trail}` });
 
-
-
-  
-      const chartData = data && prepareChartData(data[0].blockLoadMetrics,'line');
+  console.log(data,"data")
+      const chartData = data && prepareChartData(data.blockLoadMetrics,'line','blockload');
 
   
 

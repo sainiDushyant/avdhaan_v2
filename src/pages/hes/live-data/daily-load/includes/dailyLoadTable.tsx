@@ -7,6 +7,7 @@ import CaretRight from "@/components/svg/CaretRight";
 import  Button  from "@/components/ui/button";
 import BoxContainer from "@/components/customUI/BoxContainer";
 import { useGetDailyLoadPushDataQuery } from "@/store/hes/hesApi";
+import RefreshButton from "@/components/svg/RefreshButton";
 interface TableProps {
     groupName: string;
     search: string,
@@ -51,8 +52,9 @@ const DailyLoadTable: FC<TableProps> = ({ search }) => {
         <div className="flex-1 flex flex-col w-full px-2 " >
             
             < div className="flex flex-1 min-h-[60vh] items-center justify-center" >
-                {
-                    !isFetching ? <DataTable refresh refreshFn={refresh} columns={columns} data={tableData}/> : <Spinner />
+                {  
+                    !isFetching ?<div className="w-full flex flex-col"> <div className="self-end" onClick={refresh}> <RefreshButton/></div>
+                     <DataTable  columns={columns} data={tableData}/> </div>: <Spinner />
                 }
             </div>
             {!isError && <div className="self-end" >

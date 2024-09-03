@@ -16,7 +16,7 @@ const DailyLoadGraph = () => {
   const { data, isFetching, isError, error } = useGetLiveDataMetricsQuery({ searchQuery: `?trail=${trail}` });
 
 
-      const chartData = data && prepareChartData(data[0].dailyLoadMetrics,'line');
+      const chartData = data && prepareChartData(data.dailyLoadMetrics,'line','dailyload');
   
 
   if (isFetching) return <FullScreen hasSpinner={true} />;
