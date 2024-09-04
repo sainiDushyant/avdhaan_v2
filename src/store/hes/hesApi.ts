@@ -37,9 +37,6 @@ export const {
   useGetDailyLoadPushDataQuery,
   useGetMonthlyBillingDataQuery, 
   useGetScheduledReportsQuery,
-useGetBlockLoadPushDataQuery,
-useGetDailyLoadPushDataQuery,
-useGetMonthlyBillingDataQuery,
   useGetProfileInstantDataQuery,
   usePrefetch
 } = hesApi;
