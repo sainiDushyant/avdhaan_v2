@@ -1,3 +1,4 @@
+
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { customBaseQuery, HES_TAG_TYPES } from "../utils";
 import { scheduledReportsEndpoints } from "./endpoints/reports";
@@ -5,13 +6,16 @@ import { deviceManagementEndpoints } from "./endpoints/device-management";
 import { liveDataEndPoints } from "./endpoints/live-data";
 
 const hesApi = createApi({
-  reducerPath: "hesApi",
+  reducerPath: 'hesApi',
   baseQuery: customBaseQuery({
-    baseUrl: `${import.meta.env.VITE_HES_BASE_URL}/${import.meta.env.VITE_HES_API_VERSION}/`,
+    baseUrl: `${import.meta.env.VITE_HES_BASE_URL}/${
+      import.meta.env.VITE_HES_API_VERSION
+    }/`,
     credentials: 'same-origin',
     setHeaders: (headers) => {
       headers.set("Content-Type", "application/json");
       headers.set("Authorization", localStorage.getItem('token') as string );
+
       return headers;
     }
   }),
@@ -36,7 +40,8 @@ export const {
 useGetBlockLoadPushDataQuery,
 useGetDailyLoadPushDataQuery,
 useGetMonthlyBillingDataQuery,
-usePrefetch 
+  useGetProfileInstantDataQuery,
+  usePrefetch
 } = hesApi;
 
 export default hesApi;
