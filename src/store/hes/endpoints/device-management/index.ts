@@ -2,7 +2,7 @@ import { EndpointBuilder } from "@reduxjs/toolkit/query";
 import { FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from "@reduxjs/toolkit/query";
 import { BaseQueryFn } from "@reduxjs/toolkit/query";
 import { DeviceInfoResponse, DeviceMetaInfoMetricsResponse, LocationHierarchyResponse } from "../../types";
-import { LocationHierarchyRecord } from "../../types/records/device-management";
+import { DeviceMetaInfoMetricsRecord, LocationHierarchyRecord } from "../../types/records/device-management";
 import { CACHING_TIME } from "@/store/utils";
 
 export const deviceManagementEndpoints = (
@@ -28,7 +28,6 @@ export const deviceManagementEndpoints = (
         return records[0];
       },
     }),
-    //device-management/device-info
     getDeviceIdentifier: builder.query<LocationHierarchyRecord, string>({
       query: (params) => ({
         url: `device-management/device-info?${params}`,
@@ -43,12 +42,13 @@ export const deviceManagementEndpoints = (
         return { device_identifier: deviceIdentifiers };
       },
     }),
-    getDeviceMetaInfoMetrics: builder.query<DeviceMetaInfoMetricsResponse, void>({
+    getDeviceMetaInfoMetrics: builder.query<DeviceMetaInfoMetricsRecord[], void>({
       query: () => ({
         url: `device-management/device-meta-info-metrics`,
         method: "GET",
       }),
-      providesTags: [],
-      keepUnusedDataFor: CACHING_TIME,
+      transformResponse: (response: DeviceMetaInfoMetricsResponse): DeviceMetaInfoMetricsRecord[] => {
+        return response.data.records;
+      },
   }),
 });
