@@ -1,5 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { customBaseQuery, HES_TAG_TYPES } from "../utils";
+import { scheduledReportsEndpoints } from "./endpoints/reports";
 import { dashboardEndpoints } from "./endpoints/dashboard";
 import { liveDataEndPoints } from "./endpoints/live-data";
 
@@ -16,13 +17,14 @@ const hesApi = createApi({
   }),
   tagTypes: HES_TAG_TYPES,
   endpoints: (builder) => ({
+    ...scheduledReportsEndpoints(builder),
     ...dashboardEndpoints(builder),...liveDataEndPoints(builder)
   }),
 });
 
 export const { 
   useGetDeviceMetaInfoMetricsQuery,
-useGetLiveDataMetricsQuery,
+  useGetScheduledReportsQuery,
 useGetBlockLoadPushDataQuery,
 useGetDailyLoadPushDataQuery,
 useGetMonthlyBillingDataQuery
