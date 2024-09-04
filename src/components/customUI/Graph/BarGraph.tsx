@@ -2,7 +2,7 @@ import React from 'react';
 import Chart from 'react-apexcharts';
 
 interface GraphType {
-  series: ApexAxisChartSeries; // or any other specific type depending on your data
+  series: ApexAxisChartSeries | number[]; // or any other specific type depending on your data
   options: ApexCharts.ApexOptions; // or a custom type if you have one
 }
 
@@ -19,12 +19,13 @@ const BarGraph: React.FC<BarGraphProps> = ({ data, title, type }) => {
         {title}
       </div>
       <div className='w-full h-0 border border-1'></div>
-      <Chart
-        options={data.options}
-        series={data.series}
-        type={type || 'line'}
-        width="100%"
-        height="100%"
+      <Chart 
+        options={data.options} 
+        // series={data.series} 
+        series={type === 'pie' ? (data.series as number[]) : data.series} 
+        type={type&&type || 'line'}
+        width="100%" 
+        height="100%" 
       />
     </div>
   );
