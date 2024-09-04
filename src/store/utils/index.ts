@@ -11,7 +11,7 @@ type BaseQuery = {
 // Define custom baseQuery function with configuration
 export const customBaseQuery = ({ baseUrl, credentials, setHeaders }: BaseQuery) => {
   return fetchBaseQuery({
-    baseUrl:  import.meta.env.VITE_BASE_URL  + baseUrl,
+    baseUrl,
     credentials: credentials || "same-origin",
     prepareHeaders(headers) {
       return setHeaders ? setHeaders(headers) : headers
