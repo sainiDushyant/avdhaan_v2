@@ -10,7 +10,7 @@ const hesApi = createApi({
     credentials: 'same-origin',
     setHeaders: (headers) => {
       headers.set("Content-Type", "application/json");
-      headers.set("Authorization", import.meta.env.VITE_HES_AUTH_TOKEN || localStorage.getItem('token') );
+      headers.set("Authorization", localStorage.getItem('token') as string );
       return headers;
     }
   }),
