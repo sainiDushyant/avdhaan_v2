@@ -1,21 +1,26 @@
 // Types for individual data items
-type CollectedDataItem = {
+type data1 = {
     value: number;
-    count: number;
+    count?: number;
     data_timestamp: string;
 };
 
-type MissedDataItem = {
+type data2 = {
     value: number;
-    count: number;
+    count?: number;
     data_timestamp: string;
 };
 
 // Types for each metric group
  export type MetricGroup = {
-    collectedData: CollectedDataItem[];
-    missedData: MissedDataItem[];
+    collectedData: data1[];
+    missedData: data2[];
 };
+
+type ModifiedGroup = {
+    data1:data1[];
+    data2:data2[];
+}
 
 // Types for the API response structure
 export type LiveDataMetricsRecord = {
@@ -24,6 +29,11 @@ export type LiveDataMetricsRecord = {
     billingMetrics: MetricGroup;
 };
 
+export type ModifiedLiveDataRecord ={
+    blockLoadMetrics: ModifiedGroup;
+    dailyLoadMetrics: ModifiedGroup;
+    billingMetrics: ModifiedGroup;
+}
 // Transformed Response Type
 export interface PushDataMetricsRecord {
     blockLoadMetrics: MetricGroup;

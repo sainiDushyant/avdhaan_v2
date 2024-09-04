@@ -2,7 +2,7 @@ import { EndpointBuilder } from "@reduxjs/toolkit/query";
 import { FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from "@reduxjs/toolkit/query";
 import { BaseQueryFn } from "@reduxjs/toolkit/query";
 import { APIResponse,TransformedResponse } from '@/store/hes/types/monthlyBilling';
-import moment from "moment";
+import { formatDate } from "@/lib/utils";
 
 export const MonthlyBillingEndPoints = (
     builder: EndpointBuilder<
@@ -29,8 +29,8 @@ export const MonthlyBillingEndPoints = (
                 response.data.records.map(item => {
                     records.push({
                         meter_number: item.device_identifier,
-                        date: moment(item.data_timestamp).format('DD-MM-YYYY'),
-                        time: moment(item.data_timestamp).format('HH:mm'),
+                        date: formatDate(item.data_timestamp,'DD-MM-YYYY'),
+                        time: formatDate(item.data_timestamp,'HH:mm'),
                         MD_W: item.data.MD_W,
                         MD_VA: item.data.MD_VA,
                         avg_PF: item.data.avg_PF,
