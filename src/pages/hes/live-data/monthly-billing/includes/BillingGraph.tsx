@@ -17,7 +17,7 @@ const BillingGraph = () => {
   });
 
   const chartData =
-    data && prepareChartData(data.billingMetrics, 'bar', 'billing');
+    data && prepareChartData(data.billingMetrics, 'bar', 'days');
 
   if (isFetching) return <FullScreen hasSpinner={true} />;
   if (isError) return <ErrorScreen error={error} />;
