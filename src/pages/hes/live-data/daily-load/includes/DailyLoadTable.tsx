@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import DataTable from '@/components/customUI/DataTable';
 import Spinner from '@/components/customUI/Loaders/Spinner';
 import useGetTableColumns from '@/hooks/useGetTableColumns';
@@ -6,15 +6,11 @@ import CaretLeft from '@/components/svg/CaretLeft';
 import CaretRight from '@/components/svg/CaretRight';
 import Button from '@/components/ui/button';
 import BoxContainer from '@/components/customUI/BoxContainer';
-import { useGetBlockLoadPushDataQuery } from '@/store/hes/hesApi';
+import { useGetDailyLoadPushDataQuery } from '@/store/hes/hesApi';
 import RefreshButton from '@/components/svg/RefreshButton';
-interface TableProps {
-  groupName: string;
-  search: string;
-}
 
-const BlockLoadTable: FC<TableProps> = ({ search }) => {
-  const [query, setQuery] = useState(search);
+const DailyLoadTable = () => {
+
   const [pageCursor, setPageCursor] = useState('');
 
   const {
@@ -23,8 +19,8 @@ const BlockLoadTable: FC<TableProps> = ({ search }) => {
     isFetching,
     isError,
     refetch: refresh
-  } = useGetBlockLoadPushDataQuery({
-    searchQuery: `?${query}${pageCursor}`
+  } = useGetDailyLoadPushDataQuery({
+    searchQuery: `?${pageCursor}`
   });
 
   const tableData = response?.records || [];
@@ -63,10 +59,10 @@ const BlockLoadTable: FC<TableProps> = ({ search }) => {
     );
 
   return (
-    <div className="flex-1 flex flex-col px-2 ">
-      <div className="flex flex-1 min-h-[60vh]">
+    <div className="flex-1 flex flex-col w-full px-2 ">
+      <div className="flex flex-1 min-h-[60vh] items-center justify-center">
         {!isFetching ? (
-          <div className="flex flex-col w-full">
+          <div className="w-full flex flex-col">
             <div className="self-end">
               <Button
                 variant={'ghost'}
@@ -76,14 +72,10 @@ const BlockLoadTable: FC<TableProps> = ({ search }) => {
                 <RefreshButton />
               </Button>
             </div>
-            <div>
-              <DataTable columns={columns} data={tableData} />
-            </div>
+            <DataTable columns={columns} data={tableData} />{' '}
           </div>
         ) : (
-          <div className="flex flex-1 min-h-[60vh] justify-center items-center">
-            <Spinner />
-          </div>
+          <Spinner />
         )}
       </div>
       {!isError && (
@@ -108,4 +100,4 @@ const BlockLoadTable: FC<TableProps> = ({ search }) => {
   );
 };
 
-export default BlockLoadTable;
+export default DailyLoadTable;

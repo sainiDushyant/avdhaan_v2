@@ -1,7 +1,7 @@
 
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { customBaseQuery, HES_TAG_TYPES } from "../utils";
-import { scheduledReportsEndpoints } from "./endpoints/reports";
+import { scheduledReportsEndpoints } from "./endpoints/scheduled-reports";
 import { deviceManagementEndpoints } from "./endpoints/device-management";
 import { liveDataEndPoints } from "./endpoints/live-data";
 

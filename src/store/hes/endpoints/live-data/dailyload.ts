@@ -2,6 +2,7 @@ import { EndpointBuilder } from "@reduxjs/toolkit/query";
 import { FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from "@reduxjs/toolkit/query";
 import { BaseQueryFn } from "@reduxjs/toolkit/query";
 import { APIResponse,TransformedResponse } from "../../types/dailyLoad";
+
 export const DailyLoadEndPoints = (
     builder: EndpointBuilder<
         BaseQueryFn<
