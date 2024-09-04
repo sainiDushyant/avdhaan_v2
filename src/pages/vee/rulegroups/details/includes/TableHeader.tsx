@@ -1,6 +1,6 @@
-import EditRuleGroupModal from "@/components/customUI/Modals/rule-group/EditRuleGroup"
-import DeleteRuleGroupModal from "@/components/customUI/Modals/rule-group/DeleteRuleGroup"
-import AddRuleToRuleGroup from "@/components/customUI/Modals/rule-group/AddRuleToRuleGroup"
+import EditRuleGroupModal from "@/components/customUI/vee/Modals/rule-group/EditRuleGroup"
+import DeleteRuleGroupModal from "@/components/customUI/vee/Modals/rule-group/DeleteRuleGroup"
+import AddRuleToRuleGroup from "@/components/customUI/vee/Modals/rule-group/AddRuleToRuleGroup"
 
 const TableHeader = () => {
   return (

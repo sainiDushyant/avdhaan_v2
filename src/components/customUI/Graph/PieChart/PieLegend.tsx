@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { GroupPieChartData } from ".";
 
-interface GraphLegendProps {
+interface PieLegendProps {
     groupPieChartData: GroupPieChartData[]
 }
 
-const GraphLegend: FC<GraphLegendProps> = ({ groupPieChartData }) => {
+const PieLegend: FC<PieLegendProps> = ({ groupPieChartData }) => {
     return (
         <div className="flex flex-col items-start self-end gap-y-2">
             {
@@ -28,4 +28,4 @@ const GraphLegend: FC<GraphLegendProps> = ({ groupPieChartData }) => {
     )
 }
 
-export default GraphLegend
+export default PieLegend

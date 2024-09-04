@@ -1,21 +1,18 @@
 export type GraphItem = {
   name: string;
   count: number;
-  totalCount: number;
   percentage: number;
+  totalCount?: number;
   color?: string;
 }
 
 export type GraphData = GraphItem[];
 
-export type FilterPayload = {
-  start_date?: string;
-  meter_type?: string;
-  load_type?: string;
-  end_date?: string;
-  next_cursor?: string;
-  prev_cursor?: string;
-  group_name?: string;
+export type HesFilterPayload = {
+  pss_id?: string[];
+  feeder_id?: string[];
+  dtr_id?: string[];
+  device_identifier?: string[];
 };
 
 export interface DateTimeProps {

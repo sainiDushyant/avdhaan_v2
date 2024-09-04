@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { SummaryGraphRecord } from "@/store/vee/types/records/summary-details";
 import { cn } from "@/lib/utils";
-import MainGraph from "./MainGraph";
+import PieChart from "@/components/customUI/vee/PieChart";
 
 interface GroupProps {
     group: SummaryGraphRecord;
@@ -16,7 +16,7 @@ const Graph: FC<GroupProps> = ({ group }) => {
             )}
         >
             {group.graph.map((graph, index) => (
-                <MainGraph graph={graph} key={`graph_${index}`} />
+                <PieChart graph={graph} key={`graph_${index}`} />
             ))}
         </div>
     )
