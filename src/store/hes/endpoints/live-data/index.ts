@@ -5,7 +5,7 @@ import { BlockLoadEndPoints } from "./blockload";
 import { DailyLoadEndPoints } from "./dailyload";
 import { MonthlyBillingEndPoints } from "./monthlyBilling";
 import { LiveDataMetricsResponse } from "../../types";
-import { LiveDataMetricsRecord } from "../../types/live-data-metrics";
+import { LiveDataMetricsRecord, ModifiedLiveDataRecord } from "../../types/live-data-metrics";
 
 
 export const liveDataEndPoints = (
@@ -21,13 +21,24 @@ export const liveDataEndPoints = (
     "hesApi"
   >
 ) => ({
-  getLiveDataMetrics: builder.query<LiveDataMetricsRecord, { searchQuery: string }>({
+  getLiveDataMetrics: builder.query<ModifiedLiveDataRecord, { searchQuery: string }>({
     query: ({ searchQuery }) => ({
       url: `/push-data/metrics${searchQuery}`,
       method: "GET",
     }),
-    transformResponse: (response:LiveDataMetricsResponse):LiveDataMetricsRecord => {
-        return response.data.records[0] ;
+    transformResponse: (response:LiveDataMetricsResponse):ModifiedLiveDataRecord => {
+        const data = response.data.records.map((ele)=>{
+             return {billingMetrics:{data1:ele.billingMetrics.collectedData,
+                     data2:ele.billingMetrics.missedData
+             },blockLoadMetrics:{data1:ele.blockLoadMetrics.collectedData,
+              data2:ele.blockLoadMetrics.missedData
+      },dailyLoadMetrics:{data1:ele.dailyLoadMetrics.collectedData,
+        data2:ele.dailyLoadMetrics.missedData
+}
+             
+            }
+        }) ;
+        return data[0]
     },
   }),
   ...BlockLoadEndPoints(builder),...DailyLoadEndPoints(builder),...MonthlyBillingEndPoints(builder)
