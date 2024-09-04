@@ -8,13 +8,9 @@ import Button from '@/components/ui/button';
 import BoxContainer from '@/components/customUI/BoxContainer';
 import { useGetProfileInstantDataQuery } from '@/store/hes/hesApi';
 import RefreshButton from '@/components/svg/RefreshButton';
-interface TableProps {
-  groupName: string;
-  search: string;
-}
 
-const InstantaneousTable: FC<TableProps> = ({ search }) => {
-  const [query, setQuery] = useState(search);
+const InstantaneousTable = () => {
+
   const [pageCursor, setPageCursor] = useState('');
 
   const {
@@ -24,7 +20,7 @@ const InstantaneousTable: FC<TableProps> = ({ search }) => {
     isError,
     refetch: refresh
   } = useGetProfileInstantDataQuery({
-    searchQuery: `?${query}${pageCursor}`
+    searchQuery: `?${pageCursor}`
   });
 
   const tableData = response?.records || [];

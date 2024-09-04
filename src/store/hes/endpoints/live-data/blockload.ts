@@ -2,6 +2,7 @@ import { EndpointBuilder } from "@reduxjs/toolkit/query";
 import { FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from "@reduxjs/toolkit/query";
 import { BaseQueryFn } from "@reduxjs/toolkit/query";
 import { APIResponse, TransformedResponse } from '@/store/hes/types/blockLoad';
+
 export const BlockLoadEndPoints = (
     builder: EndpointBuilder<
         BaseQueryFn<
@@ -16,7 +17,6 @@ export const BlockLoadEndPoints = (
     >
 ) => ({
     getBlockLoadPushData: builder.query<TransformedResponse, { searchQuery: string }>({
-
         query: ({ searchQuery }) => ({
             url: `/push-data/blockload${searchQuery}`,
             method: "GET"

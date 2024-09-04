@@ -17,8 +17,8 @@ export const MonthlyBillingEndPoints = (
         "hesApi"
     >
 ) => ({
+    
     getMonthlyBillingData: builder.query<TransformedResponse, { searchQuery: string }>({
-
         query: ({ searchQuery }) => ({
             url: `/push-data/billing${searchQuery}`,
             method: "GET"

@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import DataTable from '@/components/customUI/DataTable';
 import Spinner from '@/components/customUI/Loaders/Spinner';
 import useGetTableColumns from '@/hooks/useGetTableColumns';
@@ -8,13 +8,9 @@ import Button from '@/components/ui/button';
 import BoxContainer from '@/components/customUI/BoxContainer';
 import { useGetMonthlyBillingDataQuery } from '@/store/hes/hesApi';
 import RefreshButton from '@/components/svg/RefreshButton';
-interface TableProps {
-  groupName: string;
-  search: string;
-}
 
-const BillingTable: FC<TableProps> = ({ search }) => {
-  const [query, setQuery] = useState(search);
+const BillingTable = () => {
+
   const [pageCursor, setPageCursor] = useState('');
 
   const {
@@ -24,7 +20,7 @@ const BillingTable: FC<TableProps> = ({ search }) => {
     isError,
     refetch: refresh
   } = useGetMonthlyBillingDataQuery({
-    searchQuery: `?${query}${pageCursor}`
+    searchQuery: `?${pageCursor}`
   });
 
   const tableData = response?.records || [];

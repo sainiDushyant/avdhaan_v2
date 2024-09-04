@@ -1,4 +1,3 @@
-import { FC, useEffect, useState } from "react";
 import DataTable from "@/components/customUI/DataTable";
 import Spinner from "@/components/customUI/Loaders/Spinner";
 import useGetTableColumns from "@/hooks/useGetTableColumns";
@@ -6,29 +5,14 @@ import BoxContainer from "@/components/customUI/BoxContainer";
 import { useGetScheduledReportsQuery } from "@/store/hes/hesApi";
 import { FlattenedCommandRecord } from "@/store/hes/types/records/reports";
 
-interface TableProps {
-  search: string,
-}
-
-const ListReports: FC<TableProps> = ({ search }) => {
-  const [query, setQuery] = useState(search);
-
-  const { data: response, isLoading, isFetching, isError, refetch: refresh } = useGetScheduledReportsQuery({
-    searchQuery: `?${query}`
+const ListReports = () => {
+  const { data: response, isLoading, isFetching, isError } = useGetScheduledReportsQuery({
+    searchQuery: ``
   });
-
-
-  useEffect(() => {
-    setQuery(search);
-  }, [search]);
 
   const tableData: FlattenedCommandRecord[] = response?.transformedRecords || [];
 
-  const columns = useGetTableColumns({
-    cols: tableData,
-    query: [],
-
-  });
+  const columns = useGetTableColumns({ cols: tableData, query: [] });
 
   if (isLoading) return (
     <BoxContainer>

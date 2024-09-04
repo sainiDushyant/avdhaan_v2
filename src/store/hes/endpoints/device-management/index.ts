@@ -1,8 +1,8 @@
 import { EndpointBuilder } from "@reduxjs/toolkit/query";
 import { FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from "@reduxjs/toolkit/query";
 import { BaseQueryFn } from "@reduxjs/toolkit/query";
-import { DeviceInfoResponse, DeviceMetaInfoMetricsResponse, LocationHierarchyResponse } from "../types";
-import { LocationHierarchyRecord } from "../types/records/device-management";
+import { DeviceInfoResponse, DeviceMetaInfoMetricsResponse, LocationHierarchyResponse } from "../../types";
+import { LocationHierarchyRecord } from "../../types/records/device-management";
 import { CACHING_TIME } from "@/store/utils";
 
 export const deviceManagementEndpoints = (

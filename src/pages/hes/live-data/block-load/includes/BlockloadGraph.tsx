@@ -8,8 +8,6 @@ import { useGetLiveDataMetricsQuery } from '@/store/hes/hesApi';
 import { prepareChartData } from '@/lib/utils';
 import '@/styles/tooltip.css';
 
-// Function to prepare chart data
-
 const BlockLoadGraph = () => {
   const [searchParams] = useSearchParams();
   const trail = searchParams.get('trail') || '7';

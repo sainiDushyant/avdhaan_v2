@@ -1,6 +1,6 @@
 import React from 'react';
-import BarGraph from "../../../../components/customUI/Graph/BarGraph";
-import { ChartData } from "../../../../store/hes/types/records/reports";
+import BarGraph from "@/components/customUI/Graph/BarGraph";
+import { ChartData } from "@/store/hes/types/records/reports";
 import { ApexOptions } from 'apexcharts';
 
 type GraphComponentProps = {
@@ -8,6 +8,7 @@ type GraphComponentProps = {
 };
 
 const GraphComponent: React.FC<GraphComponentProps> = ({ chartData }) => {
+  
   const renderCharts = () => {
     return Object.keys(chartData).map((commandName) => {
       const data = chartData[commandName];
@@ -44,7 +45,11 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ chartData }) => {
     });
   };
 
-  return <div className="grid grid-cols-2 lg:grid-cols-2 gap-8">{renderCharts()}</div>;
+  return (
+    <div className="grid grid-cols-2 lg:grid-cols-2 gap-8">
+      {renderCharts()}
+    </div>
+  );
 };
 
 export default GraphComponent;
