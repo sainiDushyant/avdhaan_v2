@@ -1,12 +1,12 @@
 import { FC } from "react";
 
-interface GraphLegendProps {
+interface PieLegendProps {
     value: number;
     name: string;
     color: string;
 }
 
-const GraphLegend: FC<GraphLegendProps> = ({ value, name, color }) => {
+const PieLegend: FC<PieLegendProps> = ({ value, name, color }) => {
     if(!value) return null;
     return (
         <div className="flex items-center gap-x-6">
@@ -16,4 +16,4 @@ const GraphLegend: FC<GraphLegendProps> = ({ value, name, color }) => {
     )
 }
 
-export default GraphLegend
+export default PieLegend

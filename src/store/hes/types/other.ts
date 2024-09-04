@@ -1,8 +1,8 @@
 export type GraphItem = {
   name: string;
   count: number;
-  totalCount: number;
   percentage: number;
+  totalCount?: number;
   color?: string;
 }
 

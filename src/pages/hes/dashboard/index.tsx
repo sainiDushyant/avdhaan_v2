@@ -1,6 +1,6 @@
 import EmptyScreen from "@/components/customUI/EmptyScreen";
 import ErrorScreen from "@/components/customUI/ErrorScreen";
-import Graph from "@/components/customUI/Graph";
+import PieChart from "@/components/customUI/Graph/PieChart";
 import HesFilters from "@/components/customUI/hes/HesFilters";
 import FullScreen from "@/components/customUI/Loaders/FullScreen";
 import { useGetDeviceMetaInfoMetricsQuery } from "@/store/hes/hesApi";
@@ -27,7 +27,7 @@ const Dashboard = () => {
           deviceMetaInfoMetricsResponse.data.records.map(recordItem => {
             return Object.entries(recordItem).map(([graphTitle, graphObj]) => (
               <div className="" key={graphTitle}>
-                <Graph graphTitle={graphTitle} graphData={graphObj} />
+                <PieChart graphTitle={graphTitle} graphData={graphObj} />
               </div>
             ))
           })

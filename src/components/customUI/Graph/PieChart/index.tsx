@@ -1,17 +1,17 @@
 import ReactSvgPieChart from "react-svg-piechart"
-import GraphLegend from "./GraphLegend"
+import PieLegend from "./PieLegend"
 import { FC } from "react";
 import { GraphData } from "@/store/hes/types/other";
 import { getUniqueColor } from "@/lib/utils";
 
-interface Graph {
+interface PieChart {
     graphData: GraphData;
     graphTitle: string;
 }
 
 export type GroupPieChartData = { title: string; value: number; color: string; };
 
-const Graph: FC<Graph> = ({ graphData, graphTitle }) => {
+const PieChart: FC<PieChart> = ({ graphData, graphTitle }) => {
 
     const groupPieChartData: GroupPieChartData[] = graphData.map(item => ({ 
         title: `${item.name}: ${item.count}`, 
@@ -42,7 +42,7 @@ const Graph: FC<Graph> = ({ graphData, graphTitle }) => {
                     />
                 </div>
             <div className="flex flex-col items-end mt-6 p-3">
-                <GraphLegend 
+                <PieLegend 
                     groupPieChartData={groupPieChartData} 
                 />
             </div>
@@ -51,4 +51,4 @@ const Graph: FC<Graph> = ({ graphData, graphTitle }) => {
             
 }
 
-            export default Graph
+export default PieChart
