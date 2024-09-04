@@ -1,5 +1,5 @@
 import React from 'react';
-import BarGraph from "@/components/customUI/Graph/BarGraph";
+import Graph from "@/components/customUI/Graph";
 import { ChartData } from "@/store/hes/types/records/reports";
 import { ApexOptions } from 'apexcharts';
 
@@ -39,7 +39,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ chartData }) => {
 
       return (
         <div key={commandName} className="flex-1 bg-white shadow-md rounded-lg p-8 m-4">
-          <BarGraph data={graphData} title={commandName} type="pie" />
+          <Graph data={graphData} title={commandName} type="pie" />
         </div>
       );
     });

@@ -3,7 +3,7 @@ import EmptyScreen from '@/components/customUI/EmptyScreen';
 import ErrorScreen from '@/components/customUI/ErrorScreen';
 import FullScreen from '@/components/customUI/Loaders/FullScreen';
 import Spinner from '@/components/customUI/Loaders/Spinner';
-import BarGraph from '@/components/customUI/Graph/BarGraph';
+import Graph from '@/components/customUI/Graph';
 import { useGetLiveDataMetricsQuery } from '@/store/hes/hesApi';
 import { prepareChartData } from '@/lib/utils';
 import '@/styles/tooltip.css';
@@ -37,7 +37,7 @@ const InstantaneousGraph = () => {
                 <div>
                   {chartData && (
                     <div className="p-5 rounded-lg bg-white h-[70vh] graph-border">
-                      <BarGraph title={'Day Range'} data={chartData} />
+                      <Graph title={'Day Range'} data={chartData} />
                     </div>
                   )}
                 </div>

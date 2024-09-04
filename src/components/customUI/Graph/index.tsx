@@ -6,13 +6,13 @@ interface GraphType {
   options: ApexCharts.ApexOptions; // or a custom type if you have one
 }
 
-interface BarGraphProps {
+interface GraphProps {
   data: GraphType;
   title: string;
   type?: "area" | "line" | "bar" | "pie" | "donut" | "radialBar" | "scatter" | "bubble" | "heatmap" | "candlestick" | "boxPlot" | "radar" | "polarArea" | "rangeBar" | "rangeArea" | "treemap"
 }
 
-const BarGraph: React.FC<BarGraphProps> = ({ data, title, type }) => {
+const Graph: React.FC<GraphProps> = ({ data, title, type }) => {
   return (
     <div className="w-full max-w-full mx-auto sm:h-64 md:h-72 lg:h-96 xl:h-96 lg:w-5/6 xl:w-full">
       <div style={{ color: '#0A3690' }} className='font-bold mb-2'>
@@ -31,4 +31,4 @@ const BarGraph: React.FC<BarGraphProps> = ({ data, title, type }) => {
   );
 };
 
-export default BarGraph;
+export default Graph;

@@ -1,6 +1,5 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-
 import { ApexOptions } from 'apexcharts';
 import { ChartData, DataType } from '@/store/hes/types/prepare-chart-data';
 import { jwtDecode } from 'jwt-decode';
@@ -349,7 +348,6 @@ export const prepareChartData = (
 
   return { series, options };
 };
-
 
 export const fetchToken = async () => {
   let token: string | null = localStorage.getItem('token');
