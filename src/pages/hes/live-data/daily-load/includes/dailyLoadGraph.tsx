@@ -17,7 +17,7 @@ const DailyLoadGraph = () => {
   });
 
   const chartData =
-    data && prepareChartData(data.dailyLoadMetrics, 'line', 'dailyload');
+    data && prepareChartData(data.dailyLoadMetrics, 'line', 'days');
 
   if (isFetching) return <FullScreen hasSpinner={true} />;
   if (isError) return <ErrorScreen error={error} />;

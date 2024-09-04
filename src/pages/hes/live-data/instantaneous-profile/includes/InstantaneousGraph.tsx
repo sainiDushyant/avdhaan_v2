@@ -8,9 +8,7 @@ import { useGetLiveDataMetricsQuery } from '@/store/hes/hesApi';
 import { prepareChartData } from '@/lib/utils';
 import '@/styles/tooltip.css';
 
-// Function to prepare chart data
-
-const BlockLoadGraph = () => {
+const InstantaneousGraph = () => {
   const [searchParams] = useSearchParams();
   const trail = searchParams.get('trail') || '7';
 
@@ -19,9 +17,7 @@ const BlockLoadGraph = () => {
   });
 
   const chartData =
-    data && prepareChartData(data.blockLoadMetrics, 'line', 'time');
-  const daysData =
-    data && prepareChartData(data.blockLoadDailyMetrics, 'line', 'days');
+    data && prepareChartData(data.profileInstantMetrics, 'line', 'days');
 
   if (isFetching) return <FullScreen hasSpinner={true} />;
   if (isError) return <ErrorScreen error={error} />;
@@ -41,12 +37,7 @@ const BlockLoadGraph = () => {
                 <div>
                   {chartData && (
                     <div className="p-5 rounded-lg bg-white h-[70vh] graph-border">
-                      <BarGraph title={'Time Range'} data={chartData} />
-                    </div>
-                  )}
-                  {daysData && (
-                    <div className="p-5 rounded-lg bg-white h-[70vh] graph-border mt-5">
-                      <BarGraph title={'Day Range'} data={daysData} />
+                      <BarGraph title={'Day Range'} data={chartData} />
                     </div>
                   )}
                 </div>
@@ -59,4 +50,4 @@ const BlockLoadGraph = () => {
   );
 };
 
-export default BlockLoadGraph;
+export default InstantaneousGraph;

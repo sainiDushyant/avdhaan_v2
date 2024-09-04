@@ -6,14 +6,14 @@ import CaretLeft from '@/components/svg/CaretLeft';
 import CaretRight from '@/components/svg/CaretRight';
 import Button from '@/components/ui/button';
 import BoxContainer from '@/components/customUI/BoxContainer';
-import { useGetMonthlyBillingDataQuery } from '@/store/hes/hesApi';
+import { useGetProfileInstantDataQuery } from '@/store/hes/hesApi';
 import RefreshButton from '@/components/svg/RefreshButton';
 interface TableProps {
   groupName: string;
   search: string;
 }
 
-const BillingTable: FC<TableProps> = ({ search }) => {
+const InstantaneousTable: FC<TableProps> = ({ search }) => {
   const [query, setQuery] = useState(search);
   const [pageCursor, setPageCursor] = useState('');
 
@@ -23,7 +23,7 @@ const BillingTable: FC<TableProps> = ({ search }) => {
     isFetching,
     isError,
     refetch: refresh
-  } = useGetMonthlyBillingDataQuery({
+  } = useGetProfileInstantDataQuery({
     searchQuery: `?${query}${pageCursor}`
   });
 
@@ -64,9 +64,9 @@ const BillingTable: FC<TableProps> = ({ search }) => {
 
   return (
     <div className="flex-1 flex flex-col w-full px-2 ">
-      <div className="flex flex-1 w-full min-h-[60vh] ">
+      <div className="flex flex-1 min-h-[60vh] items-center justify-center">
         {!isFetching ? (
-          <div className="flex flex-col">
+          <div className="w-full flex flex-col">
             <div className="self-end">
               <Button
                 variant={'ghost'}
@@ -76,14 +76,10 @@ const BillingTable: FC<TableProps> = ({ search }) => {
                 <RefreshButton />
               </Button>
             </div>
-            <div>
-              <DataTable columns={columns} data={tableData} />
-            </div>
+            <DataTable columns={columns} data={tableData} />{' '}
           </div>
         ) : (
-          <div className="flex flex-1 min-h-[60vh] justify-center items-center">
-            <Spinner />
-          </div>
+          <Spinner />
         )}
       </div>
       {!isError && (
@@ -108,4 +104,4 @@ const BillingTable: FC<TableProps> = ({ search }) => {
   );
 };
 
-export default BillingTable;
+export default InstantaneousTable;
