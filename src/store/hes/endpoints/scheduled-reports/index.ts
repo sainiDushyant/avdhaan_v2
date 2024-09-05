@@ -24,7 +24,7 @@ export const scheduledReportsEndpoints = (
       method: "GET",
     }),
     transformResponse: (response: ScheduledReportsResponse) => {
-      if (!response.success) return { chartData: {}, transformedRecords: [] };
+      if (!response.data.records) return { chartData: {}, transformedRecords: [] };
 
       const chartData = transformDataForChart(response.data);
       const transformedRecords = response.data.records.map(record => ({

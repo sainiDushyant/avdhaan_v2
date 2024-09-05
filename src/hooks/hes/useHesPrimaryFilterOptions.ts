@@ -25,7 +25,7 @@ const useHesPrimaryFilterOptions = (primaryFilters: HesFilterState) => {
         const higherOrderParamsObj = hesFiltersStateToObject(higherPriorityParams);
         const urlParams = objectToUrlParams(higherOrderParamsObj);
         urlParams.set(key, value);
-        const response = await getDeviceIdentifers(urlParams.toString());
+        const response = await getDeviceIdentifers({ searchQuery: urlParams.toString()});
         const data = response.data;
         if(!data) return [];
         return data[key]
@@ -39,7 +39,7 @@ const useHesPrimaryFilterOptions = (primaryFilters: HesFilterState) => {
         const higherOrderParamsObj = hesFiltersStateToObject(higherPriorityParams);
         const urlParams = objectToUrlParams(higherOrderParamsObj);
         urlParams.set(`${key}_id`, value);
-        const response = await getLocationHierarchy(urlParams.toString());
+        const response = await getLocationHierarchy({ searchQuery: urlParams.toString()});
         const data = response.data;
         if(!data) return [];
         return data[key]
