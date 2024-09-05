@@ -36,7 +36,7 @@ const PrimaryFilters: FC<PrimaryFiltersProps> = ({
 
     const handleChangePss = useCallback((selected: MultiValue<Option>) => {
         setPrimaryFilters(prevData => ({ 
-            ...prevData, pss_id: selected, feeder: [], dtr_id: [], device_identifier: []
+            ...prevData, pss_id: selected, feeder_id: [], dtr_id: [], device_identifier: []
         }));
     }, []);
     

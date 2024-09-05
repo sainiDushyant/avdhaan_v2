@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import EmptyScreen from '@/components/customUI/EmptyScreen';
 import ErrorScreen from '@/components/customUI/ErrorScreen';
 import FullScreen from '@/components/customUI/Loaders/FullScreen';
@@ -9,11 +9,11 @@ import { prepareChartData } from '@/lib/utils';
 import '@/styles/tooltip.css';
 
 const BlockLoadGraph = () => {
-  const [searchParams] = useSearchParams();
-  const trail = searchParams.get('trail') || '7';
-
+  
+  const { search } = useLocation();
+  
   const { data, isFetching, isError, error } = useGetLiveDataMetricsQuery({
-    searchQuery: `?trail=${trail}`
+    searchQuery: `${search ? `${search}&` : "?"}trail=7`
   });
 
   const chartData = data && prepareChartData(data.blockLoadMetrics, 'line', 'time');

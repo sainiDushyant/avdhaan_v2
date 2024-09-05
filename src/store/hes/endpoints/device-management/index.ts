@@ -18,9 +18,9 @@ export const deviceManagementEndpoints = (
     "hesApi"
   >
 ) => ({
-    getLocationHierarchy: builder.query<LocationHierarchyRecord, string>({
-      query: (params) => ({
-        url: `device-management/location-hierarchy-list?${params}`,
+    getLocationHierarchy: builder.query<LocationHierarchyRecord, { searchQuery: string }>({
+      query: ({ searchQuery }) => ({
+        url: `device-management/location-hierarchy-list?${searchQuery}`,
         method: "GET",
       }),
       transformResponse: (response: LocationHierarchyResponse): LocationHierarchyRecord => {
@@ -28,9 +28,9 @@ export const deviceManagementEndpoints = (
         return records[0];
       },
     }),
-    getDeviceIdentifier: builder.query<LocationHierarchyRecord, string>({
-      query: (params) => ({
-        url: `device-management/device-info?${params}`,
+    getDeviceIdentifier: builder.query<LocationHierarchyRecord, { searchQuery: string }>({
+      query: ({ searchQuery }) => ({
+        url: `device-management/device-info?${searchQuery}`,
         method: "GET",
       }),
       transformResponse: (response: DeviceInfoResponse): LocationHierarchyRecord => {
@@ -42,13 +42,13 @@ export const deviceManagementEndpoints = (
         return { device_identifier: deviceIdentifiers };
       },
     }),
-    getDeviceMetaInfoMetrics: builder.query<DeviceMetaInfoMetricsRecord[], void>({
-      query: () => ({
-        url: `device-management/device-meta-info-metrics`,
+    getDeviceMetaInfoMetrics: builder.query<DeviceMetaInfoMetricsRecord[], { searchQuery: string }>({
+      query: ({searchQuery}) => ({
+        url: `device-management/device-meta-info-metrics${searchQuery}`,
         method: "GET",
       }),
       transformResponse: (response: DeviceMetaInfoMetricsResponse): DeviceMetaInfoMetricsRecord[] => {
-        return response.data.records;
+        return response.data.records || [];
       },
   }),
 });
