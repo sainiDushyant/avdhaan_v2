@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import DataTable from '@/components/customUI/DataTable';
 import Spinner from '@/components/customUI/Loaders/Spinner';
 import useGetTableColumns from '@/hooks/useGetTableColumns';
@@ -6,12 +6,13 @@ import CaretLeft from '@/components/svg/CaretLeft';
 import CaretRight from '@/components/svg/CaretRight';
 import Button from '@/components/ui/button';
 import BoxContainer from '@/components/customUI/BoxContainer';
-import { useGetDailyLoadPushDataQuery } from '@/store/hes/hesApi';
+import { useGetProfileInstantDataQuery } from '@/store/hes/hesApi';
 import RefreshButton from '@/components/svg/RefreshButton';
+import { useLocation } from 'react-router-dom';
 
-const DailyLoadTable = () => {
-
+const InstantaneousTable = () => {
   const [pageCursor, setPageCursor] = useState('');
+  const { search } = useLocation();
 
   const {
     data: response,
@@ -19,8 +20,8 @@ const DailyLoadTable = () => {
     isFetching,
     isError,
     refetch: refresh
-  } = useGetDailyLoadPushDataQuery({
-    searchQuery: `?${pageCursor}`
+  } = useGetProfileInstantDataQuery({
+    searchQuery: `${search}${pageCursor}`
   });
 
   const tableData = response?.records || [];
@@ -59,10 +60,10 @@ const DailyLoadTable = () => {
     );
 
   return (
-    <div className="flex-1 flex flex-col w-full px-2 ">
-      <div className="flex flex-1 min-h-[60vh] items-center justify-center">
+    <div className="flex-1 flex flex-col w-full">
+      <div className="flex flex-col min-h-[60vh]">
         {!isFetching ? (
-          <div className="w-full flex flex-col">
+          <>
             <div className="self-end">
               <Button
                 variant={'ghost'}
@@ -72,10 +73,12 @@ const DailyLoadTable = () => {
                 <RefreshButton />
               </Button>
             </div>
-            <DataTable columns={columns} data={tableData} />{' '}
-          </div>
+            <DataTable columns={columns} data={tableData} />
+          </>
         ) : (
-          <Spinner />
+          <div className="flex flex-1 min-h-[60vh] justify-center items-center">
+            <Spinner />
+          </div>
         )}
       </div>
       {!isError && (
@@ -100,4 +103,4 @@ const DailyLoadTable = () => {
   );
 };
 
-export default DailyLoadTable;
+export default InstantaneousTable;

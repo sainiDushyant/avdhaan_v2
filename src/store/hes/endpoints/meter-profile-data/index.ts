@@ -9,12 +9,10 @@ import { BlockLoadEndPoints } from './blockload';
 import { DailyLoadEndPoints } from './dailyload';
 import { MonthlyBillingEndPoints } from './monthlyBilling';
 import { LiveDataMetricsResponse } from '../../types';
-import {
-  ModifiedLiveDataRecord
-} from '../../types/live-data-metrics';
+import { ModifiedLiveDataRecord } from '../../types/meter-profile-data-metrics';
 import { InstantaneousProfileEndpoints } from './instantaneousProfile';
 
-export const liveDataEndPoints = (
+export const meterProfileData = (
   builder: EndpointBuilder<
     BaseQueryFn<
       string | FetchArgs,

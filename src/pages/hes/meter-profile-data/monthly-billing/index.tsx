@@ -1,35 +1,37 @@
 import { useState } from 'react';
-import InstantaneousGraph from './includes/InstantaneousGraph';
+import BillingTable from './includes/BillingTable';
+import BillingGraph from './includes/BillingGraph';
 import ToggleView from '@/components/customUI/ToggleView';
-import InstantaneousTable from './includes/InstantaneousTable';
 import HesFilters from '@/components/customUI/hes/HesFilters';
+import ToggleCategory from '@/components/customUI/hes/ToggleSubCategory';
 
-const InstantaneousProfile = () => {
-
+const Billing = () => {
   const [view, setView] = useState<string>('graph');
- 
-  return (
-    <div className="px-5 py-3 w-full">
 
-      <HesFilters />
+  return (
+    <div className="px-5 w-full">
       <div className="flex relative flex-col mt-8">
         <div className="flex justify-between items-center mb-2 ">
           <h1 className="capitalize secondary-title lg:main-title">
-            <span className="font-bold text-[#0A3690]">
-              Instantaneous Profile
-            </span>
+            <span className="font-bold text-[#0A3690]">Monthly Billing</span>
           </h1>
           <ToggleView view={view} setView={setView} />
         </div>
+        <div className="float-left">
+          <HesFilters />
+        </div>
         <div className="overflow-x-scroll">
           {view === 'table' && (
-            <InstantaneousTable />
+            <>
+              <ToggleCategory />
+              <BillingTable />
+            </>
           )}
-          {view === 'graph' && <InstantaneousGraph />}
+          {view === 'graph' && <BillingGraph />}
         </div>
       </div>
     </div>
   );
 };
 
-export default InstantaneousProfile;
+export default Billing;

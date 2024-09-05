@@ -6,12 +6,13 @@ import CaretLeft from '@/components/svg/CaretLeft';
 import CaretRight from '@/components/svg/CaretRight';
 import Button from '@/components/ui/button';
 import BoxContainer from '@/components/customUI/BoxContainer';
-import { useGetMonthlyBillingDataQuery } from '@/store/hes/hesApi';
+import { useGetDailyLoadPushDataQuery } from '@/store/hes/hesApi';
 import RefreshButton from '@/components/svg/RefreshButton';
+import { useLocation } from 'react-router-dom';
 
-const BillingTable = () => {
-
+const DailyLoadTable = () => {
   const [pageCursor, setPageCursor] = useState('');
+  const { search } = useLocation();
 
   const {
     data: response,
@@ -19,8 +20,8 @@ const BillingTable = () => {
     isFetching,
     isError,
     refetch: refresh
-  } = useGetMonthlyBillingDataQuery({
-    searchQuery: `?${pageCursor}`
+  } = useGetDailyLoadPushDataQuery({
+    searchQuery: `${search}${pageCursor}`
   });
 
   const tableData = response?.records || [];
@@ -59,10 +60,10 @@ const BillingTable = () => {
     );
 
   return (
-    <div className="flex-1 flex flex-col w-full px-2 ">
-      <div className="flex flex-1 w-full min-h-[60vh] ">
+    <div className="flex-1 flex flex-col w-full">
+      <div className="flex flex-col min-h-[60vh]">
         {!isFetching ? (
-          <div className="flex flex-col">
+          <>
             <div className="self-end">
               <Button
                 variant={'ghost'}
@@ -72,10 +73,8 @@ const BillingTable = () => {
                 <RefreshButton />
               </Button>
             </div>
-            <div>
-              <DataTable columns={columns} data={tableData} />
-            </div>
-          </div>
+            <DataTable columns={columns} data={tableData} />
+          </>
         ) : (
           <div className="flex flex-1 min-h-[60vh] justify-center items-center">
             <Spinner />
@@ -104,4 +103,4 @@ const BillingTable = () => {
   );
 };
 
-export default BillingTable;
+export default DailyLoadTable;

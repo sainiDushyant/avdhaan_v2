@@ -1,8 +1,10 @@
-import { 
-  DeviceInfoRecord, LocationHierarchyRecord, 
-  DeviceMetaInfoMetricsRecord 
-} from "./records/device-management";
-import { LiveDataMetricsRecord } from "./live-data-metrics";
+import {
+  DeviceInfoRecord,
+  LocationHierarchyRecord,
+  DeviceMetaInfoMetricsRecord,
+  DeviceSubCategoryRecord
+} from './records/device-management';
+import { LiveDataMetricsRecord } from './meter-profile-data-metrics';
 
 export type ResponseBase<T> = {
   data: {
@@ -16,18 +18,23 @@ export type ResponseBase<T> = {
 };
 
 export type ResponseBaseWithOutPagination<T> = {
-  data: { 
-    records: T[]; 
-    count: number; 
+  data: {
+    records: T[];
+    count: number;
   };
 };
 
+export type DeviceMetaInfoMetricsResponse =
+  ResponseBaseWithOutPagination<DeviceMetaInfoMetricsRecord>;
+export type LocationHierarchyResponse =
+  ResponseBaseWithOutPagination<LocationHierarchyRecord>;
+export type DeviceInfoResponse =
+  ResponseBaseWithOutPagination<DeviceInfoRecord>;
+export type LiveDataMetricsResponse =
+  ResponseBaseWithOutPagination<LiveDataMetricsRecord>;
 
-export type DeviceMetaInfoMetricsResponse = ResponseBaseWithOutPagination<DeviceMetaInfoMetricsRecord>;
-export type LocationHierarchyResponse = ResponseBaseWithOutPagination<LocationHierarchyRecord>;
-export type DeviceInfoResponse = ResponseBaseWithOutPagination<DeviceInfoRecord>;
-export type LiveDataMetricsResponse = ResponseBaseWithOutPagination<LiveDataMetricsRecord>;
-
+export type DeviceSubCategoryResponse =
+  ResponseBaseWithOutPagination<DeviceSubCategoryRecord>;
 
 export interface CustomAPIError {
   description?: string;

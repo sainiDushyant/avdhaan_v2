@@ -12,7 +12,6 @@ import HesFilters from '@/components/customUI/hes/HesFilters';
 import Spinner from '@/components/customUI/Loaders/Spinner';
 
 const ScheduledReads = () => {
-
   const { search } = useLocation();
 
   const {
@@ -20,52 +19,52 @@ const ScheduledReads = () => {
     isLoading: scheduledReportsLoading,
     isFetching: scheduledReportsFetching,
     isError: scheduledReportsHasError,
-    error: scheduledReportsError,
+    error: scheduledReportsError
   } = useGetScheduledReportsQuery({ searchQuery: search });
 
   const [view, setView] = useState<string>('graph');
 
   if (scheduledReportsLoading) return <FullScreen hasSpinner={true} />;
-  if (scheduledReportsHasError) return <ErrorScreen error={scheduledReportsError} />
-  if (!scheduledReportsResponse) return (<EmptyScreen title={`scheduled reports data not available`} />);
+  if (scheduledReportsHasError)
+    return <ErrorScreen error={scheduledReportsError} />;
+  if (!scheduledReportsResponse)
+    return <EmptyScreen title={`scheduled reports data not available`} />;
 
   return (
     <div className="px-5 py-3 w-full">
-      <HesFilters />
-      {
-        !scheduledReportsFetching ?
+      {!scheduledReportsFetching ? (
+        <div className="flex relative flex-col mt-8">
+          <div className="flex justify-between items-center">
+            <h1 className="capitalize secondary-title lg:main-title">
+              <span className="font-bold text-[#0A3690]">Reports</span>
+            </h1>
 
-          <div className="flex relative flex-col mt-8">
-            <div className="flex justify-between items-center">
-
-              <h1 className="capitalize secondary-title lg:main-title">
-                <span className="font-bold text-[#0A3690]">Reports</span>
-              </h1>
-
-              <div className='flex items-center gap-x-6'>
-                <Link
-                  to="/"
-                  className="link-button tertiary-vee-btn px-2"
-                  target="_blank"
-                >
-                  <Download />
-                </Link>
-                <ToggleView view={view} setView={setView} />
-              </div>
-            </div>
-
-            <div className="overflow-x-scroll">
-              {view === 'table' ?
-                <ListReports /> :
-                <GraphComponent chartData={scheduledReportsResponse.chartData} />
-              }
+            <div className="flex items-center gap-x-6">
+              <Link
+                to="/"
+                className="link-button tertiary-vee-btn px-2"
+                target="_blank"
+              >
+                <Download />
+              </Link>
+              <ToggleView view={view} setView={setView} />
             </div>
           </div>
-          :
-          <div className='min-h-[80vh] flex items-center justify-center'>
-            <Spinner />
+          <HesFilters />
+
+          <div className="overflow-x-scroll">
+            {view === 'table' ? (
+              <ListReports />
+            ) : (
+              <GraphComponent chartData={scheduledReportsResponse.chartData} />
+            )}
           </div>
-      }
+        </div>
+      ) : (
+        <div className="min-h-[80vh] flex items-center justify-center">
+          <Spinner />
+        </div>
+      )}
     </div>
   );
 };
