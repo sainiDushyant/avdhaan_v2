@@ -2,7 +2,6 @@ import { useGetDeviceSubCategoryQuery } from '@/store/hes/hesApi';
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-// Define the type for MeterName, where the keys and values are both strings
 type MeterName = {
   '1P': string;
   '3P': string;
@@ -14,16 +13,19 @@ const ToggleCategory = () => {
   const { data, isFetching, isError } = useGetDeviceSubCategoryQuery({
     searchQuery: ''
   });
-  const [_, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState<string | null>(null);
 
-  // Function to handle tab clicks
   const handleTabClick = (id: string) => {
-    setSearchParams({ subCategory: id });
+    const newParams = new URLSearchParams(searchParams.toString());
+
+    newParams.set('subCategory', id);
+
+    setSearchParams(newParams);
+
     setActiveTab(id);
   };
 
-  // Mapping the meter names to human-readable form
   const toggleName: MeterName = {
     '1P': 'One Phase Meter',
     '3P': 'Three Phase Meter',
