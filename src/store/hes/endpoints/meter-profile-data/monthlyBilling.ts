@@ -1,7 +1,7 @@
 import { EndpointBuilder } from "@reduxjs/toolkit/query";
 import { FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from "@reduxjs/toolkit/query";
 import { BaseQueryFn } from "@reduxjs/toolkit/query";
-import { APIResponse,TransformedResponse } from '@/store/hes/types/monthlyBilling';
+import { APIResponse,TransformedResponse } from '@/store/hes/types/records/meter-profile/monthlyBilling';
 import { formatDate } from "@/lib/utils";
 
 export const MonthlyBillingEndPoints = (
@@ -17,7 +17,6 @@ export const MonthlyBillingEndPoints = (
         "hesApi"
     >
 ) => ({
-    
     getMonthlyBillingData: builder.query<TransformedResponse, { searchQuery: string }>({
         query: ({ searchQuery }) => ({
             url: `/push-data/billing${searchQuery}`,

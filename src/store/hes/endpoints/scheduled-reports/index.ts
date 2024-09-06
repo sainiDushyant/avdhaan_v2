@@ -25,7 +25,6 @@ export const scheduledReportsEndpoints = (
     }),
     transformResponse: (response: ScheduledReportsResponse) => {
       if (!response.data.records) return { chartData: {}, transformedRecords: [] };
-
       const chartData = transformDataForChart(response.data);
       const transformedRecords = response.data.records.map(record => ({
         command_Name: record.commandName,

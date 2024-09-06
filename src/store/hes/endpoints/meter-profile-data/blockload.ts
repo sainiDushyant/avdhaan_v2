@@ -1,7 +1,7 @@
 import { EndpointBuilder } from "@reduxjs/toolkit/query";
 import { FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from "@reduxjs/toolkit/query";
 import { BaseQueryFn } from "@reduxjs/toolkit/query";
-import { APIResponse, TransformedResponse } from '@/store/hes/types/blockLoad';
+import { APIResponse, TransformedResponse } from '@/store/hes/types/records/meter-profile/blockLoad';
 
 export const BlockLoadEndPoints = (
     builder: EndpointBuilder<

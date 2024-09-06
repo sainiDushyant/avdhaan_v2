@@ -8,7 +8,7 @@ import { BaseQueryFn } from '@reduxjs/toolkit/query';
 import {
   APIResponse,
   TransformedResponse
-} from '@/store/hes/types/instantaneousProfile';
+} from '@/store/hes/types/records/meter-profile/instantaneousProfile';
 import { formatDate } from '@/lib/utils';
 
 export const InstantaneousProfileEndpoints = (
@@ -24,10 +24,7 @@ export const InstantaneousProfileEndpoints = (
     'hesApi'
   >
 ) => ({
-  getProfileInstantData: builder.query<
-    TransformedResponse,
-    { searchQuery: string }
-  >({
+  getProfileInstantData: builder.query<TransformedResponse, { searchQuery: string }>({
     query: ({ searchQuery }) => ({
       url: `/push-data/profile-instant${searchQuery}`,
       method: 'GET'

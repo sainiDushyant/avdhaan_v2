@@ -1,7 +1,7 @@
 import { EndpointBuilder } from "@reduxjs/toolkit/query";
 import { FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from "@reduxjs/toolkit/query";
 import { BaseQueryFn } from "@reduxjs/toolkit/query";
-import { APIResponse,TransformedResponse } from "../../types/dailyLoad";
+import { APIResponse,TransformedResponse } from "../../types/records/meter-profile/dailyLoad";
 
 export const DailyLoadEndPoints = (
     builder: EndpointBuilder<
@@ -17,7 +17,6 @@ export const DailyLoadEndPoints = (
     >
 ) => ({
     getDailyLoadPushData: builder.query<TransformedResponse, { searchQuery: string }>({
-
         query: ({ searchQuery }) => ({
             url: `/push-data/dailyload${searchQuery}`,
             method: "GET"
