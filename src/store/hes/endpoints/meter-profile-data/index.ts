@@ -11,6 +11,7 @@ import { MonthlyBillingEndPoints } from './monthlyBilling';
 import { LiveDataMetricsResponse } from '../../types';
 import { ModifiedLiveDataRecord } from '../../types/meter-profile-data-metrics';
 import { InstantaneousProfileEndpoints } from './instantaneousProfile';
+import { PeriodicPushEndpoints } from './periodic-push';
 
 export const meterProfileData = (
   builder: EndpointBuilder<
@@ -66,5 +67,6 @@ export const meterProfileData = (
   ...BlockLoadEndPoints(builder),
   ...DailyLoadEndPoints(builder),
   ...MonthlyBillingEndPoints(builder),
-  ...InstantaneousProfileEndpoints(builder)
+  ...InstantaneousProfileEndpoints(builder),
+  ...PeriodicPushEndpoints(builder)
 });
