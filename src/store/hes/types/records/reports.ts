@@ -24,26 +24,17 @@ export type StatusDetail = {
   };
   
   export type FlattenedCommandRecord = {
-    commandName: string;
-    executionStartTime: string;
-    totalCommands: number;
-    totalMeters: number;
-    initiateCount: number;
-    initiatePercentage: number;
-    inProgressCount: number;
-    inProgressPercentage: number;
-    pendingCount: number;
-    pendingPercentage: number;
-    successCount: number;
-    successPercentage: number;
-    failedCount: number;
-    failedPercentage: number;
-    successAfterTimeoutCount: number;
-    successAfterTimeoutPercentage: number;
-    partialSuccessCount: number;
-    partialSuccessPercentage: number;
-    partialSuccessAfterTimeoutCount: number;
-    partialSuccessAfterTimeoutPercentage: number;
+    command_Name: string;
+    date_and_timestamp: string;
+    total_Meters: number;
+    initiate: number;
+    in_Progress: number;
+    pending: number;
+    success: number;
+    failed: number;
+    success_After_Timeout: number;
+    partial_Success: number;
+    partial_Success_After_Timeout: number;
   };
   
   export interface ScheduledReportsResponse {

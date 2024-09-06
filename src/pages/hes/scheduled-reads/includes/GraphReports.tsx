@@ -1,20 +1,33 @@
 import React from 'react';
 import Graph from "@/components/customUI/Graph";
-import { ChartData } from "@/store/hes/types/records/reports";
 import { ApexOptions } from 'apexcharts';
+import EmptyScreen from '@/components/customUI/EmptyScreen';
+import { useGetScheduledReportsQuery } from '@/store/hes/hesApi';
+import { useLocation } from 'react-router-dom';
+import ErrorScreen from '@/components/customUI/ErrorScreen';
+import FullScreen from '@/components/customUI/Loaders/FullScreen';
 
-type GraphComponentProps = {
-  chartData: ChartData;
-};
+const GraphComponent: React.FC = () => {
+  const { search } = useLocation();
+  const {
+    data: scheduledReportsResponse,
+    isLoading: scheduledReportsLoading,
+    isError: scheduledReportsHasError,
+    error: scheduledReportsError,
+  } = useGetScheduledReportsQuery({ searchQuery: search });
 
-const GraphComponent: React.FC<GraphComponentProps> = ({ chartData }) => {
-  
+  if (scheduledReportsLoading) return <FullScreen hasSpinner={true} />;
+  if (scheduledReportsHasError) return <ErrorScreen error={scheduledReportsError} />;
+  if (!scheduledReportsResponse || Object.keys(scheduledReportsResponse.chartData).length === 0) {
+    return <EmptyScreen title="Scheduled reports data not available" />;
+  }
+
   const renderCharts = () => {
-    return Object.keys(chartData).map((commandName) => {
-      const data = chartData[commandName];
+    return Object.keys(scheduledReportsResponse.chartData).map((commandName) => {
+      const data = scheduledReportsResponse.chartData[commandName];
       const graphData = {
         series: data.series,
-        options: {
+        options: {scheduledReportsResponse,
           chart: {
             type: 'pie',
           },
