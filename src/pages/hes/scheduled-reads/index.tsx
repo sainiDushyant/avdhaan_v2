@@ -5,6 +5,7 @@ import ListReports from './includes/ListReports';
 import Download from '@/components/svg/Download';
 import ToggleView from '@/components/customUI/ToggleView';
 import HesFilters from '@/components/customUI/hes/HesFilters';
+import DateFilters from '@/components/customUI/hes/HesFilters/DateFilter.tsx';
 
 const ScheduledReads = () => {
   const [view, setView] = useState<string>('graph');
@@ -12,6 +13,7 @@ const ScheduledReads = () => {
   return (
     <div className="px-5 py-3 w-full">
       <HesFilters />
+      <DateFilters/>
       <div className="flex relative flex-col mt-8">
         <div className="flex justify-between items-center">
 
