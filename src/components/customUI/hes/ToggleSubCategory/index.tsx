@@ -13,14 +13,16 @@ const ToggleCategory = () => {
   const { data, isFetching, isError } = useGetDeviceSubCategoryQuery({
     searchQuery: ''
   });
+
   const [searchParams, setSearchParams] = useSearchParams();
-  const [activeTab, setActiveTab] = useState<string | null>(null);
+
+  const initialActiveTab = searchParams.get('subCategory');
+  const [activeTab, setActiveTab] = useState<string | null>(initialActiveTab);
 
   const handleTabClick = (id: string) => {
     const newParams = new URLSearchParams(searchParams.toString());
 
     newParams.set('subCategory', id);
-
     setSearchParams(newParams);
 
     setActiveTab(id);
