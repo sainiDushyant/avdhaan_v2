@@ -38,6 +38,7 @@ export const {
   useGetScheduledReportsQuery,
   useGetProfileInstantDataQuery,
   useGetDeviceSubCategoryQuery,
+  useGetPeriodicPushDataQuery,
   usePrefetch
 } = hesApi;
 

@@ -6,11 +6,11 @@ import CaretLeft from '@/components/svg/CaretLeft';
 import CaretRight from '@/components/svg/CaretRight';
 import Button from '@/components/ui/button';
 import BoxContainer from '@/components/customUI/BoxContainer';
-import { useGetMonthlyBillingDataQuery } from '@/store/hes/hesApi';
+import { useGetPeriodicPushDataQuery } from '@/store/hes/hesApi';
 import RefreshButton from '@/components/svg/RefreshButton';
 import { useLocation } from 'react-router-dom';
 
-const BillingTable = () => {
+const PeriodicPushTable = () => {
   const [pageCursor, setPageCursor] = useState('');
   const { search } = useLocation();
   const {
@@ -19,12 +19,12 @@ const BillingTable = () => {
     isFetching,
     isError,
     refetch: refresh
-  } = useGetMonthlyBillingDataQuery({
+  } = useGetPeriodicPushDataQuery({
     searchQuery: `${search}${pageCursor}`
   });
 
   const tableData = response?.records || [];
-  const cursor = response?.cursor || {};
+  const cursor = response?.cursor ?? { before: null, after: null };
 
   const columns = useGetTableColumns({ cols: tableData, query: [] });
 
@@ -102,4 +102,4 @@ const BillingTable = () => {
   );
 };
 
-export default BillingTable;
+export default PeriodicPushTable;

@@ -35,8 +35,16 @@ const ToggleCategory = () => {
 
   return (
     <div>
-      {isError && <div>Error in loading filters...</div>}
-      {isFetching && <div>Loading filters...</div>}
+      {isError && (
+        <div className="w-full flex justify-center items-center my-5">
+          Error in loading filters...
+        </div>
+      )}
+      {isFetching && (
+        <div className="w-full flex justify-center items-center my-5">
+          Loading filters...
+        </div>
+      )}
       {!isFetching && (
         <div className="flex border-b border-gray-300 space-x-8 my-5">
           {data?.map((e) => (

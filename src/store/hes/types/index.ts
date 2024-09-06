@@ -5,6 +5,7 @@ import {
   DeviceSubCategoryRecord
 } from './records/device-management';
 import { LiveDataMetricsRecord } from './meter-profile-data-metrics';
+import { PeriodicPushRecord } from './records/periodic-push';
 
 export type ResponseBase<T> = {
   data: {
@@ -35,6 +36,8 @@ export type LiveDataMetricsResponse =
 
 export type DeviceSubCategoryResponse =
   ResponseBaseWithOutPagination<DeviceSubCategoryRecord>;
+
+export type PeriodicPushResponse = ResponseBase<PeriodicPushRecord>;
 
 export interface CustomAPIError {
   description?: string;

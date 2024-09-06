@@ -1,3 +1,4 @@
+import PeriodicPush from '@/pages/hes/meter-profile-data/periodic-push';
 import { lazy } from 'react';
 import { Route, Outlet } from 'react-router-dom';
 
@@ -27,6 +28,7 @@ const HesRoutes = (
       <Route path="daily-load" element={<DailyLoad />} />
       <Route path="monthly-billing" element={<MonthlyBilling />} />
       <Route path="instantaneous-profile" element={<InstantaneousProfile />} />
+      <Route path="periodic-push" element={<PeriodicPush />} />
     </Route>
 
     <Route path="scheduled-reads" element={<ScheduledReads />} />

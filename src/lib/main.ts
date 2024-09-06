@@ -34,7 +34,8 @@ export const navbarLinkData = [
       {
         to: '/hes/meter-profile-data/instantaneous-profile',
         title: 'Instantaneous Profile'
-      }
+      },
+      { to: '/hes/meter-profile-data/periodic-push', title: 'Periodic Push' }
     ]
   },
   { to: '/hes/command-execution', title: 'Command Execution' }
