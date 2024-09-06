@@ -13,7 +13,7 @@ const ScheduledReads = () => {
   return (
     <div className="px-5 py-3 w-full">
       <HesFilters />
-      <DateFilters/>
+      <DateFilters />
       <div className="flex relative flex-col mt-8">
         <div className="flex justify-between items-center">
 
