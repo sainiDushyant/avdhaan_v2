@@ -12,18 +12,28 @@ const DateTime: FC<DateTimeProps> = ({
     const [date, setDate] = useState(initialValue || "");
     const today = new Date().toISOString().split("T")[0] + "T23:59:59";
 
+    const formatDateTime = (value: string) => {
+        if (!value) return "";
+
+        const [datePart, timePart] = value.split("T");
+        return `${datePart} ${timePart}:00`;
+    };
+
     const handleChangeDate = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+        const formattedValue = formatDateTime(event.target.value);
+
         if (customState) {
-            customState.setter(event.target.value);
+            customState.setter(formattedValue);
             return;
         }
-        setDate(event.target.value);
+        setDate(formattedValue);
     }, [customState]);
 
     const onFocusDate = useCallback(() => {
         if (dateRef.current) dateRef.current.type = "datetime-local";
-    }, [dateRef])
+    }, [dateRef]);
 
+    
     return (
         <div className='h-auto md:flex-none xl:flex-1 border border-slate-300 rounded-md h-[38px] md:min-w-[170px]'>
             <Input
@@ -41,7 +51,7 @@ const DateTime: FC<DateTimeProps> = ({
                 onChange={handleChangeDate}
             />
         </div>
-    )
+    );
 }
 
 export default DateTime
