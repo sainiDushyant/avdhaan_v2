@@ -28,7 +28,7 @@ const DateFilters = () => {
             const formattedStartDate = formatDate(startDate);
             const formattedEndDate = formatDate(endDate);
             if (formattedStartDate) params.set("from", formattedStartDate);
-            if (formattedEndDate) params.set("to", formattedEndDate);  // Add this line if you want to include endDate
+            if (formattedEndDate) params.set("to", formattedEndDate); 
             setSearchParams(params.toString());
         },
         [startDate, endDate, searchParams, setSearchParams]
@@ -36,7 +36,7 @@ const DateFilters = () => {
 
     return (
         <form
-        className="p-5 rounded-lg bg-white my-3 flex-1 flex flex-wrap gap-x-5 gap-y-5"
+        className="p-5 rounded-lg  my-3 flex-1 flex flex-wrap gap-x-5 gap-y-5"
             onSubmit={handleSubmit}
         >
             <DateTime

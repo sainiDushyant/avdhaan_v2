@@ -51,7 +51,7 @@ const GraphComponent: React.FC = () => {
       };
 
       return (
-        <div key={commandName} className="flex-1 bg-white shadow-md rounded-lg p-8 m-4">
+        <div key={commandName} className="bg-white rounded-sm p-3 drop-shadow-sm">
           <Graph data={graphData} title={commandName} type="pie" />
         </div>
       );
@@ -59,10 +59,10 @@ const GraphComponent: React.FC = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-2 gap-8">
+       <div className="h-[50vh] mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8">
       {renderCharts()}
-    </div>
-  );
+      </div>
+        );
 };
 
 export default GraphComponent;
