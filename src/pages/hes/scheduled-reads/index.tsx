@@ -12,7 +12,6 @@ import HesFilters from '@/components/customUI/hes/HesFilters';
 import Spinner from '@/components/customUI/Loaders/Spinner';
 
 const ScheduledReads = () => {
-
   const { search } = useLocation();
 
   const {

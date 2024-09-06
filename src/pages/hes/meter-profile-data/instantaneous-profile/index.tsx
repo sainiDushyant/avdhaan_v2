@@ -1,33 +1,38 @@
 import { useState } from 'react';
-import DailyLoadTable from './includes/DailyLoadTable';
-import DailyLoadGraph from './includes/DailyLoadGraph';
+import InstantaneousGraph from './includes/InstantaneousGraph';
 import ToggleView from '@/components/customUI/ToggleView';
+import InstantaneousTable from './includes/InstantaneousTable';
 import HesFilters from '@/components/customUI/hes/HesFilters';
+import ToggleCategory from '@/components/customUI/hes/ToggleSubCategory';
 
-const DailyLoad = () => {
+const InstantaneousProfile = () => {
 
   const [view, setView] = useState<string>('graph');
-
+ 
   return (
-    <div className="px-5 py-3 w-full">
-      
-      <HesFilters />
+    <div className="px-5 w-full">
       <div className="flex relative flex-col mt-8">
         <div className="flex justify-between items-center mb-2 ">
           <h1 className="capitalize secondary-title lg:main-title">
-            <span className="font-bold text-[#0A3690]">Daily Load</span>
+            <span className="font-bold text-[#0A3690]">
+              Instantaneous Profile
+            </span>
           </h1>
           <ToggleView view={view} setView={setView} />
         </div>
+        <HesFilters />
         <div className="overflow-x-scroll">
           {view === 'table' && (
-            <DailyLoadTable />
+            <>
+              <ToggleCategory />
+              <InstantaneousTable />
+            </>
           )}
-          {view === 'graph' && <DailyLoadGraph />}
+          {view === 'graph' && <InstantaneousGraph />}
         </div>
       </div>
     </div>
   );
 };
 
-export default DailyLoad;
+export default InstantaneousProfile;

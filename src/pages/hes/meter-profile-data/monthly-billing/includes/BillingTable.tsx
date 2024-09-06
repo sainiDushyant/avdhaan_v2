@@ -8,11 +8,11 @@ import Button from '@/components/ui/button';
 import BoxContainer from '@/components/customUI/BoxContainer';
 import { useGetMonthlyBillingDataQuery } from '@/store/hes/hesApi';
 import RefreshButton from '@/components/svg/RefreshButton';
+import { useLocation } from 'react-router-dom';
 
 const BillingTable = () => {
-
   const [pageCursor, setPageCursor] = useState('');
-
+  const { search } = useLocation();
   const {
     data: response,
     isLoading,
@@ -20,7 +20,7 @@ const BillingTable = () => {
     isError,
     refetch: refresh
   } = useGetMonthlyBillingDataQuery({
-    searchQuery: `?${pageCursor}`
+    searchQuery: `${search}${pageCursor}`
   });
 
   const tableData = response?.records || [];
@@ -59,10 +59,10 @@ const BillingTable = () => {
     );
 
   return (
-    <div className="flex-1 flex flex-col w-full px-2 ">
-      <div className="flex flex-1 w-full min-h-[60vh] ">
+    <div className="flex-1 flex flex-col w-full">
+      <div className="flex flex-col min-h-[60vh]">
         {!isFetching ? (
-          <div className="flex flex-col">
+          <>
             <div className="self-end">
               <Button
                 variant={'ghost'}
@@ -72,10 +72,8 @@ const BillingTable = () => {
                 <RefreshButton />
               </Button>
             </div>
-            <div>
-              <DataTable columns={columns} data={tableData} />
-            </div>
-          </div>
+            <DataTable columns={columns} data={tableData} />
+          </>
         ) : (
           <div className="flex flex-1 min-h-[60vh] justify-center items-center">
             <Spinner />

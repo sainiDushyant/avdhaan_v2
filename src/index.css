@@ -243,6 +243,10 @@
     fill: green; /* Change this to your desired hover color */
   }
 
+  .underline-none{
+    text-decoration: none !important;
+  }
+
   .table-header {
     background: linear-gradient(
       90deg,
