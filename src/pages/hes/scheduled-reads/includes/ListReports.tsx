@@ -5,7 +5,6 @@ import BoxContainer from "@/components/customUI/BoxContainer";
 import { useGetScheduledReportsQuery } from "@/store/hes/hesApi";
 import { FlattenedCommandRecord } from "@/store/hes/types/records/reports";
 
-
 const ListReports = () => {
   const { data: response, isLoading, isFetching, isError } = useGetScheduledReportsQuery({
     searchQuery: ``

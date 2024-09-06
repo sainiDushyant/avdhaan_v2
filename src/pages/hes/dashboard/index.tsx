@@ -29,7 +29,7 @@ const Dashboard = () => {
       <HesFilters />
       
       {!deviceMetaInfoMetricsFetching ?
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
       {
           deviceMetaInfoMetricsResponse.map(recordItem => {
             return Object.entries(recordItem).map(([graphTitle, graphObj]) => {

@@ -9,12 +9,11 @@ import { BlockLoadEndPoints } from './blockload';
 import { DailyLoadEndPoints } from './dailyload';
 import { MonthlyBillingEndPoints } from './monthlyBilling';
 import { LiveDataMetricsResponse } from '../../types';
-import {
-  ModifiedLiveDataRecord
-} from '../../types/live-data-metrics';
+import { ModifiedLiveDataRecord } from '../../types/meter-profile-data-metrics';
 import { InstantaneousProfileEndpoints } from './instantaneousProfile';
+import { PeriodicPushEndpoints } from './periodic-push';
 
-export const liveDataEndPoints = (
+export const meterProfileData = (
   builder: EndpointBuilder<
     BaseQueryFn<
       string | FetchArgs,
@@ -27,17 +26,12 @@ export const liveDataEndPoints = (
     'hesApi'
   >
 ) => ({
-  getLiveDataMetrics: builder.query<
-    ModifiedLiveDataRecord,
-    { searchQuery: string }
-  >({
+  getLiveDataMetrics: builder.query<ModifiedLiveDataRecord, { searchQuery: string }>({
     query: ({ searchQuery }) => ({
       url: `/push-data/metrics${searchQuery}`,
       method: 'GET'
     }),
-    transformResponse: (
-      response: LiveDataMetricsResponse
-    ): ModifiedLiveDataRecord => {
+    transformResponse: (response: LiveDataMetricsResponse): ModifiedLiveDataRecord => {
       const data = response.data.records.map((ele) => {
         return {
           billingMetrics: {
@@ -68,5 +62,6 @@ export const liveDataEndPoints = (
   ...BlockLoadEndPoints(builder),
   ...DailyLoadEndPoints(builder),
   ...MonthlyBillingEndPoints(builder),
-  ...InstantaneousProfileEndpoints(builder)
+  ...InstantaneousProfileEndpoints(builder),
+  ...PeriodicPushEndpoints(builder)
 });
