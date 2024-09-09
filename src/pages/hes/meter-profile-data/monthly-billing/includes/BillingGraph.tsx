@@ -40,7 +40,7 @@ const BillingGraph = () => {
             <div className="flex relative flex-col md:flex-row mt-8">
               <div className="flex-1 overflow-x-scroll">
                 <div className="flex flex-col">
-                  <div className="self-end flex gap-2 items-center mb-5">
+                  <div className="self-end flex-wrap flex gap-2 items-center mb-5">
                     <div>
                       <DateTimeFilter queryUpdater={setQuery} />
                     </div>
