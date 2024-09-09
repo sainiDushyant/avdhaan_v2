@@ -8,16 +8,22 @@ import { useGetLiveDataMetricsQuery } from '@/store/hes/hesApi';
 import { prepareChartData } from '@/lib/utils';
 import Button from '@/components/ui/button';
 import RefreshButton from '@/components/svg/RefreshButton';
+import DateTimeFilter from '@/components/customUI/hes/HesFilters/DateTimeFilter';
 import '@/styles/tooltip.css';
+import { useState } from 'react';
+import { getLast7DaysMinMax } from '@/lib/utils';
 
 const DailyLoadGraph = () => {
   const { search } = useLocation();
+  const [query, setQuery] = useState<string>('');
   const { data, isFetching, isError, error, refetch } =
     useGetLiveDataMetricsQuery({
-      searchQuery: search
+      searchQuery: `${search ? search : '?'}${query}`
     });
   const chartData =
-    data && prepareChartData(data.dailyLoadMetrics, 'line', 'days');
+    data && prepareChartData(data.dailyLoadMetrics, 'bar', 'days');
+
+  const { minDate, maxDate } = getLast7DaysMinMax();
 
   if (isFetching) return <FullScreen hasSpinner={true} />;
   if (isError) return <ErrorScreen error={error} />;
@@ -35,7 +41,20 @@ const DailyLoadGraph = () => {
             <div className="flex relative flex-col md:flex-row mt-8">
               <div className="flex-1 overflow-x-scroll">
                 <div className="flex flex-col">
-                  <div className="self-end mb-5">
+                  <div className="self-end flex gap-2 items-center mb-5">
+                    <div>
+                      <DateTimeFilter
+                        start={{
+                          min: minDate,
+                          max: maxDate
+                        }}
+                        end={{
+                          min: minDate,
+                          max: maxDate
+                        }}
+                        queryUpdater={setQuery}
+                      />
+                    </div>
                     <Button
                       variant={'ghost'}
                       className="refresh-button"
@@ -46,7 +65,7 @@ const DailyLoadGraph = () => {
                   </div>
                   {chartData && (
                     <div className="p-5 rounded-lg bg-white h-[70vh] graph-border">
-                      <Graph title={'Day Range'} data={chartData} />
+                      <Graph title={'Day Range'} type="bar" data={chartData} />
                     </div>
                   )}
                 </div>

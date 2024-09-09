@@ -211,8 +211,13 @@
  .refresh-button{
   background: linear-gradient(to right, #2F80ED 0%, #56CCF2 100%);
   border-radius: 50% !important;
-  width: 50px !important;
-  height: 50px !important;
+  width: 45px !important;
+  height: 45px !important;
+ }
+
+ .date-filter-color{
+  background: linear-gradient(to right, #2F80ED 0%, #56CCF2 100%);
+  color: #ffffff !important;
  }
 
   .selected-summary {

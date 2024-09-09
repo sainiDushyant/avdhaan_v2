@@ -9,10 +9,12 @@ import BoxContainer from '@/components/customUI/BoxContainer';
 import { useGetDailyLoadPushDataQuery } from '@/store/hes/hesApi';
 import RefreshButton from '@/components/svg/RefreshButton';
 import { useLocation } from 'react-router-dom';
+import DateTimeFilter from '@/components/customUI/hes/HesFilters/DateTimeFilter';
 
 const DailyLoadTable = () => {
   const [pageCursor, setPageCursor] = useState('');
   const { search } = useLocation();
+  const [query, setQuery] = useState<string>('');
 
   const {
     data: response,
@@ -21,7 +23,7 @@ const DailyLoadTable = () => {
     isError,
     refetch: refresh
   } = useGetDailyLoadPushDataQuery({
-    searchQuery: `${search}${pageCursor}`
+    searchQuery: `${search ? search : '?'}${query}${pageCursor}`
   });
 
   const tableData = response?.records || [];
@@ -32,7 +34,7 @@ const DailyLoadTable = () => {
   const getNewRecords = useCallback(
     (val: string | null | undefined) => {
       if (!val) return;
-      setPageCursor(`&afterCursor=${val}`);
+      setPageCursor(`&after_cursor=${val}`);
     },
     [setPageCursor]
   );
@@ -40,7 +42,7 @@ const DailyLoadTable = () => {
   const getOldRecords = useCallback(
     (val: string | null | undefined) => {
       if (!val) return;
-      setPageCursor(`&beforeCursor=${val}`);
+      setPageCursor(`&before_cursor=${val}`);
     },
     [setPageCursor]
   );
@@ -64,7 +66,10 @@ const DailyLoadTable = () => {
       <div className="flex flex-col min-h-[60vh]">
         {!isFetching ? (
           <>
-            <div className="self-end">
+            <div className="self-end flex gap-2 items-center">
+              <div>
+                <DateTimeFilter queryUpdater={setQuery} />
+              </div>
               <Button
                 variant={'ghost'}
                 className="refresh-button"

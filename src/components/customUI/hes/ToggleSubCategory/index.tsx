@@ -22,7 +22,7 @@ const ToggleCategory = () => {
   const handleTabClick = (id: string) => {
     const newParams = new URLSearchParams(searchParams.toString());
 
-    newParams.set('subCategory', id);
+    newParams.set('sub_category', id);
     setSearchParams(newParams);
 
     setActiveTab(id);
@@ -53,7 +53,7 @@ const ToggleCategory = () => {
             <div
               key={e.id}
               onClick={() => handleTabClick(e.id.toString())}
-              className={`cursor-pointer text-lg pb-2 transition-colors duration-300 ${
+              className={`cursor-pointer font-bold pb-2 transition-colors duration-300 ${
                 activeTab === e.id.toString()
                   ? 'text-[#0A3690] font-semibold border-b-2 border-[#0A3690]'
                   : 'text-gray-500'
