@@ -93,7 +93,7 @@ const BlockLoadGraph = () => {
                       <RefreshButton />
                     </Button>
                   </div>
-                  <div className="w-[550px] self-end mb-5">
+                  <div className="self-end mb-5">
                     <DateTimeFilter
                       start={{
                         min: today,
@@ -111,7 +111,7 @@ const BlockLoadGraph = () => {
                       <Graph title={'Time Range'} data={blockLoadChartData} />
                     </div>
                   )}
-                  <div className="w-[550px] self-end mt-5">
+                  <div className=" self-end mt-5">
                     <DateTimeFilter
                       start={{ min: minDate, max: maxDate }}
                       end={{ min: minDate, max: maxDate }}
