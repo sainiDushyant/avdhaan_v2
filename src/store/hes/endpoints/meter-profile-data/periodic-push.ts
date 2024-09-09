@@ -7,7 +7,7 @@ import {
 import { BaseQueryFn } from '@reduxjs/toolkit/query';
 import { formatDate } from '@/lib/utils';
 import { PeriodicPushResponse } from '../../types';
-import { FlatenedPeriodicPushRecord } from '../../types/records/periodic-push';
+import { FlatenedPeriodicPushRecord } from '../../types/records/meter-profile/periodic-push';
 
 export const PeriodicPushEndpoints = (
   builder: EndpointBuilder<
@@ -22,17 +22,13 @@ export const PeriodicPushEndpoints = (
     'hesApi'
   >
 ) => ({
-  getPeriodicPushData: builder.query<
-    FlatenedPeriodicPushRecord,
-    { searchQuery: string }
-  >({
+  getPeriodicPushData: builder.query<FlatenedPeriodicPushRecord, { searchQuery: string }>({
     query: ({ searchQuery }) => ({
       url: `/push-data/periodic-push${searchQuery}`,
       method: 'GET'
     }),
-    transformResponse: (
-      response: PeriodicPushResponse
-    ): FlatenedPeriodicPushRecord => {
+    transformResponse: (response: PeriodicPushResponse): FlatenedPeriodicPushRecord => {
+      if(!response.data.records) return { records: [] , cursor: { before: null, after: null } }
       let records: any[] = [];
       response.data.records.map((item) => {
         records.push({

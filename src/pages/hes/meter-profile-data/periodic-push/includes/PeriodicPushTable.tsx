@@ -9,9 +9,11 @@ import BoxContainer from '@/components/customUI/BoxContainer';
 import { useGetPeriodicPushDataQuery } from '@/store/hes/hesApi';
 import RefreshButton from '@/components/svg/RefreshButton';
 import { useLocation } from 'react-router-dom';
+import DateTimeFilter from '@/components/customUI/hes/HesFilters/DateTimeFilter';
 
 const PeriodicPushTable = () => {
   const [pageCursor, setPageCursor] = useState('');
+  const [query, setQuery] = useState<string>('');
   const { search } = useLocation();
   const {
     data: response,
@@ -20,7 +22,7 @@ const PeriodicPushTable = () => {
     isError,
     refetch: refresh
   } = useGetPeriodicPushDataQuery({
-    searchQuery: `${search}${pageCursor}`
+    searchQuery: `${search ? search : '?'}${query}${pageCursor}`
   });
 
   const tableData = response?.records || [];
@@ -31,7 +33,7 @@ const PeriodicPushTable = () => {
   const getNewRecords = useCallback(
     (val: string | null | undefined) => {
       if (!val) return;
-      setPageCursor(`&afterCursor=${val}`);
+      setPageCursor(`&after_cursor=${val}`);
     },
     [setPageCursor]
   );
@@ -39,7 +41,7 @@ const PeriodicPushTable = () => {
   const getOldRecords = useCallback(
     (val: string | null | undefined) => {
       if (!val) return;
-      setPageCursor(`&beforeCursor=${val}`);
+      setPageCursor(`&before_cursor=${val}`);
     },
     [setPageCursor]
   );
@@ -63,7 +65,10 @@ const PeriodicPushTable = () => {
       <div className="flex flex-col min-h-[60vh]">
         {!isFetching ? (
           <>
-            <div className="self-end">
+            <div className="self-end flex gap-2 items-center">
+              <div>
+                <DateTimeFilter queryUpdater={setQuery} />
+              </div>
               <Button
                 variant={'ghost'}
                 className="refresh-button"

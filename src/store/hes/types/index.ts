@@ -4,8 +4,8 @@ import {
   DeviceMetaInfoMetricsRecord,
   DeviceSubCategoryRecord
 } from './records/device-management';
-import { LiveDataMetricsRecord } from './meter-profile-data-metrics';
-import { PeriodicPushRecord } from './records/periodic-push';
+import { LiveDataMetricsRecord } from './records/meter-profile/meter-profile-data-metrics';
+import { PeriodicPushRecord } from './records/meter-profile/periodic-push';
 
 export type ResponseBase<T> = {
   data: {

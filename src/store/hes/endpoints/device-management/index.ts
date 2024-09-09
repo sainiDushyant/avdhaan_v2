@@ -16,7 +16,6 @@ import {
   DeviceSubCategoryRecord,
   LocationHierarchyRecord
 } from '../../types/records/device-management';
-import { CACHING_TIME } from '@/store/utils';
 
 export const deviceManagementEndpoints = (
   builder: EndpointBuilder<
@@ -31,32 +30,22 @@ export const deviceManagementEndpoints = (
     'hesApi'
   >
 ) => ({
-  getLocationHierarchy: builder.query<
-    LocationHierarchyRecord,
-    { searchQuery: string }
-  >({
+  getLocationHierarchy: builder.query<LocationHierarchyRecord,{ searchQuery: string }>({
     query: ({ searchQuery }) => ({
       url: `device-management/location-hierarchy-list?${searchQuery}`,
       method: 'GET'
     }),
-    transformResponse: (
-      response: LocationHierarchyResponse
-    ): LocationHierarchyRecord => {
+    transformResponse: (response: LocationHierarchyResponse): LocationHierarchyRecord => {
       const records = response.data.records;
       return records[0];
     }
   }),
-  getDeviceIdentifier: builder.query<
-    LocationHierarchyRecord,
-    { searchQuery: string }
-  >({
+  getDeviceIdentifier: builder.query<LocationHierarchyRecord, { searchQuery: string }>({
     query: ({ searchQuery }) => ({
       url: `device-management/device-info?${searchQuery}`,
       method: 'GET'
     }),
-    transformResponse: (
-      response: DeviceInfoResponse
-    ): LocationHierarchyRecord => {
+    transformResponse: (response: DeviceInfoResponse): LocationHierarchyRecord => {
       const deviceIdentifiers = response.data.records.map((record) => ({
         label: record.deviceIdentifier,
         value: record.deviceIdentifier
@@ -65,31 +54,21 @@ export const deviceManagementEndpoints = (
       return { device_identifier: deviceIdentifiers };
     }
   }),
-  getDeviceMetaInfoMetrics: builder.query<
-    DeviceMetaInfoMetricsRecord[],
-    { searchQuery: string }
-  >({
+  getDeviceMetaInfoMetrics: builder.query<DeviceMetaInfoMetricsRecord[], { searchQuery: string }>({
     query: ({ searchQuery }) => ({
       url: `device-management/device-meta-info-metrics${searchQuery}`,
       method: 'GET'
     }),
-    transformResponse: (
-      response: DeviceMetaInfoMetricsResponse
-    ): DeviceMetaInfoMetricsRecord[] => {
+    transformResponse: (response: DeviceMetaInfoMetricsResponse): DeviceMetaInfoMetricsRecord[] => {
       return response.data.records || [];
     }
   }),
-  getDeviceSubCategory: builder.query<
-    DeviceSubCategoryRecord[],
-    { searchQuery: string }
-  >({
+  getDeviceSubCategory: builder.query<DeviceSubCategoryRecord[], { searchQuery: string }>({
     query: () => ({
       url: `device-management/device-sub-category-list`,
       method: 'GET'
     }),
-    transformResponse: (
-      response: DeviceSubCategoryResponse
-    ): DeviceSubCategoryRecord[] => {
+    transformResponse: (response: DeviceSubCategoryResponse): DeviceSubCategoryRecord[] => {
       return response.data.records || [];
     }
   })

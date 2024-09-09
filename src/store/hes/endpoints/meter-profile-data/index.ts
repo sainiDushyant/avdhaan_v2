@@ -9,7 +9,7 @@ import { BlockLoadEndPoints } from './blockload';
 import { DailyLoadEndPoints } from './dailyload';
 import { MonthlyBillingEndPoints } from './monthlyBilling';
 import { LiveDataMetricsResponse } from '../../types';
-import { ModifiedLiveDataRecord } from '../../types/meter-profile-data-metrics';
+import { ModifiedLiveDataRecord } from '../../types/records/meter-profile/meter-profile-data-metrics';
 import { InstantaneousProfileEndpoints } from './instantaneousProfile';
 import { PeriodicPushEndpoints } from './periodic-push';
 
@@ -26,17 +26,12 @@ export const meterProfileData = (
     'hesApi'
   >
 ) => ({
-  getLiveDataMetrics: builder.query<
-    ModifiedLiveDataRecord,
-    { searchQuery: string }
-  >({
+  getLiveDataMetrics: builder.query<ModifiedLiveDataRecord, { searchQuery: string }>({
     query: ({ searchQuery }) => ({
       url: `/push-data/metrics${searchQuery}`,
       method: 'GET'
     }),
-    transformResponse: (
-      response: LiveDataMetricsResponse
-    ): ModifiedLiveDataRecord => {
+    transformResponse: (response: LiveDataMetricsResponse): ModifiedLiveDataRecord => {
       const data = response.data.records.map((ele) => {
         return {
           billingMetrics: {

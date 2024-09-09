@@ -4,6 +4,7 @@ import BlockLoadGraph from './includes/BlockloadGraph';
 import ToggleView from '@/components/customUI/ToggleView';
 import HesFilters from '@/components/customUI/hes/HesFilters';
 import ToggleCategory from '@/components/customUI/hes/ToggleSubCategory';
+
 const BlockLoad = () => {
   const [view, setView] = useState<string>('graph');
 

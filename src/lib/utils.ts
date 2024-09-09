@@ -184,16 +184,13 @@ export const prepareChartData = (
   chartType: 'bar' | 'line',
   dateType: 'days' | 'time' | 'month'
 ) => {
-  // Helper function to transform data for the chart
   const transformDataForChart = (data: DataType[]) => {
-    // Sort the data array by the data_timestamp in ascending order
     const sortedData = [...data].sort(
       (a, b) =>
         new Date(a.data_timestamp).getTime() -
         new Date(b.data_timestamp).getTime()
     );
 
-    // Determine the date format based on chart type and parent parameter
     const dateFormat =
       dateType === 'month'
         ? 'MMM YYYY'
@@ -209,23 +206,35 @@ export const prepareChartData = (
     };
   };
 
-  // Extract data for the chart based on fixed keys or properties
   const collectedDataTransformed = transformDataForChart(data['data1'] || []);
   const missedDataTransformed = transformDataForChart(data['data2'] || []);
 
-  // Define the series for the chart
+  const getLimitedData = (
+    data: { dates: string[]; values: number[] },
+    limit: number
+  ) => {
+    const slicedDates = data.dates.slice(-limit);
+    const slicedValues = data.values.slice(-limit);
+    return { dates: slicedDates, values: slicedValues };
+  };
+
+  const isMobile = window.innerWidth < 768;
+  const limit = isMobile ? 4 : collectedDataTransformed.dates.length; // Limit to 4 on mobile or show all
+
+  const collectedDataLimited = getLimitedData(collectedDataTransformed, limit);
+  const missedDataLimited = getLimitedData(missedDataTransformed, limit);
+
   const series = [
     {
       name: '% Reads Fetched',
-      data: collectedDataTransformed.values
+      data: collectedDataLimited.values
     },
     {
       name: '% Missed Fetched',
-      data: missedDataTransformed.values
+      data: missedDataLimited.values
     }
   ];
 
-  // Define common options for the chart
   const commonOptions: ApexOptions = {
     chart: {
       zoom: { enabled: false },
@@ -251,11 +260,11 @@ export const prepareChartData = (
       tooltip: {
         enabled: false
       },
-      categories: collectedDataTransformed.dates,
+      categories: collectedDataLimited.dates,
       labels: {
         style: {
           fontSize: '12px',
-          colors: collectedDataTransformed.dates.map(() => '#A3B2CF')
+          colors: collectedDataLimited.dates.map(() => '#A3B2CF')
         },
         format:
           dateType === 'month'
@@ -280,10 +289,57 @@ export const prepareChartData = (
           '</div>'
         );
       }
-    }
+    },
+    responsive: [
+      {
+        breakpoint: 768,
+        options: {
+          chart: {
+            height: 250
+          },
+          xaxis: {
+            categories: collectedDataLimited.dates, // Show only the last 4 entries
+            labels: {
+              style: {
+                fontSize: '8px'
+              }
+            }
+          },
+          yaxis: {
+            labels: {
+              style: {
+                fontSize: '8px'
+              }
+            }
+          }
+        }
+      },
+      {
+        breakpoint: 480,
+        options: {
+          chart: {
+            height: 200
+          },
+          xaxis: {
+            categories: collectedDataLimited.dates, // Show only the last 4 entries
+            labels: {
+              style: {
+                fontSize: '6px'
+              }
+            }
+          },
+          yaxis: {
+            labels: {
+              style: {
+                fontSize: '6px'
+              }
+            }
+          }
+        }
+      }
+    ]
   };
 
-  // Define bar-specific options
   const barSpecificOptions: ApexOptions = {
     plotOptions: {
       bar: {
@@ -314,7 +370,6 @@ export const prepareChartData = (
     }
   };
 
-  // Define line-specific options
   const lineSpecificOptions: ApexOptions = {
     markers: {
       shape: 'circle',
@@ -340,7 +395,6 @@ export const prepareChartData = (
     }
   };
 
-  // Combine common and specific options
   const options = {
     ...commonOptions,
     ...(chartType === 'bar' ? barSpecificOptions : lineSpecificOptions)
@@ -357,7 +411,7 @@ export const fetchToken = async () => {
     const currentTime = Date.now() / 1000;
 
     if (decodedToken.exp < currentTime) {
-      console.log("Token is expired, fetching a new one...");
+      console.log('Token is expired, fetching a new one...');
       token = await getNewToken();
     }
   } else {
@@ -365,22 +419,25 @@ export const fetchToken = async () => {
   }
 
   if (token) {
-    console.log("Token is valid or newly fetched");
+    console.log('Token is valid or newly fetched');
   }
 };
 
 export const getNewToken = async (): Promise<string | null> => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_HES_BASE_URL}/v1/auth/token`, {
-      method: 'POST',
-      body: JSON.stringify({
-        "authID": "bdf234d4-e1bb-4df3-a27e-433d596b808c"
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'same-origin',
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_HES_BASE_URL}/v1/auth/token`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          authID: 'bdf234d4-e1bb-4df3-a27e-433d596b808c'
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+      }
+    );
 
     const data = await response.json();
 
@@ -389,11 +446,44 @@ export const getNewToken = async (): Promise<string | null> => {
       localStorage.setItem('token', newToken);
       return newToken;
     } else {
-      console.error("Failed to get the new token");
+      console.error('Failed to get the new token');
       return null;
     }
   } catch (error) {
-    console.error("Error fetching new token:", error);
+    console.error('Error fetching new token:', error);
     return null;
   }
+};
+
+export const formatDateTimeForSearchParams = (date: string) => {
+  if (!date) return '';
+  const d = new Date(date);
+  const pad = (num: number) => (num < 10 ? '0' : '') + num;
+
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(
+    d.getHours()
+  )}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+};
+
+export const getLast7DaysMinMax = (): { minDate: string; maxDate: string } => {
+  const currentDate = new Date();
+  const maxDate = new Date(currentDate);
+
+  // Calculate the minimum date by subtracting 7 days
+  const minDate = new Date(currentDate);
+  minDate.setDate(currentDate.getDate() - 7);
+
+  // Helper function to format date as YYYY-MM-DDTHH:mm:ss
+  const formatDateTime = (date: Date): string => {
+    const pad = (num: number) => (num < 10 ? '0' : '') + num;
+
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
+      date.getDate()
+    )}T23:59:59`;
+  };
+
+  return {
+    minDate: formatDateTime(minDate),
+    maxDate: formatDateTime(maxDate)
+  };
 };

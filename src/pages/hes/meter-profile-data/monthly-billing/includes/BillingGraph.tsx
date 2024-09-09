@@ -9,12 +9,16 @@ import { prepareChartData } from '@/lib/utils';
 import '@/styles/tooltip.css';
 import Button from '@/components/ui/button';
 import RefreshButton from '@/components/svg/RefreshButton';
+import DateTimeFilter from '@/components/customUI/hes/HesFilters/DateTimeFilter';
+import { useState } from 'react';
 
 const BillingGraph = () => {
   const { search } = useLocation();
+  const [query, setQuery] = useState<string>('');
+
   const { data, isFetching, isError, error, refetch } =
     useGetLiveDataMetricsQuery({
-      searchQuery: search
+      searchQuery: `${search ? search : '?'}${query}`
     });
 
   const chartData =
@@ -36,7 +40,10 @@ const BillingGraph = () => {
             <div className="flex relative flex-col md:flex-row mt-8">
               <div className="flex-1 overflow-x-scroll">
                 <div className="flex flex-col">
-                  <div className="self-end mb-5">
+                  <div className="self-end flex gap-2 items-center mb-5">
+                    <div>
+                      <DateTimeFilter queryUpdater={setQuery} />
+                    </div>
                     <Button
                       variant={'ghost'}
                       className="refresh-button"

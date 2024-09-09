@@ -5,22 +5,27 @@ import useGetTableColumns from '@/hooks/useGetTableColumns';
 import CaretLeft from '@/components/svg/CaretLeft';
 import CaretRight from '@/components/svg/CaretRight';
 import Button from '@/components/ui/button';
-import BoxContainer from '@/components/customUI/BoxContainer';
 import { useGetBlockLoadPushDataQuery } from '@/store/hes/hesApi';
 import RefreshButton from '@/components/svg/RefreshButton';
 import { useLocation } from 'react-router-dom';
+import FullScreen from '@/components/customUI/Loaders/FullScreen';
+import ErrorScreen from '@/components/customUI/ErrorScreen';
+import EmptyScreen from '@/components/customUI/EmptyScreen';
+import DateTimeFilter from '@/components/customUI/hes/HesFilters/DateTimeFilter';
 
 const BlockLoadTable = () => {
   const [pageCursor, setPageCursor] = useState('');
   const { search } = useLocation();
+  const [query, setQuery] = useState<string>('');
   const {
     data: response,
     isLoading,
     isFetching,
     isError,
+    error,
     refetch: refresh
   } = useGetBlockLoadPushDataQuery({
-    searchQuery: `${search}${pageCursor}`
+    searchQuery: `${search ? search : '?'}${query}${pageCursor}`
   });
 
   const tableData = response?.records || [];
@@ -31,7 +36,7 @@ const BlockLoadTable = () => {
   const getNewRecords = useCallback(
     (val: string | null | undefined) => {
       if (!val) return;
-      setPageCursor(`&afterCursor=${val}`);
+      setPageCursor(`after_cursor=${val}`);
     },
     [setPageCursor]
   );
@@ -39,23 +44,16 @@ const BlockLoadTable = () => {
   const getOldRecords = useCallback(
     (val: string | null | undefined) => {
       if (!val) return;
-      setPageCursor(`&beforeCursor=${val}`);
+      setPageCursor(`before_cursor=${val}`);
     },
     [setPageCursor]
   );
 
-  if (isLoading)
+  if (isLoading) return <FullScreen hasSpinner={true} />;
+  if (isError) return <ErrorScreen error={error} />;
+  if (!response)
     return (
-      <BoxContainer>
-        <Spinner />
-      </BoxContainer>
-    );
-
-  if (isError)
-    return (
-      <BoxContainer>
-        <strong>Something went wrong, please refresh the page! </strong>
-      </BoxContainer>
+      <EmptyScreen title={`deviceMetaInfoMetricsResponse not available`} />
     );
 
   return (
@@ -63,7 +61,10 @@ const BlockLoadTable = () => {
       <div className="flex flex-col min-h-[60vh]">
         {!isFetching ? (
           <>
-            <div className="self-end">
+            <div className="self-end flex gap-2 items-center">
+              <div>
+                <DateTimeFilter queryUpdater={setQuery} />
+              </div>
               <Button
                 variant={'ghost'}
                 className="refresh-button"
@@ -72,6 +73,7 @@ const BlockLoadTable = () => {
                 <RefreshButton />
               </Button>
             </div>
+
             <DataTable columns={columns} data={tableData} />
           </>
         ) : (

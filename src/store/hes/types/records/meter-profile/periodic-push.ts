@@ -1,4 +1,4 @@
-import { Cursor } from '../other';
+import { Cursor } from '../../other';
 
 interface PeriodicPushDeviceData {
   BN_voltage: string;

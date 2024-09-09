@@ -1,20 +1,14 @@
-import PeriodicPush from '@/pages/hes/meter-profile-data/periodic-push';
+
 import { lazy } from 'react';
 import { Route, Outlet } from 'react-router-dom';
 
 const Dashboard = lazy(() => import('@/pages/hes/dashboard'));
-const BlockLoad = lazy(
-  () => import('@/pages/hes/meter-profile-data/block-load')
-);
-const DailyLoad = lazy(
-  () => import('@/pages/hes/meter-profile-data/daily-load')
-);
-const MonthlyBilling = lazy(
-  () => import('@/pages/hes/meter-profile-data/monthly-billing')
-);
-const InstantaneousProfile = lazy(
-  () => import('@/pages/hes/meter-profile-data/instantaneous-profile')
-);
+const BlockLoad = lazy(() => import('@/pages/hes/meter-profile-data/block-load'));
+const DailyLoad = lazy(() => import('@/pages/hes/meter-profile-data/daily-load'));
+const MonthlyBilling = lazy(() => import('@/pages/hes/meter-profile-data/monthly-billing'));
+const InstantaneousProfile = lazy(() => import('@/pages/hes/meter-profile-data/instantaneous-profile'));
+const PeriodicPush = lazy(() => import('@/pages/hes/meter-profile-data/periodic-push'));
+
 const ScheduledReads = lazy(() => import('@/pages/hes/scheduled-reads'));
 const CommandExecution = lazy(() => import('@/pages/hes/command-execution'));
 

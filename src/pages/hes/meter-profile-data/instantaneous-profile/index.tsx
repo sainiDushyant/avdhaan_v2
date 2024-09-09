@@ -6,8 +6,9 @@ import HesFilters from '@/components/customUI/hes/HesFilters';
 import ToggleCategory from '@/components/customUI/hes/ToggleSubCategory';
 
 const InstantaneousProfile = () => {
-  const [view, setView] = useState<string>('graph');
 
+  const [view, setView] = useState<string>('graph');
+ 
   return (
     <div className="px-5 w-full">
       <div className="flex relative flex-col mt-8">
