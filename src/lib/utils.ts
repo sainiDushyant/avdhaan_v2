@@ -302,9 +302,9 @@ export const prepareChartData = (
       offsetX: 0,
       offsetY: 0,
       style: {
-        color: 'red',
-        fontSize: '14px',
-        fontFamily: undefined
+        color: '#0A3690',
+        fontSize: '20px',
+        fontFamily: 'sans-serif'
       }
     },
     responsive: [
@@ -356,6 +356,18 @@ export const prepareChartData = (
             fontSize: '10px',
             markers: {
               size: 4
+            }
+          },
+          noData: {
+            text: 'No data available for this time frame.',
+            align: 'center',
+            verticalAlign: 'middle',
+            offsetX: 0,
+            offsetY: 0,
+            style: {
+              color: '#0A3690',
+              fontSize: '10px',
+              fontFamily: 'sans-serif'
             }
           }
         }
