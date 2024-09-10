@@ -178,7 +178,6 @@ export const formatDate = (
   return new Intl.DateTimeFormat('en-US', options).format(new Date(date));
 };
 
-// Define the function with fixed parameters and dynamic keys
 export const prepareChartData = (
   data: ChartData,
   chartType: 'bar' | 'line',
@@ -213,12 +212,13 @@ export const prepareChartData = (
     data: { dates: string[]; values: number[] },
     limit: number
   ) => {
-    const slicedDates = data.dates.slice(-limit);
-    const slicedValues = data.values.slice(-limit);
+    const slicedDates = data.dates.slice(0, limit);
+    const slicedValues = data.values.slice(0, limit);
     return { dates: slicedDates, values: slicedValues };
   };
 
   const isMobile = window.innerWidth < 768;
+  console.log(console.log(window));
   const limit = isMobile ? 4 : collectedDataTransformed.dates.length; // Limit to 4 on mobile or show all
 
   const collectedDataLimited = getLimitedData(collectedDataTransformed, limit);
@@ -256,6 +256,7 @@ export const prepareChartData = (
         }
       }
     },
+
     xaxis: {
       tooltip: {
         enabled: false
@@ -276,7 +277,11 @@ export const prepareChartData = (
     },
     legend: {
       position: 'bottom',
-      horizontalAlign: 'center'
+      horizontalAlign: 'center',
+      itemMargin: {
+        horizontal: 20,
+        vertical: 5
+      }
     },
     tooltip: {
       followCursor: true,
@@ -288,6 +293,18 @@ export const prepareChartData = (
           '</span>' +
           '</div>'
         );
+      }
+    },
+    noData: {
+      text: 'No data available for this time frame.',
+      align: 'center',
+      verticalAlign: 'middle',
+      offsetX: 0,
+      offsetY: 0,
+      style: {
+        color: 'red',
+        fontSize: '14px',
+        fontFamily: undefined
       }
     },
     responsive: [
@@ -333,6 +350,12 @@ export const prepareChartData = (
               style: {
                 fontSize: '6px'
               }
+            }
+          },
+          legend: {
+            fontSize: '10px',
+            markers: {
+              size: 4
             }
           }
         }
