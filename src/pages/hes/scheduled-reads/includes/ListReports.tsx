@@ -4,13 +4,14 @@ import useGetTableColumns from "@/hooks/useGetTableColumns";
 import BoxContainer from "@/components/customUI/BoxContainer";
 import { useGetScheduledReportsQuery } from "@/store/hes/hesApi";
 import { FlattenedCommandRecord } from "@/store/hes/types/records/reports";
+import { useLocation } from "react-router-dom";
 
 
 const ListReports = () => {
+  const { search } = useLocation();
   const { data: response, isLoading, isFetching, isError } = useGetScheduledReportsQuery({
-    searchQuery: ``
-  });
-
+ searchQuery: search });
+ 
   const tableData: FlattenedCommandRecord[] = response?.transformedRecords || [];
 
   const columns = useGetTableColumns({ cols: tableData, query: ["totalCommands"] });
