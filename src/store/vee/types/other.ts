@@ -39,10 +39,10 @@ export type Cursor = string | null;
 
 export interface CursorPaginationProps {
   countApiPath?: string;
-  after_cursor: Cursor;
-  before_cursor: Cursor;
+  afterCursor: Cursor;
+  beforeCursor: Cursor;
   prefetchCursor?: (
-    arg1: { after_cursor: Cursor; before_cursor: Cursor },
+    arg1: { afterCursor: Cursor; beforeCursor: Cursor },
     args2?: { [k: string]: string | number }
   ) => void;
 }
