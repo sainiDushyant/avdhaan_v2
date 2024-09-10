@@ -18,7 +18,7 @@ const BillingGraph = () => {
 
   const { data, isFetching, isError, error, refetch } =
     useGetLiveDataMetricsQuery({
-      searchQuery: `${search ? search : '?'}${query}`
+      searchQuery: `?data_type=billing${search}${query}`
     });
 
   const chartData =
@@ -53,7 +53,7 @@ const BillingGraph = () => {
                     </Button>
                   </div>
                   {chartData && (
-                    <div className="p-5 rounded-lg bg-white h-[70vh] graph-border">
+                    <div className="p-5 rounded-lg bg-white h-[35vh] sm:h-[40vh] md:h-[60vh] lg:h-[70vh] graph-border">
                       <Graph
                         title={'Monthly Range'}
                         type={'bar'}

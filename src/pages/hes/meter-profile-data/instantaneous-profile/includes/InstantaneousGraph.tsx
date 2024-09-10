@@ -17,7 +17,7 @@ const InstantaneousGraph = () => {
   const [query, setQuery] = useState<string>('');
   const { data, isFetching, isError, error, refetch } =
     useGetLiveDataMetricsQuery({
-      searchQuery: `${search ? search : '?'}${query}`
+      searchQuery: `?data_type=profile-instant${search}${query}`
     });
 
   const chartData =
@@ -64,7 +64,7 @@ const InstantaneousGraph = () => {
                     </Button>
                   </div>
                   {chartData && (
-                    <div className="p-5 rounded-lg bg-white h-[70vh] graph-border">
+                    <div className="p-5 rounded-lg bg-white h-[35vh] sm:h-[40vh] md:h-[60vh] lg:h-[70vh] graph-border">
                       <Graph title={'Day Range'} type="bar" data={chartData} />
                     </div>
                   )}

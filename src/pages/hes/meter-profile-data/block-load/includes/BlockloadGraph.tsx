@@ -73,7 +73,7 @@ const BlockLoadGraph = () => {
     <div className="w-full">
       <div className="flex justify-center items-center">
         {isLoading ? (
-          <div className="h-[70vh] flex items-center justify-center">
+          <div className="h-auto flex items-center justify-center">
             <Spinner />
           </div>
         ) : (
@@ -107,11 +107,11 @@ const BlockLoadGraph = () => {
                     />
                   </div>
                   {blockLoadChartData && (
-                    <div className="p-5 rounded-lg bg-white h-[70vh] graph-border">
+                    <div className="p-5 rounded-lg bg-white h-[35vh] sm:h-[40vh] md:h-[60vh] lg:h-[70vh] graph-border">
                       <Graph title={'Time Range'} data={blockLoadChartData} />
                     </div>
                   )}
-                  <div className=" self-end mt-5">
+                  <div className="self-end mt-5">
                     <DateTimeFilter
                       start={{ min: minDate, max: maxDate }}
                       end={{ min: minDate, max: maxDate }}
@@ -119,7 +119,7 @@ const BlockLoadGraph = () => {
                     />
                   </div>
                   {blockLoadDailyChartData && (
-                    <div className="p-5 rounded-lg bg-white h-[70vh] graph-border mt-5">
+                    <div className="p-5 rounded-lg bg-white h-[35vh] sm:h-[40vh] md:h-[60vh] lg:h-[70vh] graph-border mt-5">
                       <Graph
                         title={'Day Range'}
                         type="bar"
