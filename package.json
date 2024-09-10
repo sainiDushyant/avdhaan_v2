@@ -1,9 +1,8 @@
 {
-  "name": "hes",
+  "name": "avdhaan",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "/hes",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
