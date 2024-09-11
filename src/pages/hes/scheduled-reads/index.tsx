@@ -26,56 +26,54 @@ const ScheduledReads = () => {
   const [query, setQuery] = useState<QueryType>({ from: "", to: "" });
 
   const urlSearchParam = useMemo(() => {
-    let newSearchParam = search ? `${search}&` : "?"; 
-    if(query.from) newSearchParam += `from=${query.from}&`
-    if(query.to) newSearchParam += `to=${query.from}&`
+    let newSearchParam = search ? `${search}&` : "?";
+    if (query.from) newSearchParam += `from=${query.from}&`
+    if (query.to) newSearchParam += `to=${query.from}&`
     return newSearchParam
-  }, [ query, search ]);
+  }, [query, search]);
 
-  const { data: response, isLoading, isFetching, isError, error } = useGetScheduledReportsQuery({ 
-    searchQuery: urlSearchParam 
+  const { data: response, isLoading, isFetching, isError, error } = useGetScheduledReportsQuery({
+    searchQuery: urlSearchParam
   }, { refetchOnMountOrArgChange: true });
 
   if (isLoading) return <FullScreen hasSpinner={true} />;
   if (isError) return <ErrorScreen error={error} />
-  if (!response || !response.transformedRecords.length || 
+  if (!response || !response.transformedRecords.length ||
     !response.chartData) return (<EmptyScreen title={`scheduled reads not available`} />);
 
   return (
     <div className="px-5 py-3 w-full">
       <HesFilters />
       <DateFilters
-          setQuery={setQuery}
+        setQuery={setQuery}
       />
       {!isFetching ?
-      <>
-        <div className="flex relative flex-col mt-8">
-          <div className="flex justify-between items-center">
-            <h1 className="capitalize secondary-title lg:main-title">
-              <span className="font-bold text-[#0A3690]">Reports</span>
-            </h1>
-            <div className='flex items-center gap-x-6'>
-              <Link to="/" className="link-button tertiary-vee-btn px-2" target="_blank">
-                <Download />
-              </Link>
-              <ToggleView view={view} setView={setView} />
+        <>
+          <div className="flex relative flex-col mt-8 m-4 h-[440vh]">
+            <div className="flex justify-between items-center p-2">
+              <h1 className="capitalize secondary-title lg:main-title">
+                <span className="font-bold text-[#0A3690]">Reports</span>
+              </h1>
+              <div className='flex items-center gap-x-6'>
+                <Link to="/" className="link-button tertiary-vee-btn px-2" target="_blank">
+                  <Download />
+                </Link>
+                <ToggleView view={view} setView={setView} />
             </div>
           </div>
-          <div className="overflow-x-scroll">
-            {view === 'table' ? (
-                <ListReports data={response.transformedRecords} />
-                ) : (
-                <GraphComponent data={response.chartData} />
-                )
-              }
+          {view === 'table' ? (
+            <ListReports data={response.transformedRecords} />
+          ) : (
+            <GraphComponent  data={response.chartData} />
+          )
+          }
           </div>
-        </div>
-      </>
-      :
-      <div className='min-h-[80vh] flex items-center justify-center'>
+        </>
+        :
+        <div className='min-h-[80vh] flex items-center justify-center'>
           <Spinner />
-      </div> 
-      }  
+        </div>
+      }
     </div>
   );
 };

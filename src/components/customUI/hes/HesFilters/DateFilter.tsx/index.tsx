@@ -2,6 +2,7 @@ import { FC, useCallback, useState } from "react";
 import DateTime from "../../../Date/DateTime";
 import { QueryType } from "@/pages/hes/scheduled-reads";
 import Button from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 
 interface DateFiltersProps {
   setQuery: React.Dispatch<React.SetStateAction<QueryType>>;
@@ -19,10 +20,25 @@ const DateFilters: FC<DateFiltersProps> = ({ setQuery }) => {
   }, [setQuery, setStartDate, setEndDate]);
 
 
-  const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setQuery({ "from": startDate, "to": endDate })
-  }, [setQuery, startDate, endDate]);
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+
+      const diffInDays = (end.getTime() - start.getTime()) / (1000 * 3600 * 24);
+      if (diffInDays > 7) {
+        toast({
+          variant: "destructive",
+          description: "End date must be within 7 days from the start date.",
+        })
+        return;
+      }
+      setQuery({ from: startDate, to: endDate });
+    },
+    [setQuery, startDate, endDate]
+  );
 
 
   return (
@@ -39,6 +55,8 @@ const DateFilters: FC<DateFiltersProps> = ({ setQuery }) => {
         }}
         name="startDate"
         required={false}
+        customCss="flex-none md:min-w-[240px]"
+
       />
       <DateTime
         placeholder="End Date"
@@ -47,8 +65,11 @@ const DateFilters: FC<DateFiltersProps> = ({ setQuery }) => {
           setter: setEndDate
         }}
         name="endDate"
+        min={startDate}
         required={false}
+        customCss="flex-none md:min-w-[240px]"
       />
+
       <Button
         className="date-filter-color"
         variant={'secondary'}

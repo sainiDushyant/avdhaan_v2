@@ -1,11 +1,12 @@
 import { useState, useCallback, ChangeEvent, useRef, FC } from "react";
 import { Input } from "@/components/ui/input";
 import { DateTimeProps } from "@/store/vee/types/other";
+import { cn } from "@/lib/utils";
 
 
 const DateTime: FC<DateTimeProps> = ({
     initialValue, placeholder, customState, max, min,
-    name, required
+    name, required,customCss
 }) => {
 
     const dateRef = useRef<HTMLInputElement>(null);
@@ -35,10 +36,10 @@ const DateTime: FC<DateTimeProps> = ({
 
     
     return (
-        <div className='h-auto md:flex-none xl:flex-1 border border-slate-300 rounded-md h-[38px] md:min-w-[170px]'>
+        <div className='h-auto md:flex-none border border-slate-300 rounded-md '>
             <Input
                 ref={dateRef}
-                className='block w-full h-full'
+                className={cn("md:min-w-[170px] flex-1", customCss)}
                 aria-label={placeholder}
                 type="text"
                 placeholder={placeholder}

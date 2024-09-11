@@ -38,7 +38,7 @@ const GraphComponent: FC<GraphComponentProps> = ({ data: graphResponseData }) =>
       };
 
       return (
-        <div key={commandName} className="flex-1 bg-white shadow-md rounded-lg p-8 m-4">
+        <div key={commandName} className="bg-white rounded-sm p-3 drop-shadow-sm  ">
           <Graph data={graphData} title={commandName} type="pie" />
         </div>
       );
@@ -46,7 +46,7 @@ const GraphComponent: FC<GraphComponentProps> = ({ data: graphResponseData }) =>
   };
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-2 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-64 sm:h-72 md:h-80 lg:h-96 xl:h-[500px]">
       {renderCharts()}
     </div>
   );
