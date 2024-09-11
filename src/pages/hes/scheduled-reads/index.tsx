@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import GraphComponent from './includes/GraphReports';
 import ListReports from './includes/ListReports';
@@ -24,25 +24,31 @@ const ScheduledReads = () => {
 
   const [view, setView] = useState<string>('graph');
   const [query, setQuery] = useState<QueryType>({ from: "", to: "" });
-  console.log(query, "<=======query")
+
+  const urlSearchParam = useMemo(() => {
+    let newSearchParam = search ? `${search}&` : "?"; 
+    if(query.from) newSearchParam += `from=${query.from}&`
+    if(query.to) newSearchParam += `to=${query.from}&`
+    return newSearchParam
+  }, [ query, search ]);
 
   const { data: response, isLoading, isFetching, isError, error } = useGetScheduledReportsQuery({ 
-    searchQuery: search 
-  });
+    searchQuery: urlSearchParam 
+  }, { refetchOnMountOrArgChange: true });
 
   if (isLoading) return <FullScreen hasSpinner={true} />;
   if (isError) return <ErrorScreen error={error} />
-  if (!response) return (<EmptyScreen title={`scheduled reads not available`} />);
+  if (!response || !response.transformedRecords.length || 
+    !response.chartData) return (<EmptyScreen title={`scheduled reads not available`} />);
 
   return (
     <div className="px-5 py-3 w-full">
       <HesFilters />
+      <DateFilters
+          setQuery={setQuery}
+      />
       {!isFetching ?
       <>
-        <DateFilters
-          setQuery={setQuery}
-        />
-
         <div className="flex relative flex-col mt-8">
           <div className="flex justify-between items-center">
             <h1 className="capitalize secondary-title lg:main-title">

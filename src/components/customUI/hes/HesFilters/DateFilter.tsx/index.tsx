@@ -14,7 +14,9 @@ const DateFilters: FC<DateFiltersProps> = ({ setQuery }) => {
 
   const clearFilters = useCallback(() => {
     setQuery({ "from": "", "to": "" })
-  }, [setQuery]);
+    setStartDate("")
+    setEndDate("")
+  }, [setQuery, setStartDate, setEndDate]);
 
 
   const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
