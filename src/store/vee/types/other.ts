@@ -19,6 +19,7 @@ export interface DateTimeProps {
   min?: string;
   name?: string;
   required?: boolean;
+  customCss?: string;
 }
 
 export interface Pagination {

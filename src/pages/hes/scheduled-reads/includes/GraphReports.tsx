@@ -1,33 +1,20 @@
-import React from 'react';
+import { FC } from 'react';
 import Graph from "@/components/customUI/Graph";
 import { ApexOptions } from 'apexcharts';
-import EmptyScreen from '@/components/customUI/EmptyScreen';
-import { useGetScheduledReportsQuery } from '@/store/hes/hesApi';
-import { useLocation } from 'react-router-dom';
-import ErrorScreen from '@/components/customUI/ErrorScreen';
-import FullScreen from '@/components/customUI/Loaders/FullScreen';
+import { ChartData } from '@/store/hes/types/records/reports';
 
-const GraphComponent: React.FC = () => {
-  const { search } = useLocation();
-  const {
-    data: scheduledReportsResponse,
-    isLoading: scheduledReportsLoading,
-    isError: scheduledReportsHasError,
-    error: scheduledReportsError,
-  } = useGetScheduledReportsQuery({ searchQuery: search });
+interface GraphComponentProps {
+  data: ChartData;
+}
 
-  if (scheduledReportsLoading) return <FullScreen hasSpinner={true} />;
-  if (scheduledReportsHasError) return <ErrorScreen error={scheduledReportsError} />;
-  if (!scheduledReportsResponse || Object.keys(scheduledReportsResponse.chartData).length === 0) {
-    return <EmptyScreen title="Scheduled reports data not available" />;
-  }
+const GraphComponent: FC<GraphComponentProps> = ({ data: graphResponseData }) => {
 
   const renderCharts = () => {
-    return Object.keys(scheduledReportsResponse.chartData).map((commandName) => {
-      const data = scheduledReportsResponse.chartData[commandName];
+    return Object.keys(graphResponseData).map((commandName) => {
+      const data = graphResponseData[commandName];
       const graphData = {
         series: data.series,
-        options: {scheduledReportsResponse,
+        options: {
           chart: {
             type: 'pie',
           },
@@ -51,7 +38,7 @@ const GraphComponent: React.FC = () => {
       };
 
       return (
-        <div key={commandName} className="bg-white rounded-sm p-3 drop-shadow-sm">
+        <div key={commandName} className="bg-white rounded-sm p-3 drop-shadow-sm  ">
           <Graph data={graphData} title={commandName} type="pie" />
         </div>
       );
@@ -59,7 +46,7 @@ const GraphComponent: React.FC = () => {
   };
 
   return (
-       <div className="h-[50vh] mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-64 sm:h-72 md:h-80 lg:h-96 xl:h-[500px]">
       {renderCharts()}
       </div>
         );
