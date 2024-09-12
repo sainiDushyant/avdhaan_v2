@@ -6,7 +6,7 @@ import ListReports from './includes/ListReports';
 import Download from '@/components/svg/Download';
 import ToggleView from '@/components/customUI/ToggleView';
 import HesFilters from '@/components/customUI/hes/HesFilters';
-import DateFilters from '@/components/customUI/hes/HesFilters/DateFilter.tsx';
+import DateFilters from './includes/DateFilter.tsx';
 import { useGetScheduledReportsQuery } from '@/store/hes/hesApi';
 import EmptyScreen from '@/components/customUI/EmptyScreen';
 import ErrorScreen from '@/components/customUI/ErrorScreen';
