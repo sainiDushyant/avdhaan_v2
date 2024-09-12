@@ -1,5 +1,5 @@
 import { FC, useCallback, useState } from "react";
-import DateTime from "../../../Date/DateTime";
+import DateTime from "@/components/customUI/Date/DateTime";
 import { QueryType } from "@/pages/hes/scheduled-reads";
 import Button from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";

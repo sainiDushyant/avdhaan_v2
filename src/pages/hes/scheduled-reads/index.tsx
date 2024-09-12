@@ -28,7 +28,7 @@ const ScheduledReads = () => {
   const urlSearchParam = useMemo(() => {
     let newSearchParam = search ? `${search}&` : "?";
     if (query.from) newSearchParam += `from=${query.from}&`
-    if (query.to) newSearchParam += `to=${query.from}&`
+    if (query.to) newSearchParam += `to=${query.to}&`
     return newSearchParam
   }, [query, search]);
 
