@@ -13,7 +13,7 @@ image:
 
 containers:
   - name: data-acquisition-service
-    image: "ap-mumbai-1.ocir.io/bmndcolr71u1/data-acquisition-service"
+    image: "ap-mumbai-1.ocir.io/bmndcolr71u1/avdhaan_v2"
     imagePullPolicy: Always
     securityContext: {}
       # capabilities:
