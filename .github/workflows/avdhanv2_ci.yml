@@ -18,6 +18,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+    
     - name: Set up OCI CLI
       run: |
           sudo apt-get update
@@ -41,35 +42,34 @@ jobs:
           chmod 600 ~/.oci/oci_api_key.pem
           cat ~/.oci/config
       shell: bash
+    
     - name: Retrieve secrets from OCI Vault
       run: |
-          #oci secrets secret-bundle get --secret-id ocid1.vaultsecret.oc1.ap-mumbai-1.amaaaaaavdzcjeaamcmdaupa5exidvnknql3z2vasnfedunhiqhpg7c3hkea --query 'data."secret-bundenvcontent".content' --raw-output | base64 --decode >> .env
-          oci secrets secret-bundle get --secret-id ocid1.vaultsecret.oc1.ap-mumbai-1.amaaaaaavdzcjeaapjuls266qcaqxwmbeonbxwyef7dtfrfv4fz2vzp4xsdq  --query 'data."secret-bundle-content".content'   --raw-output | base64 --decode >> env.json
-          # oci kms management vault create --compartment-id ocid1.tenancy.oc1..aaaaaaaav2wedenwgecynbmhgejfzcsebevogncfkgfbg4t6xdettpwolunq --display-name "Mytest2"  --vault-type DEFAULT
-          # SECRET=$(oci secrets secret-bundle get --secret-id ocid1.vault.oc1.ap-mumbai-1.fbtlbf7raaap4.abrg6ljrrpmvglvcwvlanymdcckp4vk6mzkz3h6xestsqzq5xpsrgplnsn5a --query 'data."secret-bundle-content".content' --raw-output --debug | base64 --decode)
-          # echo "${SECRET}" > .envs
+          oci secrets secret-bundle get --secret-id ocid1.vaultsecret.oc1.ap-mumbai-1.amaaaaaavdzcjeaapjuls266qcaqxwmbeonbxwyef7dtfrfv4fz2vzp4xsdq --query 'data."secret-bundle-content".content' --raw-output | base64 --decode > env.json
           jq -r 'to_entries | .[] | "\(.key)=\(.value|tostring)"' env.json > .env
           cat .env
           ls -a
+    
     - name: Login to Oracle Cloud Infrastructure Registry (OCIR)
       run: |
-        echo "${{ secrets.OCI_AUTH_TOKEN }}" | docker login -u "${{ secrets.OCI_NAMESPACE }}/${{ secrets.OCI_USER_MAIL }}" ${{ secrets.OCI_CLI_REGION }}.ocir.io --password-stdin     
+        echo "${{ secrets.OCI_AUTH_TOKEN }}" | docker login -u "${{ secrets.OCI_NAMESPACE }}/${{ secrets.OCI_USER_MAIL }}" ${{ secrets.OCI_CLI_REGION }}.ocir.io --password-stdin
+    
+    - name: Print Docker Tag for Debugging
+      run: |
+        echo "OCI_CLI_REGION: '${{ secrets.OCI_CLI_REGION }}'"
+        echo "OCI_NAMESPACE: '${{ secrets.OCI_NAMESPACE }}'"
+        echo "NAME_REPO: '${{ secrets.NAME_REPO }}'"
+        IMAGE_TAG="${{ secrets.OCI_CLI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest"
+        echo "Docker Image Tag: '$IMAGE_TAG'"
+
     - name: Build Docker image
       run: |
-          echo Building the Docker image...
-          docker build -t ${{ secrets.OCI_CLI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest .
-          docker tag ${{ secrets.OCI_CLI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest ${{ secrets.OCI_CLI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest
-      # uses: docker/build-push-action@v6
-      # with:
-      #   platforms: linux/arm64
-      #   # context: app
-      #   file: Dockerfile
-      #   tags: ${{ secrets.OCI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}/command-execution-service:latest
-      #   push: false
-      #   load: true
-      #   # cache-from: type=gha
-      #   # cache-to: type=gha,mode=max   
-        
+          IMAGE_TAG="${{ secrets.OCI_CLI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest"
+          echo "Building Docker image with tag '$IMAGE_TAG'..."
+          docker build -t $IMAGE_TAG .
+    
     - name: Push Docker Image to Oracle Cloud Registry
       run: |
-        docker push ${{ secrets.OCI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest 
+        IMAGE_TAG="${{ secrets.OCI_CLI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest"
+        echo "Pushing Docker image with tag '$IMAGE_TAG'..."
+        docker push $IMAGE_TAG
