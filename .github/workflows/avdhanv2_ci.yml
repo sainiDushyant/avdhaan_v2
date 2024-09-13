@@ -3,7 +3,7 @@ name: Deploy to Private OKE Cluster
 on:
   push:
     branches:
-      - west-bengal
+      - main
       
 jobs:
   deploy:
