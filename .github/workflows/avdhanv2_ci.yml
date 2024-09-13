@@ -43,8 +43,8 @@ jobs:
       shell: bash
     - name: Retrieve secrets from OCI Vault
       run: |
-         # oci secrets secret-bundle get --secret-id ocid1.vaultsecret.oc1.ap-mumbai-1.amaaaaaavdzcjeaamcmdaupa5exidvnknql3z2vasnfedunhiqhpg7c3hkea --query 'data."secret-bundenvcontent".content' --raw-output | base64 --decode >> .env
-          oci secrets secret-bundle get --secret-id ocid1.vaultsecret.oc1.ap-mumbai-1.amaaaaaavdzcjeaashhn66in6pf4e6txe6zg64zivm74ux47skma4fujzrsa  --query 'data."secret-bundle-content".content'   --raw-output | base64 --decode >> env.json
+          #oci secrets secret-bundle get --secret-id ocid1.vaultsecret.oc1.ap-mumbai-1.amaaaaaavdzcjeaamcmdaupa5exidvnknql3z2vasnfedunhiqhpg7c3hkea --query 'data."secret-bundenvcontent".content' --raw-output | base64 --decode >> .env
+          oci secrets secret-bundle get --secret-id ocid1.vaultsecret.oc1.ap-mumbai-1.amaaaaaavdzcjeaapjuls266qcaqxwmbeonbxwyef7dtfrfv4fz2vzp4xsdq  --query 'data."secret-bundle-content".content'   --raw-output | base64 --decode >> env.json
           # oci kms management vault create --compartment-id ocid1.tenancy.oc1..aaaaaaaav2wedenwgecynbmhgejfzcsebevogncfkgfbg4t6xdettpwolunq --display-name "Mytest2"  --vault-type DEFAULT
           # SECRET=$(oci secrets secret-bundle get --secret-id ocid1.vault.oc1.ap-mumbai-1.fbtlbf7raaap4.abrg6ljrrpmvglvcwvlanymdcckp4vk6mzkz3h6xestsqzq5xpsrgplnsn5a --query 'data."secret-bundle-content".content' --raw-output --debug | base64 --decode)
           # echo "${SECRET}" > .envs
