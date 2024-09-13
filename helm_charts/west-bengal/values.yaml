@@ -24,7 +24,7 @@ containers:
       # runAsUser: 1000
     ports:
       - name: http
-        containerPort: 8002
+        containerPort: 80
         protocol: TCP
     livenessProbe:
       enabled: true
@@ -61,7 +61,7 @@ serviceAccount:
 service:
   enabled: true
   type: ClusterIP
-  port: 8002
+  port: 80
 
 deployment:
   environment:
