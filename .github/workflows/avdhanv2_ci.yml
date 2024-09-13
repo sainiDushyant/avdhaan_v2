@@ -54,14 +54,6 @@ jobs:
       run: |
         echo "${{ secrets.OCI_AUTH_TOKEN }}" | docker login -u "${{ secrets.OCI_NAMESPACE }}/${{ secrets.OCI_USER_MAIL }}" ${{ secrets.OCI_CLI_REGION }}.ocir.io --password-stdin
     
-    - name: Print Docker Tag for Debugging
-      run: |
-        echo "OCI_CLI_REGION: '${{ secrets.OCI_CLI_REGION }}'"
-        echo "OCI_NAMESPACE: '${{ secrets.OCI_NAMESPACE }}'"
-        echo "NAME_REPO: '${{ secrets.NAME_REPO }}'"
-        IMAGE_TAG="${{ secrets.OCI_CLI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest"
-        echo "Docker Image Tag: '$IMAGE_TAG'"
-
     - name: Build Docker image
       run: |
         echo Building the Docker image...
