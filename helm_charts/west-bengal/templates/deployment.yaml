@@ -58,7 +58,7 @@ spec:
             failureThreshold: {{ .livenessProbe.failureThreshold }}
             httpGet:
               path: /{{ .livenessProbe.path }}
-              port: 8002
+              port: 80
               {{- if .livenessProbe.healthcheckHttps }}
               scheme: HTTPS
               {{- end }}
@@ -77,7 +77,7 @@ spec:
             failureThreshold: {{ .readinessProbe.failureThreshold }}
             httpGet:
               path: /{{ .readinessProbe.path }}
-              port: 8002
+              port: 80
               {{- if .readinessProbe.healthcheckHttps }}
               scheme: HTTPS
               {{- end }}
