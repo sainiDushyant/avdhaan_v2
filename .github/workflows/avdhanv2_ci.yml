@@ -57,8 +57,8 @@ jobs:
     - name: Build Docker image
       run: |
           echo Building the Docker image...
-          docker build -t ${{ secrets.OCI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest .
-          docker tag ${{ secrets.OCI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest ${{ secrets.OCI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest
+          docker build -t ${{ secrets.OCI_CLI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest .
+          docker tag ${{ secrets.OCI_CLI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest ${{ secrets.OCI_CLI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest
       # uses: docker/build-push-action@v6
       # with:
       #   platforms: linux/arm64
