@@ -64,9 +64,9 @@ jobs:
 
     - name: Build Docker image
       run: |
-          IMAGE_TAG="${{ secrets.OCI_CLI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest"
-          echo "Building Docker image with tag '$IMAGE_TAG'..."
-          docker build -t $IMAGE_TAG .
+        echo Building the Docker image...
+        docker build -t ${{ secrets.OCI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest .
+        docker tag ${{ secrets.OCI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest ${{ secrets.OCI_REGION }}.ocir.io/${{ secrets.OCI_NAMESPACE }}/${{ secrets.NAME_REPO }}:latest
     
     - name: Push Docker Image to Oracle Cloud Registry
       run: |
