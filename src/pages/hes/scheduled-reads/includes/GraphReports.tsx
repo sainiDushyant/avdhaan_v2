@@ -73,7 +73,7 @@ const GraphComponent: FC<GraphComponentProps> = ({
     return <EmptyScreen title={`scheduled reads not available`} />;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 pt-3">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
       {renderCharts()}
     </div>
   );
