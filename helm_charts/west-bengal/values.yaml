@@ -13,7 +13,7 @@ image:
   tag: ""
 
 containers:
-  - name: avdhaan_v2
+  - name: avdhaan-v2
     image: "ap-mumbai-1.ocir.io/bmndcolr71u1/avdhaan_v2"
     imagePullPolicy: Always
     securityContext: {}
