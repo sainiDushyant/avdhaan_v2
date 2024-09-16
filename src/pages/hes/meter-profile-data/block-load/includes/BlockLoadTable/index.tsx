@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useGetBlockLoadPushDataQuery } from '@/store/hes/hesApi';
 import { useLocation } from 'react-router-dom';
 import { getCommandExecutionHistoryUrlSearchParams } from '@/pages/hes/command-execution/includes/utils';
