@@ -1,12 +1,14 @@
-import { useState } from 'react';
-import DailyLoadTable from './includes/DailyLoadTable';
+import { lazy, Suspense, useState } from 'react';
 import DailyLoadGraph from './includes/DailyLoadGraph';
 import ToggleView from '@/components/customUI/ToggleView';
 import HesFilters from '@/components/customUI/hes/HesFilters';
-import ToggleCategory from '@/components/customUI/hes/ToggleSubCategory';
+
+const DailyLoadTable = lazy(() => import('./includes/DailyLoadTable'));
 
 const DailyLoad = () => {
-  const [view, setView] = useState<string>('graph');
+
+  const [view, setView] = useState<"graph" | "table">('graph');
+
   return (
     <div className="px-5 w-full">
       <div className="flex relative flex-col mt-8">
@@ -18,12 +20,13 @@ const DailyLoad = () => {
         </div>
         <HesFilters />
         <div className="overflow-x-scroll">
-          {view === 'table' && (
-            <>
-              <ToggleCategory />
+          {view === 'table' &&
+            <Suspense
+              fallback={<div className='min-h-[60vh] flex items-center justify-center' />}
+            >
               <DailyLoadTable />
-            </>
-          )}
+            </Suspense>
+          }
           {view === 'graph' && <DailyLoadGraph />}
         </div>
       </div>

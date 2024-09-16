@@ -30,7 +30,6 @@ const DeleteHeadGroupModal = () => {
             description: "Head Group deleted successfully",
         })
     } catch (error) {
-        console.error(error)
         const errorMsg = error as CustomAPIError;
         toast({
             variant: "destructive",

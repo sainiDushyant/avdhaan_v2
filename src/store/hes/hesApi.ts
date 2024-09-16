@@ -3,6 +3,8 @@ import { customBaseQuery, HES_TAG_TYPES } from '../utils';
 import { scheduledReportsEndpoints } from './endpoints/scheduled-reports';
 import { deviceManagementEndpoints } from './endpoints/device-management';
 import { meterProfileData } from './endpoints/meter-profile-data';
+import { commandExecutionEndpoints } from "./endpoints/command-execution";
+import { DeviceInfoEndpoints } from './endpoints/device-info';
 
 const hesApi = createApi({
   reducerPath: 'hesApi',
@@ -23,8 +25,10 @@ const hesApi = createApi({
     ...deviceManagementEndpoints(builder),
     ...meterProfileData(builder),
     ...scheduledReportsEndpoints(builder),
-    ...meterProfileData(builder)
-  })
+    ...meterProfileData(builder),
+    ...commandExecutionEndpoints(builder),
+    ...DeviceInfoEndpoints(builder)
+  }),
 });
 
 export const {
@@ -39,6 +43,13 @@ export const {
   useGetProfileInstantDataQuery,
   useGetDeviceSubCategoryQuery,
   useGetPeriodicPushDataQuery,
+  useLazyGetCommandInfoQuery,
+  useGetCommandInfoQuery,
+  useGetCommandExecutionHistoryQuery,
+  useGetBatchCommandExecutionHistoryQuery,
+  useExecuteCommandMutation,
+  useGetDeviceInfoQuery,
+  useUpdateDeviceInfoMutation,
   usePrefetch
 } = hesApi;
 

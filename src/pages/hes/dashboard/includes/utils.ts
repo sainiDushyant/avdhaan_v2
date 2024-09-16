@@ -19,7 +19,7 @@ export const prepareDashboardChart = (graphObj: GraphData) => {
       },
       tooltip: {
         enabled: true,
-        custom: ({series, seriesIndex, dataPointIndex, w}) => {
+        custom: ({ seriesIndex }) => {
           const currentVal = `${graphObj[seriesIndex].name}: ${graphObj[seriesIndex].count}`
           return (
             '<div style="min-width: 4px; height: 30px; padding:0 5px;">' +

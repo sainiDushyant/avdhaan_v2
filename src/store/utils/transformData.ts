@@ -1,6 +1,7 @@
-import { ScheduledReportsResponse, ChartData } from "../hes/types/records/reports";
+import { ChartData } from "../hes/types/records/reports";
+import { ScheduledReportsResponse } from "../hes/types";
 
-export const transformDataForChart = (data: ScheduledReportsResponse['data']): ChartData => {
+export const transformDataForChart = (data: ScheduledReportsResponse['data']): ChartData => {  
   const chartData: ChartData = {};
 
   data.records.forEach(({ commandName, statusBreakup }) => {
@@ -12,7 +13,6 @@ export const transformDataForChart = (data: ScheduledReportsResponse['data']): C
 
     Object.entries(statusBreakup).forEach(([status, detail]) => {
       if (!detail || !('percentage' in detail)) return;
-
       const { percentage } = detail;
       const index = {
         IN_PROGRESS: 0,
@@ -28,6 +28,5 @@ export const transformDataForChart = (data: ScheduledReportsResponse['data']): C
 
     chartData[commandName] = chartItem;
   });
-
   return chartData;
 };

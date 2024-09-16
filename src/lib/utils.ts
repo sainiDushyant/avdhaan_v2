@@ -1,7 +1,6 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { ApexOptions } from 'apexcharts';
-import { ChartData, DataType } from '@/store/hes/types/prepare-chart-data';
 import { jwtDecode } from 'jwt-decode';
 
 export function cn(...inputs: ClassValue[]) {
@@ -178,6 +177,19 @@ export const formatDate = (
   return new Intl.DateTimeFormat('en-US', options).format(new Date(date));
 };
 
+export type DataType = {
+  title?: string;
+  value: number;
+  percentage?: number;
+  color?: string;
+  totalCount?: number;
+  data_timestamp: string | Date | number;
+}
+
+export  type ChartData = {
+  [key: string]: DataType[];
+}
+
 export const prepareChartData = (
   data: ChartData,
   chartType: 'bar' | 'line',
@@ -218,7 +230,6 @@ export const prepareChartData = (
   };
 
   const isMobile = window.innerWidth < 768;
-  console.log(console.log(window));
   const limit = isMobile ? 4 : collectedDataTransformed.dates.length; // Limit to 4 on mobile or show all
 
   const collectedDataLimited = getLimitedData(collectedDataTransformed, limit);
@@ -442,19 +453,14 @@ export const fetchToken = async () => {
   let token: string | null = localStorage.getItem('token');
 
   if (token) {
-    const decodedToken: any = jwtDecode(token);
+    const decodedToken: { exp: number } = jwtDecode(token);
     const currentTime = Date.now() / 1000;
 
     if (decodedToken.exp < currentTime) {
-      console.log('Token is expired, fetching a new one...');
       token = await getNewToken();
     }
   } else {
     token = await getNewToken();
-  }
-
-  if (token) {
-    console.log('Token is valid or newly fetched');
   }
 };
 
@@ -481,7 +487,6 @@ export const getNewToken = async (): Promise<string | null> => {
       localStorage.setItem('token', newToken);
       return newToken;
     } else {
-      console.error('Failed to get the new token');
       return null;
     }
   } catch (error) {
@@ -500,25 +505,18 @@ export const formatDateTimeForSearchParams = (date: string) => {
   )}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 };
 
-export const getLast7DaysMinMax = (): { minDate: string; maxDate: string } => {
-  const currentDate = new Date();
-  const maxDate = new Date(currentDate);
+export function dateDiffInDays(dateTime1: string, dateTime2: string): number {
+  const date1 = new Date(dateTime1);
+  const date2 = new Date(dateTime2);
+  const diffInMilliseconds = Math.abs(date2.getTime() - date1.getTime());
+  const diffInDays = diffInMilliseconds / (1000 * 60 * 60 * 24);
+  return diffInDays;
+}
 
-  // Calculate the minimum date by subtracting 7 days
-  const minDate = new Date(currentDate);
-  minDate.setDate(currentDate.getDate() - 7);
-
-  // Helper function to format date as YYYY-MM-DDTHH:mm:ss
-  const formatDateTime = (date: Date): string => {
-    const pad = (num: number) => (num < 10 ? '0' : '') + num;
-
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
-      date.getDate()
-    )}T23:59:59`;
-  };
-
-  return {
-    minDate: formatDateTime(minDate),
-    maxDate: formatDateTime(maxDate)
-  };
-};
+export function dateDiffInMonths(dateTime1: string, dateTime2: string): number {
+  const date1 = new Date(dateTime1);
+  const date2 = new Date(dateTime2);
+  const yearsDiff = date2.getFullYear() - date1.getFullYear();
+  const monthsDiff = date2.getMonth() - date1.getMonth();
+  return yearsDiff * 12 + monthsDiff;
+}

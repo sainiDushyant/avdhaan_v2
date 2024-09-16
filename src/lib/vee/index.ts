@@ -94,6 +94,7 @@ const newState: ConditionTypeState = {
 if(ogCondition && selectedType && ogCondition.type === selectedType.value){
     newState['field_name'] = { label: ogCondition.field_name.split("_").join(" "),  value: ogCondition.field_name };
     newState['condition_type'] = {label: ogCondition.condition_type, value: ogCondition.condition_type };
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     newState['first_value'] = ogCondition.first_value || "",
     newState['second_value'] = ogCondition.second_value || "",
     newState['method'] = ogCondition?.method ? { label: ogCondition.method,  value: ogCondition.method }  : null,

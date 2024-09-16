@@ -1,17 +1,23 @@
 import { FC, useCallback, useState } from "react";
-import DateTime from "@/components/customUI/Date/DateTime";
 import { QueryType } from "@/pages/hes/scheduled-reads";
 import Button from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
+import { dateDiffInDays } from "@/lib/utils";
+import DateRange from "@/components/customUI/Date/DateRange";
+import RefreshButton from "@/components/svg/RefreshButton";
 
 interface DateFiltersProps {
   setQuery: React.Dispatch<React.SetStateAction<QueryType>>;
+  refresh: () => void;
 }
 
-const DateFilters: FC<DateFiltersProps> = ({ setQuery }) => {
+const DateFilters: FC<DateFiltersProps> = ({ setQuery, refresh }) => {
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("")
+
+  const date = new Date().toISOString();
+  const max = date.split("T")[0];
 
   const clearFilters = useCallback(() => {
     setQuery({ "from": "", "to": "" })
@@ -24,18 +30,15 @@ const DateFilters: FC<DateFiltersProps> = ({ setQuery }) => {
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      const start = new Date(startDate);
-      const end = new Date(endDate);
-
-      const diffInDays = (end.getTime() - start.getTime()) / (1000 * 3600 * 24);
+      const diffInDays =  dateDiffInDays(startDate, endDate)
       if (diffInDays > 7) {
-        toast({
-          variant: "destructive",
-          description: "End date must be within 7 days from the start date.",
+        return toast({
+          variant: "default",
+          title: "Invalid Date Range",
+          description: "Start date - end date diff should not be greater than 7 days",
         })
-        return;
       }
-      setQuery({ from: startDate, to: endDate });
+      setQuery({ from: `${startDate} 00:00:00`, to: `${endDate} 00:00:00` });
     },
     [setQuery, startDate, endDate]
   );
@@ -43,47 +46,55 @@ const DateFilters: FC<DateFiltersProps> = ({ setQuery }) => {
 
   return (
     <form
-      className="p-5 rounded-lg bg-white my-3 flex-1 flex flex-wrap gap-x-5 gap-y-5"
+      className='flex flex-wrap gap-3 lg:justify-end mt-5'
       onSubmit={handleSubmit}
     >
 
-      <DateTime
-        placeholder="Start Date"
-        customState={{
-          val: startDate,
-          setter: setStartDate
-        }}
-        name="startDate"
-        required={false}
-        customCss="flex-none md:min-w-[240px]"
-
-      />
-      <DateTime
-        placeholder="End Date"
-        customState={{
-          val: endDate,
-          setter: setEndDate
-        }}
-        name="endDate"
-        min={startDate}
-        required={false}
-        customCss="flex-none md:min-w-[240px]"
-      />
+        <DateRange 
+          start={{
+            max,
+            name: "from",
+            required: true,
+            customState: {
+              val: startDate,
+              setter: setStartDate
+            }
+          }}
+          end={{
+            max,
+            name: "to",
+            required: true,
+            customState: {
+              val: endDate,
+              setter: setEndDate
+            }
+          }}
+          customCss={"flex-none xl:flex-none md:min-w-[220px]"}
+        />
 
       <Button
+        type="submit"
         className="date-filter-color"
         variant={'secondary'}
-        type="submit"
       >
         Apply
       </Button>
       <Button
-        className="date-filter-color"
-        variant={'secondary'}
         type="button"
+        className="destroy-filter-color"
+        variant={'secondary'}
         onClick={clearFilters}
       >
         Clear
+      </Button>
+
+      <Button
+        type="button"
+        variant={'ghost'}
+        className="refresh-button p-0 min-w-[35px]"
+        onClick={refresh}
+      >
+        <RefreshButton />
       </Button>
     </form>
   );

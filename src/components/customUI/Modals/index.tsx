@@ -31,7 +31,7 @@ const BaseModal: FC<BaseModalProps> = ({
             <DialogContent className={cn("min-w-[40vw]", modalClass)}>
                 {dialogTitle &&
                     <DialogHeader>
-                        <DialogTitle className='text-start font-semibold mb-5'>{dialogTitle}</DialogTitle>
+                        <DialogTitle className='text-start text-[#0A3690] font-semibold mb-5'>{dialogTitle}</DialogTitle>
                     </DialogHeader>
                 }
                 {children && children}

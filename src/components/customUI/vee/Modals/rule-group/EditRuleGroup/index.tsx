@@ -3,11 +3,15 @@ import BaseModal from "@/components/customUI/Modals";
 import { useGetRuleGroupDetailTableQuery } from "@/store/vee/veeApi";
 import { useParams, useNavigate } from "react-router-dom";
 import Spinner from "@/components/customUI/Loaders/Spinner";
+import { useToast } from "@/components/ui/use-toast";
+import { CustomAPIError } from "@/store/vee/types";
 
 const AddRuleGroupForm = lazy(() => import("@/components/customUI/vee/Forms/rule-group/AddRuleGroup"));
 
 const EditRuleGroupModal = () => {
 
+  const { toast } = useToast();
+  
   const { ruleGroupId } = useParams();
   const navigate = useNavigate();
   const { data } = useGetRuleGroupDetailTableQuery({ id: ruleGroupId as string });
@@ -17,9 +21,14 @@ const EditRuleGroupModal = () => {
     try {
       setOpen(false);
     } catch (error) {
-      console.error("Error updating rule group:", error);
+      const errorMsg = error as CustomAPIError;
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: errorMsg?.description || "Failed to add estimation rule",
+      })
     }
-  }, [navigate, setOpen]);
+  }, [navigate, setOpen, toast]);
 
   return (
     <BaseModal

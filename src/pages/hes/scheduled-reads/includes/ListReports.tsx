@@ -1,10 +1,10 @@
 import { FC } from "react";
 import DataTable from "@/components/customUI/DataTable";
 import useGetTableColumns from "@/hooks/useGetTableColumns";
-import { FlattenedCommandRecord } from "@/store/hes/types/records/reports";
+import { FlattenedScheduledCommandRecord } from "@/store/hes/types/records/reports";
 
 interface ListReportsProps {
-  data: FlattenedCommandRecord[];
+  data: FlattenedScheduledCommandRecord[];
 }
 
 const ListReports: FC<ListReportsProps> = ({ data }) => {
