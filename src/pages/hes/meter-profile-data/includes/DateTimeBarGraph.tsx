@@ -7,8 +7,9 @@ import { useState, useCallback, FC } from "react";
 import { MeterProfileQueryParams, ModifiedGroup } from "@/store/hes/types/records/meter-profile-data-metrics";
 import { SerializedError } from "@reduxjs/toolkit";
 import DateTimeRange from "@/components/customUI/Date/DateTimeRange";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query/react";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useToast } from "@/components/ui/use-toast";
+
 
 interface DateTimeBarGraphProps {
     data: ModifiedGroup | undefined;

@@ -9,7 +9,7 @@ import useGetTableColumns from "@/hooks/useGetTableColumns";
 import ToggleCategory from "./ToggleSubCategory";
 import { MeterProfileDataTableNewResponse } from "@/store/hes/types";
 import Header from "./Header";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query/react";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { MeterProfileQueryParams } from "@/store/hes/types/records/meter-profile-data-metrics";
 import { useSelector } from "@/store";

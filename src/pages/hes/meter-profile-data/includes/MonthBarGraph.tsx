@@ -7,7 +7,7 @@ import { useState, useCallback, FC } from "react";
 import { MeterProfileQueryParams, ModifiedGroup } from "@/store/hes/types/records/meter-profile-data-metrics";
 import { SerializedError } from "@reduxjs/toolkit";
 import MonthYearRange from "@/components/customUI/Date/MonthYearRange";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query/react";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useToast } from "@/components/ui/use-toast";
 
 

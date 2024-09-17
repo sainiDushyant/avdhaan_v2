@@ -73,7 +73,7 @@ const NavBar = () => {
                     : ''
                 } `}
               >
-                <AccordionTrigger className="text-[#708CC7] underline-none">
+                <AccordionTrigger className="text-[#708CC7] py-0 underline-none">
                   <div>
                     <h3
                       className={`${
