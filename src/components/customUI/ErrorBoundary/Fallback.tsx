@@ -6,7 +6,7 @@ const Fallback: FC<FallbackProps> = ({ error, resetErrorBoundary }) => {
     return (
         <div role="alert" className="w-screen h-screen flex flex-col items-center justify-center">
             <p>Something went wrong:</p>
-            <pre style={{ color: "red" }}>{error.message}</pre>
+            <pre style={{ color: "red" }} className="text-wrap">{error.message}</pre>
             <Button
                 type="submit" variant="ghost"
                 onClick={resetErrorBoundary}

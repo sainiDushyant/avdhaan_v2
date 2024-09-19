@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 const initialState = {
-  mainFilterLoading: false
+  mainFilterLoading: false,
 };
 
 const hes = createSlice({
@@ -11,9 +11,11 @@ const hes = createSlice({
   reducers: {
     setMainFilterLoading(state, action: PayloadAction<boolean>) {
       state.mainFilterLoading = action.payload
-    },
+    }
   },
 });
 
-export const { setMainFilterLoading } = hes.actions
+export const { 
+  setMainFilterLoading, 
+} = hes.actions
 export default hes.reducer;

@@ -49,9 +49,11 @@ export type HesFilterState = {
   device_identifier: MultiValue<Option>;
 };
 
+export type MeterName = "1P" | "3P" | "LTCT" | "HTCT"
+
 export type DeviceSubCategoryRecord = {
   id: number;
-  name: string;
+  name: MeterName
 };
 
 export type HesFilterStateOptional = Partial<HesFilterState>;

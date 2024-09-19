@@ -17,6 +17,7 @@ import {
     CommandHistoryRecord
 } from '@/store/hes/types/records/command-execution';
 import BatchStatus from './BatchStatus';
+import ExecutionResponse from './ExecutionResponse';
 
 interface ExecutionHistoryProps {
     data: BatchCommandHistoryRecord;
@@ -43,7 +44,7 @@ const ExecutionHistory: FC<ExecutionHistoryProps> = ({ data }) => {
     );
 
     const batchCommandHistoryActions: ActionType<CommandHistoryRecord>[] = [
-        { element: BatchStatus },
+        { element: BatchStatus }, { element: ExecutionResponse, colName: "Response" }
       ]
 
     const columns = useGetTableColumns({

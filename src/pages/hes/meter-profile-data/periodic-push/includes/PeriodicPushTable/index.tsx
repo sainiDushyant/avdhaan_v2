@@ -8,7 +8,7 @@ import { useSelector } from '@/store';
 
 const PeriodicPushTable = () => {
   const { search } = useLocation();
-  const [query, setQuery] = useState<MeterProfileQueryParams>({});
+  const [query, setQuery] = useState<MeterProfileQueryParams>({ sub_category: 1 });
   const mainFilterLoading = useSelector(state => state.hes.mainFilterLoading);
 
   const urlSearchParams = useMemo(() => {

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import HesFilters from "@/components/customUI/hes/HesFilters"
 import CommandForm from "./includes/CommandForm"
 import { useGetBatchCommandExecutionHistoryQuery } from "@/store/hes/hesApi"
@@ -16,11 +16,13 @@ import SearchPagination from "@/components/customUI/SearchPagination";
 import { 
   BatchCommandHistoryRecord, CommandHistoryQueryParams 
 } from "@/store/hes/types/records/command-execution";
+import { useSelector } from "@/store";
 
 const CommandExecution = () => {
 
   const { search } = useLocation();
   const [query, setQuery] = useState<CommandHistoryQueryParams>({});
+  const mainFilterLoading = useSelector(state => state.hes.mainFilterLoading);
 
   const urlSearchParams = useMemo(() => {
     return getCommandExecutionHistoryUrlSearchParams({ query, search });
@@ -35,7 +37,7 @@ const CommandExecution = () => {
     refetch: refetchCommandExecutionHistory
   } = useGetBatchCommandExecutionHistoryQuery({ 
     searchParams: urlSearchParams 
-  }, { });
+  }, { skip: mainFilterLoading });
 
   const commandHistoryActions: ActionType<BatchCommandHistoryRecord>[] = [
     { element: ExecutionHistoryModal, colName: "" },

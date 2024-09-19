@@ -81,8 +81,10 @@ const MetricProfileTable: FC<MetricProfileTableProps> = ({
         <ToggleCategory query={query} setQuery={setQuery} />
         <Header  
           filterType={filterType}
-          dateStep={dateStep} query={query} 
-          setQuery={setQuery} refresh={refresh} 
+          dateStep={dateStep} 
+          query={query} 
+          setQuery={setQuery} 
+          refresh={refresh} 
         />
   
         {!isFetching ?

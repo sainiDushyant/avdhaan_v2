@@ -48,7 +48,7 @@ const Header: FC<HeaderProps> = ({
   }, [startDateTime, endDateTime, filterType, setQuery, toast]);
 
   const resetFilters = useCallback(() => {
-    setQuery({});
+    setQuery({ sub_category: 1 });
     setStartDateTime("");
     setEndDateTime("");
   }, [setQuery, setStartDateTime, setEndDateTime])

@@ -14,6 +14,7 @@ import {
   CommandInfoRecord 
 } from "./records/command-execution";
 import { ScheduledCommandRecord } from './records/reports';
+import { HESAuthToken } from './records/login';
 
 export type HesAPIError = {
   errorMsg: string;
@@ -68,12 +69,13 @@ export type BatchCommandHistoryResponse = ResponseBaseWithOffsetPagination<Batch
 
 export type MeterProfileDataTableOgResponse = ResponseBase<MeterProfileDataTableRecord>;
 export type MeterProfileDataTableNewResponse = ResponseBase<MeterProfileDataTableRecordTransformed>;
+
 export type ScheduledReportsResponse = ResponseBaseWithOutPagination<ScheduledCommandRecord>
 
-
 export type DeviceDataResponse = ResponseBase<DeviceManagementInfoRecord>;
-
 export type DeviceDetailResponse = ResponseBase<DeviceDetailRecord>;
+
+export type HESTokenResponse = ResponseBaseWithOutPagination<HESAuthToken>;
 
 export interface CustomAPIError {
   description?: string;

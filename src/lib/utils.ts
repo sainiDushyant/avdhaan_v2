@@ -12,36 +12,6 @@ export async function enableMocking() {
   return worker.start();
 }
 
-export function serializeFormData<T>(formData: FormData) {
-  const formPayload: { [key: string]: string | string[] } = {};
-  for (const [key, value] of formData.entries()) {
-    const keyExists = key in formPayload;
-    if (!keyExists) {
-      formPayload[key] = value as string;
-    } else {
-      const prevValue = formPayload[key];
-      if (typeof prevValue === 'object') {
-        const prevValue = formPayload[key];
-        formPayload[key] = [...prevValue, value as string];
-      } else {
-        formPayload[key] = [prevValue, value as string];
-      }
-    }
-  }
-  return formPayload as T;
-}
-
-export function convertToDateTime(input: string, postFix: string) {
-  if (!input || !input.length) return '';
-  const dateTime = input.split('T');
-  if (dateTime.length < 2) return '';
-  let time = dateTime[1];
-  if (time.length === 5) {
-    time = time + postFix;
-  }
-  return dateTime[0] + ' ' + time;
-}
-
 export function isValidDate(dateString: string): boolean {
   const date = new Date(dateString);
   return !isNaN(date.getTime());
@@ -109,7 +79,6 @@ function createUniqueColorGenerator() {
   return getUniqueColor;
 }
 
-// Example usage
 export const getUniqueColor = createUniqueColorGenerator();
 
 function getRandomCoordinate(max: number) {
@@ -186,7 +155,7 @@ export type DataType = {
   data_timestamp: string | Date | number;
 }
 
-export  type ChartData = {
+export type ChartData = {
   [key: string]: DataType[];
 }
 
@@ -195,6 +164,7 @@ export const prepareChartData = (
   chartType: 'bar' | 'line',
   dateType: 'days' | 'time' | 'month'
 ) => {
+
   const transformDataForChart = (data: DataType[]) => {
     const sortedData = [...data].sort(
       (a, b) =>
@@ -206,8 +176,8 @@ export const prepareChartData = (
       dateType === 'month'
         ? 'MMM YYYY'
         : dateType === 'days'
-        ? 'D MMM'
-        : 'h:mm A';
+          ? 'D MMM'
+          : 'h:mm A';
 
     return {
       dates: sortedData.map((item) =>
@@ -282,8 +252,8 @@ export const prepareChartData = (
           dateType === 'month'
             ? 'MMM yyyy'
             : dateType === 'days'
-            ? 'd MMM'
-            : 'h:mm TT'
+              ? 'd MMM'
+              : 'h:mm TT'
       }
     },
     legend: {
@@ -447,62 +417,6 @@ export const prepareChartData = (
   };
 
   return { series, options };
-};
-
-export const fetchToken = async () => {
-  let token: string | null = localStorage.getItem('token');
-
-  if (token) {
-    const decodedToken: { exp: number } = jwtDecode(token);
-    const currentTime = Date.now() / 1000;
-
-    if (decodedToken.exp < currentTime) {
-      token = await getNewToken();
-    }
-  } else {
-    token = await getNewToken();
-  }
-};
-
-export const getNewToken = async (): Promise<string | null> => {
-  try {
-    const response = await fetch(
-      `${import.meta.env.VITE_HES_BASE_URL}/v1/auth/token`,
-      {
-        method: 'POST',
-        body: JSON.stringify({
-          authID: 'bdf234d4-e1bb-4df3-a27e-433d596b808c'
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'same-origin'
-      }
-    );
-
-    const data = await response.json();
-
-    if (data) {
-      const newToken = data?.data?.records[0]?.token;
-      localStorage.setItem('token', newToken);
-      return newToken;
-    } else {
-      return null;
-    }
-  } catch (error) {
-    console.error('Error fetching new token:', error);
-    return null;
-  }
-};
-
-export const formatDateTimeForSearchParams = (date: string) => {
-  if (!date) return '';
-  const d = new Date(date);
-  const pad = (num: number) => (num < 10 ? '0' : '') + num;
-
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(
-    d.getHours()
-  )}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 };
 
 export function dateDiffInDays(dateTime1: string, dateTime2: string): number {

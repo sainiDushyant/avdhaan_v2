@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { Route, Outlet } from 'react-router-dom';
+import HesOutlet from '@/navigation/HesOutlet';
 
 const Dashboard = lazy(() => import('@/pages/hes/dashboard'));
 const BlockLoad = lazy(() => import('@/pages/hes/meter-profile-data/block-load'));
@@ -13,7 +14,7 @@ const CommandExecution = lazy(() => import('@/pages/hes/command-execution'));
 const DeviceInformation = lazy(() => import('@/pages/hes/device-information'));
 
 const HesRoutes = (
-  <Route path="/hes" element={<Outlet />}>
+  <Route path="/hes" element={<HesOutlet />}>
     <Route index element={<Dashboard />} />
 
     <Route path="meter-profile-data" element={<Outlet />}>

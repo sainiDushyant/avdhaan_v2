@@ -1,6 +1,6 @@
 import { HesFilterPayload } from "@/store/hes/types/other";
 import { CommandInfoArgsType, CommandInfoParams, NumberParams } from "@/store/hes/types/records/command-execution";
-import { HesFilterRecord, HesFilterStateOptional } from "@/store/hes/types/records/device-management";
+import { HesFilterRecord, HesFilterStateOptional, MeterName } from "@/store/hes/types/records/device-management";
 
 export const executionStatusData = [
     { label: "Success", value: "SUCCESS" },
@@ -13,26 +13,12 @@ export const executionStatusData = [
     { label: "In progress", value: "IN_PROGRESS" },
 ]
 
-type MeterCategory = { id: number; name: string };
-
-export const meterCategoryData: MeterCategory[] = [
-  {
-      "id": 1,
-      "name": "One Phase meter"
-  },
-  {
-      "id": 2,
-      "name": "Three Phase meter"
-  },
-  {
-      "id": 3,
-      "name": "LTCT Meter"
-  },
-  {
-      "id": 4,
-      "name": "HTCT meter"
-  }
-]
+export const meterCategoryData: Map<MeterName, string> = new Map([
+      ["1P", "One Phase meter"],
+      ["3P", "Three Phase meter"],
+      ["LTCT", "LTCT Meter"],
+      ["HTCT", "HTCT meter"]
+])
 
 export const searchParamsToHesFilters = 
     (urlSearchParams: URLSearchParams): HesFilterRecord => {
