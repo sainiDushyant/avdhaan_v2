@@ -11,6 +11,7 @@ const PeriodicPush = lazy(() => import('@/pages/hes/meter-profile-data/periodic-
 
 const ScheduledReads = lazy(() => import('@/pages/hes/scheduled-reads'));
 const CommandExecution = lazy(() => import('@/pages/hes/command-execution'));
+const CommandExecutionDetails = lazy(() => import('@/pages/hes/command-execution/details'));
 const DeviceInformation = lazy(() => import('@/pages/hes/device-information'));
 
 const HesRoutes = (
@@ -26,8 +27,11 @@ const HesRoutes = (
       <Route path="periodic-push" element={<PeriodicPush />} />
     </Route>
 
+    <Route path="command-execution" element={<Outlet />}>
+      <Route index element={<CommandExecution />} />
+      {/* <Route path=":commandId" element={<CommandExecutionDetails />} /> */}
+    </Route>
     <Route path="scheduled-reads" element={<ScheduledReads />} />
-    <Route path="command-execution" element={<CommandExecution />} />
     <Route path="device-information" element={<DeviceInformation />} />
   </Route>
 );

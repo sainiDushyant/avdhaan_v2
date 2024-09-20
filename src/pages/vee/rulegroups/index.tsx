@@ -23,7 +23,7 @@ const RuleGroups = () => {
   const columns = useGetTableColumns({
     cols: response?.groups || [],
     query: [],
-    getLink: (id) => `/rulegroups/${id}`,
+    getLink: (id) => `/vee/rulegroups/${id}`,
   })
 
   if (isLoading) return <FullScreen hasSpinner={true} />;

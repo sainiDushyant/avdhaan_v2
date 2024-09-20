@@ -12,10 +12,12 @@ const ExecutionResponse = () => {
       <Button onClick={() => setOpen(true)} variant="ghost">
         {!open ? <Eye /> : <EyeClose />}
       </Button>
-
-        <div className="absolute min-w-full left-0 top-[100px] bg-[red] h-[40vh]">
+      
+      {open &&
+        <div className="absolute w-[100%] h-[40vh] z-20 bg-[red] left-0 top-[80px]">
 
         </div>
+      }
     </>
   )
 }

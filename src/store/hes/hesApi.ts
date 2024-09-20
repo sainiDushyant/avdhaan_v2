@@ -52,6 +52,7 @@ export const {
   useGetDeviceInfoQuery,
   useUpdateDeviceInfoMutation,
   useUpdateTokenForAuthMutation,
+  useGetCommandExecutionHistoryDetailsQuery,
   usePrefetch
 } = hesApi;
 

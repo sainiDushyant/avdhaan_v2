@@ -106,3 +106,25 @@ export interface ExecuteCommandPayload {
         }
     }
 }
+
+export type ExecutionHistoryDetailsRecord = {
+    execInfoID: number;
+    response: {
+        executionId: string;
+        index: number;
+        responseData: {
+            cmd_name: string;
+            payload: {[key: string]: string | number};
+        }
+    };
+    pendingStatusReason: string | null;
+}
+
+export type ExecutionHistoryDetailsRecordModified = {
+    execInfoID: number;
+    executionId: string;
+    index: number;
+    cmd_name: string;
+    payload: {[key: string]: string | number};
+    pendingStatusReason: string | null;
+}

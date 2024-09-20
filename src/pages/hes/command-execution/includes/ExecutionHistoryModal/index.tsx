@@ -17,7 +17,6 @@ import {
     CommandHistoryRecord
 } from '@/store/hes/types/records/command-execution';
 import BatchStatus from './BatchStatus';
-import ExecutionResponse from './ExecutionResponse';
 
 interface ExecutionHistoryProps {
     data: BatchCommandHistoryRecord;
@@ -44,7 +43,7 @@ const ExecutionHistory: FC<ExecutionHistoryProps> = ({ data }) => {
     );
 
     const batchCommandHistoryActions: ActionType<CommandHistoryRecord>[] = [
-        { element: BatchStatus }, { element: ExecutionResponse, colName: "Response" }
+        { element: BatchStatus }
       ]
 
     const columns = useGetTableColumns({
@@ -52,7 +51,7 @@ const ExecutionHistory: FC<ExecutionHistoryProps> = ({ data }) => {
         customId: "executionId",
         query: ["executionStatus", "colorCode", "args"],
         action: batchCommandHistoryActions,
-        // getLink: (id) => `/command-execution/${id}`,
+        // getLink: (id) => `/hes/command-execution/${id}`,
     });
 
     if (!batchId) return <EyeClose />

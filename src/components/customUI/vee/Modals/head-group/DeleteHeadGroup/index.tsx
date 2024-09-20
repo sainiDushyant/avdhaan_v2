@@ -50,7 +50,7 @@ const DeleteHeadGroupModal = () => {
 
       <DialogHeader>
         <img 
-          src="/vee/assets/images/other/discovery.png" 
+          src="/assets/images/other/discovery.png" 
           height="auto" loading="lazy" 
           style={{ maxWidth: 70 }} 
           className="mx-auto"

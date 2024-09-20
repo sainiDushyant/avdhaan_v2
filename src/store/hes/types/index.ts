@@ -11,7 +11,9 @@ import {
 } from './records/meter-profile-data-metrics';
 import { 
   BatchCommandHistoryRecord, CommandHistoryRecord, 
-  CommandInfoRecord 
+  CommandInfoRecord, 
+  ExecutionHistoryDetailsRecord,
+  ExecutionHistoryDetailsRecordModified
 } from "./records/command-execution";
 import { ScheduledCommandRecord } from './records/reports';
 import { HESAuthToken } from './records/login';
@@ -66,6 +68,8 @@ export type LiveDataMetricsResponse = ResponseBaseWithOutPagination<LiveDataMetr
 export type CommandInfoResponse = ResponseBaseWithOutPagination<CommandInfoRecord>;
 export type CommandHistoryResponse = ResponseBase<CommandHistoryRecord>;
 export type BatchCommandHistoryResponse = ResponseBaseWithOffsetPagination<BatchCommandHistoryRecord>;
+export type ExecutionHistoryDetailsResponse = ResponseBase<ExecutionHistoryDetailsRecord>
+export type ExecutionHistoryDetailsResponseModified = ResponseBase<ExecutionHistoryDetailsRecordModified>
 
 export type MeterProfileDataTableOgResponse = ResponseBase<MeterProfileDataTableRecord>;
 export type MeterProfileDataTableNewResponse = ResponseBase<MeterProfileDataTableRecordTransformed>;

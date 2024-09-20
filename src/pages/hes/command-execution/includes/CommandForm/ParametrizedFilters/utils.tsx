@@ -42,7 +42,7 @@ export const getNumberFilter = (params: NumberParams): JSX.Element => {
 export const getRangeFilter = ({ isMulti, ...rest }: RangeParams): JSX.Element  => {
     if(isMulti){
         return <MultiRange 
-            start={{...rest, name: "from", required: true}} 
+            start={{...rest, name: "from", required: true }} 
             end={{...rest, name: "to", required: true}} 
             customCss={"flex-none xl:flex-none md:min-w-[150px]"}
         />  

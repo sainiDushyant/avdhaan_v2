@@ -27,7 +27,7 @@ const HeadgroupDetails = () => {
     cols: ruleGroupData,
     query: [],
     getLink: (id) => ({
-      pathname: `/rulegroups/${id}`,
+      pathname: `/vee/rulegroups/${id}`,
       state: { from: 'headgroup', headGroupId: headGroupId },
     }),
   });

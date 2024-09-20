@@ -23,7 +23,7 @@ const HeadGroups = () => {
   const columns = useGetTableColumns({
     cols: response?.head_groups || [],
     query: ["name"],
-    getLink: (id) => `/headgroups/${id}`,
+    getLink: (id) => `/vee/headgroups/${id}`,
   })
 
   if (isLoading) return <FullScreen hasSpinner={true} />;

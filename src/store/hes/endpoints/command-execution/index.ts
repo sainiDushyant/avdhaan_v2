@@ -1,7 +1,10 @@
 import { EndpointBuilder } from "@reduxjs/toolkit/query";
 import { FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from "@reduxjs/toolkit/query";
 import { BaseQueryFn } from "@reduxjs/toolkit/query";
-import { BatchCommandHistoryResponse, CommandHistoryResponse, CommandInfoResponse, ResponseBaseWithOutPagination } from "../../types";
+import { 
+  BatchCommandHistoryResponse, CommandHistoryResponse, 
+  CommandInfoResponse, ExecutionHistoryDetailsResponse, ExecutionHistoryDetailsResponseModified, ResponseBaseWithOutPagination 
+} from "../../types";
 import { CommandInfoRecordTransformed, ExecuteCommandPayload } from "../../types/records/command-execution";
 
 export const commandExecutionEndpoints = (
@@ -45,5 +48,37 @@ export const commandExecutionEndpoints = (
         method: "POST", 
         body: data 
       }),
+    }),
+    getCommandExecutionHistoryDetails: builder.query<ExecutionHistoryDetailsResponseModified, { searchParams: string }>({
+      query: ({ searchParams }) => ({
+      url: `/command-execution/command-response${searchParams}`,
+        method: "GET",
+      }),
+      transformResponse: (response: ExecutionHistoryDetailsResponse): ExecutionHistoryDetailsResponseModified => {
+        const records = response.data.records.map(record => {
+          const { 
+            execInfoID, pendingStatusReason, 
+            response: { executionId, index, responseData } 
+          } = record;
+
+          const { cmd_name, payload } = responseData;
+
+          return {
+            execInfoID,
+            executionId,
+            index,
+            pendingStatusReason,
+            cmd_name,
+            payload,
+          }
+        });
+        return {
+          ...response,
+          data: {
+            ...response.data,
+            records
+          }
+        }
+      },
     }),
 });
