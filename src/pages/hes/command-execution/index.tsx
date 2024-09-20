@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import HesFilters from "@/components/customUI/hes/HesFilters"
 import CommandForm from "./includes/CommandForm"
 import { useGetBatchCommandExecutionHistoryQuery } from "@/store/hes/hesApi"

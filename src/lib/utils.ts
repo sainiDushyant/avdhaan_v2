@@ -1,7 +1,6 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { ApexOptions } from 'apexcharts';
-import { jwtDecode } from 'jwt-decode';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

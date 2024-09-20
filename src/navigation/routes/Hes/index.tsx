@@ -11,7 +11,7 @@ const PeriodicPush = lazy(() => import('@/pages/hes/meter-profile-data/periodic-
 
 const ScheduledReads = lazy(() => import('@/pages/hes/scheduled-reads'));
 const CommandExecution = lazy(() => import('@/pages/hes/command-execution'));
-const CommandExecutionDetails = lazy(() => import('@/pages/hes/command-execution/details'));
+// const CommandExecutionDetails = lazy(() => import('@/pages/hes/command-execution/details'));
 const DeviceInformation = lazy(() => import('@/pages/hes/device-information'));
 
 const HesRoutes = (
