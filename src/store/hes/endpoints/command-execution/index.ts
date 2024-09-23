@@ -5,7 +5,7 @@ import {
   BatchCommandHistoryResponse, CommandHistoryResponse, 
   CommandInfoResponse, ExecutionHistoryDetailsResponse, ExecutionHistoryDetailsResponseModified, ResponseBaseWithOutPagination 
 } from "../../types";
-import { CommandInfoRecordTransformed, ExecuteCommandPayload } from "../../types/records/command-execution";
+import { CommandInfoRecordTransformed, ExecuteCommandPayload, ExecutionHistoryDetailsRecordModified } from "../../types/records/command-execution";
 
 export const commandExecutionEndpoints = (
   builder: EndpointBuilder<
@@ -56,22 +56,22 @@ export const commandExecutionEndpoints = (
       }),
       transformResponse: (response: ExecutionHistoryDetailsResponse): ExecutionHistoryDetailsResponseModified => {
         const records = response.data.records.map(record => {
-          const { 
-            execInfoID, pendingStatusReason, 
-            response: { executionId, index, responseData } 
-          } = record;
 
-          const { cmd_name, payload } = responseData;
-
-          return {
-            execInfoID,
-            executionId,
-            index,
-            pendingStatusReason,
-            cmd_name,
-            payload,
+          const { response, pendingStatusReason, ...rest } = record;
+          let finalResponse: ExecutionHistoryDetailsRecordModified = {...rest };
+          if(pendingStatusReason) finalResponse["pendingStatusReason"] = pendingStatusReason.reason;
+          if(response){
+            const { responseData, ...other } = response;
+            finalResponse = { ...finalResponse, ...other };
+            if(responseData){
+              finalResponse = { ...finalResponse, ...responseData };
+            }
           }
+
+          return finalResponse
         });
+
+
         return {
           ...response,
           data: {

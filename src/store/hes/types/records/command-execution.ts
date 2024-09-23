@@ -115,16 +115,19 @@ export type ExecutionHistoryDetailsRecord = {
         responseData: {
             cmd_name: string;
             payload: {[key: string]: string | number};
-        }
+        } | null;
     };
-    pendingStatusReason: string | null;
+    pendingStatusReason: {
+        executionid: string;
+        reason: string;
+    } | null;
 }
 
 export type ExecutionHistoryDetailsRecordModified = {
     execInfoID: number;
-    executionId: string;
-    index: number;
-    cmd_name: string;
-    payload: {[key: string]: string | number};
-    pendingStatusReason: string | null;
+    executionId?: string;
+    index?: number;
+    cmd_name?: string;
+    payload?: {[key: string]: string | number};
+    pendingStatusReason?: string;
 }
