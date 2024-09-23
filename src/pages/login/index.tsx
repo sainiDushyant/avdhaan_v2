@@ -8,6 +8,7 @@ import ErrorScreen from "@/components/customUI/ErrorScreen";
 
 const Login = () => {
 
+
     const [updateToken, { isError, error }] = useUpdateTokenForAuthMutation();
     const navigate = useNavigate();
     const { toast } = useToast();
@@ -17,8 +18,7 @@ const Login = () => {
     const handleToken = useCallback(async () => {
         try {
             const { token } = await updateToken({
-                authID: "bdf234d4-e1bb-4df3-a27e-433d596b808c" 
-                // import.meta.env.VITE_HES_AUTH_ID
+                authID: import.meta.env.VITE_HES_AUTH_ID
             }).unwrap();
             sessionStorage.setItem('hes_token', token);
             navigate(redirectUrl)
