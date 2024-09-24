@@ -13,6 +13,7 @@ const ScheduledReads = lazy(() => import('@/pages/hes/scheduled-reads'));
 const CommandExecution = lazy(() => import('@/pages/hes/command-execution'));
 // const CommandExecutionDetails = lazy(() => import('@/pages/hes/command-execution/details'));
 const DeviceInformation = lazy(() => import('@/pages/hes/device-information'));
+const ConfigureCommand = lazy(() => import('@/pages/hes/configure-command'));
 
 const HesRoutes = (
   <Route path="/hes" element={<HesOutlet />}>
@@ -33,6 +34,7 @@ const HesRoutes = (
     </Route>
     <Route path="scheduled-reads" element={<ScheduledReads />} />
     <Route path="device-information" element={<DeviceInformation />} />
+    <Route path="configure-command" element={<ConfigureCommand />} />
   </Route>
 );
 

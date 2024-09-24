@@ -16,6 +16,7 @@ import {
   ExecutionHistoryDetailsRecordModified
 } from "./records/command-execution";
 import { ScheduledCommandRecord } from './records/reports';
+import { ConfigureCommandRecord } from './records/configure-command';
 import { HESAuthToken } from './records/login';
 
 export type HesAPIError = {
@@ -78,6 +79,7 @@ export type ScheduledReportsResponse = ResponseBaseWithOutPagination<ScheduledCo
 
 export type DeviceDataResponse = ResponseBase<DeviceManagementInfoRecord>;
 export type DeviceDetailResponse = ResponseBase<DeviceDetailRecord>;
+export type configureCommandResponse = ResponseBase<ConfigureCommandRecord>;
 
 export type HESTokenResponse = ResponseBaseWithOutPagination<HESAuthToken>;
 

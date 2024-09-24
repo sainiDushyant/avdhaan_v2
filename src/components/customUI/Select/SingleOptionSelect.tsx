@@ -11,6 +11,7 @@ interface SingleOptionSelectProps {
     name?: string;
     required?: boolean;
     customCss?: string;
+    disabled?: boolean;
 }
 
 const SingleOptionSelect =({
@@ -34,6 +35,7 @@ const SingleOptionSelect =({
             options={data}
             name={name}
             required={required}
+            isDisabled = {false}
         />
     )
 }
