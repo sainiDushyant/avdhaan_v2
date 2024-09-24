@@ -34,7 +34,6 @@ const GraphComponent: FC<GraphComponentProps> = ({ data: graphResponseData }) =>
             },
             minAngleToShowLabel: 0,
           },
-
           responsive: [{
             breakpoint: 658,
             options: {
@@ -61,7 +60,7 @@ const GraphComponent: FC<GraphComponentProps> = ({ data: graphResponseData }) =>
   ) return <EmptyScreen title={`scheduled reads not available`} />
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 pt-3">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
       {renderCharts()}
     </div>
   );

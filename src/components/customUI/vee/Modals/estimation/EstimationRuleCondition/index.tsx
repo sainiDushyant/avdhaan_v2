@@ -20,7 +20,7 @@ const EstimationRuleCondition: FC<EstimationRuleConditionProps> = ({ data }) => 
             buttonClass="tertiary-vee-btn"
         >
             <div className='flex flex-col gap-6 max-h-[80vh] overflow-y-auto scrollable-content'>
-                <div className='space-y-2'>
+                {/* <div className='space-y-2'>
                     <label htmlFor="rule-name">Rule Name</label>
                     <Input
                         name="estimation0rule-name"
@@ -29,7 +29,7 @@ const EstimationRuleCondition: FC<EstimationRuleConditionProps> = ({ data }) => 
                         style={{ opacity: "0.8", cursor: "text" }}
                         className="flex flex-wrap h-auto"
                     />
-                </div>
+                </div> */}
 
                 <div className='space-y-2'>
                     <label htmlFor="rule-description">Rule Description</label>

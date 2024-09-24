@@ -6,7 +6,7 @@ import { meterProfileData } from './endpoints/meter-profile-data';
 import { commandExecutionEndpoints } from "./endpoints/command-execution";
 import { DeviceInfoEndpoints } from './endpoints/device-info';
 import { ConfigureCommandEndpoints } from "./endpoints/configure-command";
-
+import { loginEndpoints } from './endpoints/login';
 
 const hesApi = createApi({
   reducerPath: 'hesApi',
@@ -17,8 +17,7 @@ const hesApi = createApi({
     credentials: 'same-origin',
     setHeaders: (headers) => {
       headers.set('Content-Type', 'application/json');
-      headers.set('Authorization', localStorage.getItem('token') as string);
-
+      headers.set('Authorization', sessionStorage.getItem('hes_token') as string);
       return headers;
     }
   }),
@@ -31,6 +30,7 @@ const hesApi = createApi({
     ...commandExecutionEndpoints(builder),
     ...DeviceInfoEndpoints(builder),
     ...ConfigureCommandEndpoints(builder),
+    ...loginEndpoints(builder)
   }),
 });
 
@@ -55,6 +55,8 @@ export const {
   useUpdateDeviceInfoMutation,
   useGetConfigureCommandInfoQuery,
   useUpdateCommandInfoMutation,
+  useUpdateTokenForAuthMutation,
+  useGetCommandExecutionHistoryDetailsQuery,
   usePrefetch
 } = hesApi;
 

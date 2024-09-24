@@ -11,10 +11,13 @@ import {
 } from './records/meter-profile-data-metrics';
 import { 
   BatchCommandHistoryRecord, CommandHistoryRecord, 
-  CommandInfoRecord 
+  CommandInfoRecord, 
+  ExecutionHistoryDetailsRecord,
+  ExecutionHistoryDetailsRecordModified
 } from "./records/command-execution";
 import { ScheduledCommandRecord } from './records/reports';
 import { ConfigureCommandRecord } from './records/configure-command';
+import { HESAuthToken } from './records/login';
 
 export type HesAPIError = {
   errorMsg: string;
@@ -66,16 +69,19 @@ export type LiveDataMetricsResponse = ResponseBaseWithOutPagination<LiveDataMetr
 export type CommandInfoResponse = ResponseBaseWithOutPagination<CommandInfoRecord>;
 export type CommandHistoryResponse = ResponseBase<CommandHistoryRecord>;
 export type BatchCommandHistoryResponse = ResponseBaseWithOffsetPagination<BatchCommandHistoryRecord>;
+export type ExecutionHistoryDetailsResponse = ResponseBase<ExecutionHistoryDetailsRecord>
+export type ExecutionHistoryDetailsResponseModified = ResponseBase<ExecutionHistoryDetailsRecordModified>
 
 export type MeterProfileDataTableOgResponse = ResponseBase<MeterProfileDataTableRecord>;
 export type MeterProfileDataTableNewResponse = ResponseBase<MeterProfileDataTableRecordTransformed>;
+
 export type ScheduledReportsResponse = ResponseBaseWithOutPagination<ScheduledCommandRecord>
 
-
 export type DeviceDataResponse = ResponseBase<DeviceManagementInfoRecord>;
-
 export type DeviceDetailResponse = ResponseBase<DeviceDetailRecord>;
 export type configureCommandResponse = ResponseBase<ConfigureCommandRecord>;
+
+export type HESTokenResponse = ResponseBaseWithOutPagination<HESAuthToken>;
 
 export interface CustomAPIError {
   description?: string;

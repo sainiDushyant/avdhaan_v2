@@ -63,7 +63,7 @@ export const deviceManagementEndpoints = (
       return response.data.records || [];
     }
   }),
-  getDeviceSubCategory: builder.query<DeviceSubCategoryRecord[], { searchQuery: string }>({
+  getDeviceSubCategory: builder.query<DeviceSubCategoryRecord[], void>({
     query: () => ({
       url: `device-management/device-sub-category-list`,
       method: 'GET'

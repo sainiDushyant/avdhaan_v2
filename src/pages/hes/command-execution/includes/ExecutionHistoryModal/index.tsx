@@ -43,7 +43,7 @@ const ExecutionHistory: FC<ExecutionHistoryProps> = ({ data }) => {
     );
 
     const batchCommandHistoryActions: ActionType<CommandHistoryRecord>[] = [
-        { element: BatchStatus },
+        { element: BatchStatus }
       ]
 
     const columns = useGetTableColumns({
@@ -51,7 +51,7 @@ const ExecutionHistory: FC<ExecutionHistoryProps> = ({ data }) => {
         customId: "executionId",
         query: ["executionStatus", "colorCode", "args"],
         action: batchCommandHistoryActions,
-        // getLink: (id) => `/command-execution/${id}`,
+        // getLink: (id) => `/hes/command-execution/${id}`,
     });
 
     if (!batchId) return <EyeClose />
@@ -63,7 +63,7 @@ const ExecutionHistory: FC<ExecutionHistoryProps> = ({ data }) => {
             modalClass="max-w-[80vw] py-0 flex flex-col"
             ButtonLogo={Eye}
         >
-            <DialogTitle className='font-semibold text-xl mt-5'>
+            <DialogTitle className='font-semibold text-xl mt-5 text-[#0A3690]'>
                 Command History
             </DialogTitle>
 
