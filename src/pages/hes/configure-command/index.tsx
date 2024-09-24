@@ -45,7 +45,11 @@ const ConfigureCommand = () => {
   const tableData = response?.data?.records || [];
   const columns = useGetTableColumns({
     cols: tableData,
+<<<<<<< HEAD
     query: ['argsType', 'argsMode', 'params', 'commandType', 'timeout', 'retryCount', 'commandID'],
+=======
+    query: ['argsType', 'argsMode', 'params', 'commandType', 'timeout', 'retryCount'],
+>>>>>>> afd724d (Adding Config Command Screen)
     action: deviceActions
   });
 
@@ -56,9 +60,12 @@ const ConfigureCommand = () => {
   return (
     <div className="px-5 py-3 w-full">
       <div className="flex flex-col py-4">
+<<<<<<< HEAD
         <h1 className="capitalize secondary-title lg:main-title">
           <span className="font-bold text-[#0A3690]">Configure Command</span>
         </h1>
+=======
+>>>>>>> afd724d (Adding Config Command Screen)
 
         {
           !isFetching ?

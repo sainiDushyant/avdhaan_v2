@@ -6,7 +6,10 @@ export interface ConfigureCommandRecord {
     retryCount: number;
     timeout: number;
     protocol: string,
+<<<<<<< HEAD
     commandID: string,
+=======
+>>>>>>> afd724d (Adding Config Command Screen)
 }
 export interface UpdateCommandPayload {
     commandId: string,
