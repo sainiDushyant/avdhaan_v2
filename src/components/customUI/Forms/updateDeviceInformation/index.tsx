@@ -4,10 +4,10 @@ import { FC, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SubmitButton from "../../Button/SubmitButton";
 import { Input } from "@/components/ui/input";
-import { CustomAPIError } from "@/store/hes/types";
 import FormCheckbox from "./FormCheckbox";
 import { DeviceDetailRecord, UpdateDevicePayload } from "@/store/hes/types/records/device-information";
 import { cn } from "@/lib/utils";
+import { CustomHesApiError } from "@/store/hes/types/other";
 
 interface UpdateDeviceFormProps {
   deviceInfo: DeviceDetailRecord;
@@ -54,18 +54,22 @@ const UpdateDeviceForm: FC<UpdateDeviceFormProps> = ({ deviceInfo, formCss, onSu
 
   const handleUpdateDevice = useCallback(async (apiPayload: UpdateDevicePayload) => {
     try {
-      await updateDeviceInfo(apiPayload);
+      await updateDeviceInfo(apiPayload).unwrap();
       toast({ variant: "default", description: "Device updated successfully" });
       if (onSubmitCb) return onSubmitCb();
       navigate('/device-management');
     } catch (error) {
-      const errorMsg = error as CustomAPIError;
+      const errorObj = error as CustomHesApiError;
+      let errorMsg = "Failed to update device"
+      if(errorObj.data && errorObj.data.error && errorObj.data.error.errorMsg ) {
+          errorMsg = errorObj.data.error.errorMsg;
+      }
       toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: errorMsg?.description || "Failed to update rule",
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: errorMsg,
       })
-    }
+  }
   }, [updateDeviceInfo, toast, onSubmitCb, navigate])
 
   const handleSubmit = useCallback(
