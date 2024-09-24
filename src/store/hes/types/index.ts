@@ -14,6 +14,7 @@ import {
   CommandInfoRecord 
 } from "./records/command-execution";
 import { ScheduledCommandRecord } from './records/reports';
+import { ConfigureCommandRecord } from './records/configure-command';
 
 export type HesAPIError = {
   errorMsg: string;
@@ -74,6 +75,7 @@ export type ScheduledReportsResponse = ResponseBaseWithOutPagination<ScheduledCo
 export type DeviceDataResponse = ResponseBase<DeviceManagementInfoRecord>;
 
 export type DeviceDetailResponse = ResponseBase<DeviceDetailRecord>;
+export type configureCommandResponse = ResponseBase<ConfigureCommandRecord>;
 
 export interface CustomAPIError {
   description?: string;
