@@ -18,6 +18,7 @@ import {
   ExecutionHistoryDetailsRecordModified
 } from './records/command-execution';
 import { ScheduledCommandRecord } from './records/reports';
+import { ConfigureCommandRecord } from './records/configure-command';
 import { HESAuthToken } from './records/login';
 import { DownloadCSVRecord } from './records/download-csv';
 
@@ -93,11 +94,7 @@ export type ScheduledReportsResponse =
 
 export type DeviceDataResponse = ResponseBase<DeviceManagementInfoRecord>;
 export type DeviceDetailResponse = ResponseBase<DeviceDetailRecord>;
-
-export type HESTokenResponse = ResponseBaseWithOutPagination<HESAuthToken>;
-
-export type DownloadCSVResponse =
-  ResponseBaseWithOutPagination<DownloadCSVRecord>;
+export type configureCommandResponse = ResponseBase<ConfigureCommandRecord>;
 
 export interface CustomAPIError {
   description?: string;
