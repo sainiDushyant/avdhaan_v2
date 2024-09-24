@@ -20,6 +20,7 @@ const Icons = () => {
                 <img
                     width="auto" className='max-h-[30px] lg:max-h-[40px]'
                     src="/assets/images/sidebar/logo.png"
+                    loading="lazy"
                 />
             </Link>
 

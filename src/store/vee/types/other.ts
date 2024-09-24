@@ -19,8 +19,11 @@ export interface DateTimeProps {
   min?: string;
   name?: string;
   required?: boolean;
+  step?: string;
   customCss?: string;
 }
+
+export type RangeProps = DateTimeProps;
 
 export interface Pagination {
   pageIndex: number;
@@ -37,13 +40,3 @@ export interface RefetchDataProps {
 }
 
 export type Cursor = string | null;
-
-export interface CursorPaginationProps {
-  countApiPath?: string;
-  afterCursor: Cursor;
-  beforeCursor: Cursor;
-  prefetchCursor?: (
-    arg1: { afterCursor: Cursor; beforeCursor: Cursor },
-    args2?: { [k: string]: string | number }
-  ) => void;
-}

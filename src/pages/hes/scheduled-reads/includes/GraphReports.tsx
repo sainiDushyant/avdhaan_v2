@@ -1,7 +1,8 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import Graph from "@/components/customUI/Graph";
 import { ApexOptions } from 'apexcharts';
 import { ChartData } from '@/store/hes/types/records/reports';
+import EmptyScreen from '@/components/customUI/EmptyScreen';
 
 interface GraphComponentProps {
   data: ChartData;
@@ -9,7 +10,7 @@ interface GraphComponentProps {
 
 const GraphComponent: FC<GraphComponentProps> = ({ data: graphResponseData }) => {
 
-  const renderCharts = () => {
+  const renderCharts = useCallback(() => {
     return Object.keys(graphResponseData).map((commandName) => {
       const data = graphResponseData[commandName];
       const graphData = {
@@ -33,7 +34,6 @@ const GraphComponent: FC<GraphComponentProps> = ({ data: graphResponseData }) =>
             },
             minAngleToShowLabel: 0,
           },
-          
           responsive: [{
             breakpoint: 658,
             options: {
@@ -44,7 +44,7 @@ const GraphComponent: FC<GraphComponentProps> = ({ data: graphResponseData }) =>
             }
           }],
           colors: ['#0A3690', '#FF5A5A', '#FFC32E', '#00C4B4', '#9966FF', '#FF9F40'],
-        } as ApexOptions,
+        } as ApexOptions
       };
 
       return (
@@ -53,7 +53,11 @@ const GraphComponent: FC<GraphComponentProps> = ({ data: graphResponseData }) =>
         </div>
       );
     });
-  };
+  }, [ graphResponseData ]);
+
+  if(!graphResponseData || 
+    !Object.keys(graphResponseData).length 
+  ) return <EmptyScreen title={`scheduled reads not available`} />
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">

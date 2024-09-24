@@ -1,10 +1,17 @@
+import { ResponseBaseWithOutPagination } from ".";
+
+export type CustomHesApiError = {
+  status: number;
+  data: ResponseBaseWithOutPagination<null>;
+}
+
 export type GraphItem = {
   name: string;
   count: number;
   percentage: number;
   totalCount?: number;
   color?: string;
-}
+};
 
 export type GraphData = GraphItem[];
 
@@ -43,13 +50,3 @@ export interface RefetchDataProps {
 }
 
 export type Cursor = string | null;
-
-export interface CursorPaginationProps {
-  countApiPath?: string;
-  afterCursor: Cursor;
-  beforeCursor: Cursor;
-  prefetchCursor?: (
-    arg1: { afterCursor: Cursor; beforeCursor: Cursor },
-    args2?: { [k: string]: string | number }
-  ) => void;
-}

@@ -1,90 +1,60 @@
-import { FC, useCallback, useState } from "react";
-import DateTime from "@/components/customUI/Date/DateTime";
-import { QueryType } from "@/pages/hes/scheduled-reads";
-import Button from "@/components/ui/button";
-import { toast } from "@/components/ui/use-toast";
+import { useCallback, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import SubmitButton from '@/components/customUI/Button/SubmitButton';
+import DateTime from '@/components/customUI/Date/DateTime';
 
-interface DateFiltersProps {
-  setQuery: React.Dispatch<React.SetStateAction<QueryType>>;
-}
+const DateFilters = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string>('');
 
-const DateFilters: FC<DateFiltersProps> = ({ setQuery }) => {
-
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("")
-
-  const clearFilters = useCallback(() => {
-    setQuery({ "from": "", "to": "" })
-    setStartDate("")
-    setEndDate("")
-  }, [setQuery, setStartDate, setEndDate]);
-
+  const formatDate = (date: string) => {
+    if (!date) return '';
+    const formattedDate = new Date(date);
+    const year = formattedDate.getFullYear();
+    const month = String(formattedDate.getMonth() + 1).padStart(2, '0');
+    const day = String(formattedDate.getDate()).padStart(2, '0');
+    const hours = String(formattedDate.getHours()).padStart(2, '0');
+    const minutes = String(formattedDate.getMinutes()).padStart(2, '0');
+    const seconds = String(formattedDate.getSeconds()).padStart(2, '0');
+    return `${year}-${day}-${month} ${hours}:${minutes}:${seconds}`;
+  };
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-
-      const start = new Date(startDate);
-      const end = new Date(endDate);
-
-      const diffInDays = (end.getTime() - start.getTime()) / (1000 * 3600 * 24);
-      if (diffInDays > 7) {
-        toast({
-          variant: "destructive",
-          description: "End date must be within 7 days from the start date.",
-        })
-        return;
-      }
-      setQuery({ from: startDate, to: endDate });
+      const params = new URLSearchParams(searchParams);
+      const formattedStartDate = formatDate(startDate);
+      const formattedEndDate = formatDate(endDate);
+      if (formattedStartDate) params.set('from', formattedStartDate);
+      if (formattedEndDate) params.set('to', formattedEndDate);
+      setSearchParams(params.toString());
     },
-    [setQuery, startDate, endDate]
+    [startDate, endDate, searchParams, setSearchParams]
   );
-
 
   return (
     <form
-      className="p-5 rounded-lg bg-white my-3 flex-1 flex flex-wrap gap-x-5 gap-y-5"
+      className="p-5 rounded-lg  my-3 flex-1 flex flex-wrap gap-x-5 gap-y-5"
       onSubmit={handleSubmit}
     >
-
       <DateTime
+        initialValue={startDate}
         placeholder="Start Date"
-        customState={{
-          val: startDate,
-          setter: setStartDate
-        }}
+        customState={{ val: startDate, setter: setStartDate }}
         name="startDate"
         required={false}
-        customCss="flex-none md:min-w-[240px]"
-
       />
+
       <DateTime
+        initialValue={endDate}
         placeholder="End Date"
-        customState={{
-          val: endDate,
-          setter: setEndDate
-        }}
+        customState={{ val: endDate, setter: setEndDate }}
         name="endDate"
-        min={startDate}
         required={false}
-        customCss="flex-none md:min-w-[240px]"
       />
 
-      <Button
-        className="date-filter-color"
-        variant={'secondary'}
-        type="submit"
-      >
-        Apply
-      </Button>
-      <Button
-        className="date-filter-color"
-        variant={'secondary'}
-        type="button"
-        onClick={clearFilters}
-      >
-        Clear
-      </Button>
+      <SubmitButton title="Apply Filters" />
     </form>
   );
 };

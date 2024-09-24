@@ -4,8 +4,9 @@ import { DateTimeProps } from "@/store/vee/types/other";
 
 const MonthYearPicker: FC<DateTimeProps> = ({
     initialValue, placeholder, customState, max, min,
-    name, required
+    name, required,
 }) => {
+    
     const dateRef = useRef<HTMLInputElement>(null);
     const [date, setDate] = useState(initialValue || "");   
     const today = new Date();

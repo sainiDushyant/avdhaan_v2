@@ -1,8 +1,6 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { ApexOptions } from 'apexcharts';
-import { ChartData, DataType } from '@/store/hes/types/prepare-chart-data';
-import { jwtDecode } from 'jwt-decode';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -11,36 +9,6 @@ export function cn(...inputs: ClassValue[]) {
 export async function enableMocking() {
   const { worker } = await import('../mocks/browser');
   return worker.start();
-}
-
-export function serializeFormData<T>(formData: FormData) {
-  const formPayload: { [key: string]: string | string[] } = {};
-  for (const [key, value] of formData.entries()) {
-    const keyExists = key in formPayload;
-    if (!keyExists) {
-      formPayload[key] = value as string;
-    } else {
-      const prevValue = formPayload[key];
-      if (typeof prevValue === 'object') {
-        const prevValue = formPayload[key];
-        formPayload[key] = [...prevValue, value as string];
-      } else {
-        formPayload[key] = [prevValue, value as string];
-      }
-    }
-  }
-  return formPayload as T;
-}
-
-export function convertToDateTime(input: string, postFix: string) {
-  if (!input || !input.length) return '';
-  const dateTime = input.split('T');
-  if (dateTime.length < 2) return '';
-  let time = dateTime[1];
-  if (time.length === 5) {
-    time = time + postFix;
-  }
-  return dateTime[0] + ' ' + time;
 }
 
 export function isValidDate(dateString: string): boolean {
@@ -110,7 +78,6 @@ function createUniqueColorGenerator() {
   return getUniqueColor;
 }
 
-// Example usage
 export const getUniqueColor = createUniqueColorGenerator();
 
 function getRandomCoordinate(max: number) {
@@ -178,28 +145,38 @@ export const formatDate = (
   return new Intl.DateTimeFormat('en-US', options).format(new Date(date));
 };
 
-// Define the function with fixed parameters and dynamic keys
+export type DataType = {
+  title?: string;
+  value: number;
+  percentage?: number;
+  color?: string;
+  totalCount?: number;
+  data_timestamp: string | Date | number;
+}
+
+export type ChartData = {
+  [key: string]: DataType[];
+}
+
 export const prepareChartData = (
   data: ChartData,
   chartType: 'bar' | 'line',
   dateType: 'days' | 'time' | 'month'
 ) => {
-  // Helper function to transform data for the chart
+
   const transformDataForChart = (data: DataType[]) => {
-    // Sort the data array by the data_timestamp in ascending order
     const sortedData = [...data].sort(
       (a, b) =>
         new Date(a.data_timestamp).getTime() -
         new Date(b.data_timestamp).getTime()
     );
 
-    // Determine the date format based on chart type and parent parameter
     const dateFormat =
       dateType === 'month'
         ? 'MMM YYYY'
         : dateType === 'days'
-        ? 'D MMM'
-        : 'h:mm A';
+          ? 'D MMM'
+          : 'h:mm A';
 
     return {
       dates: sortedData.map((item) =>
@@ -209,23 +186,35 @@ export const prepareChartData = (
     };
   };
 
-  // Extract data for the chart based on fixed keys or properties
   const collectedDataTransformed = transformDataForChart(data['data1'] || []);
   const missedDataTransformed = transformDataForChart(data['data2'] || []);
 
-  // Define the series for the chart
+  const getLimitedData = (
+    data: { dates: string[]; values: number[] },
+    limit: number
+  ) => {
+    const slicedDates = data.dates.slice(0, limit);
+    const slicedValues = data.values.slice(0, limit);
+    return { dates: slicedDates, values: slicedValues };
+  };
+
+  const isMobile = window.innerWidth < 768;
+  const limit = isMobile ? 4 : collectedDataTransformed.dates.length; // Limit to 4 on mobile or show all
+
+  const collectedDataLimited = getLimitedData(collectedDataTransformed, limit);
+  const missedDataLimited = getLimitedData(missedDataTransformed, limit);
+
   const series = [
     {
       name: '% Reads Fetched',
-      data: collectedDataTransformed.values
+      data: collectedDataLimited.values
     },
     {
       name: '% Missed Fetched',
-      data: missedDataTransformed.values
+      data: missedDataLimited.values
     }
   ];
 
-  // Define common options for the chart
   const commonOptions: ApexOptions = {
     chart: {
       zoom: { enabled: false },
@@ -247,27 +236,32 @@ export const prepareChartData = (
         }
       }
     },
+
     xaxis: {
       tooltip: {
         enabled: false
       },
-      categories: collectedDataTransformed.dates,
+      categories: collectedDataLimited.dates,
       labels: {
         style: {
           fontSize: '12px',
-          colors: collectedDataTransformed.dates.map(() => '#A3B2CF')
+          colors: collectedDataLimited.dates.map(() => '#A3B2CF')
         },
         format:
           dateType === 'month'
             ? 'MMM yyyy'
             : dateType === 'days'
-            ? 'd MMM'
-            : 'h:mm TT'
+              ? 'd MMM'
+              : 'h:mm TT'
       }
     },
     legend: {
       position: 'bottom',
-      horizontalAlign: 'center'
+      horizontalAlign: 'center',
+      itemMargin: {
+        horizontal: 20,
+        vertical: 5
+      }
     },
     tooltip: {
       followCursor: true,
@@ -280,10 +274,87 @@ export const prepareChartData = (
           '</div>'
         );
       }
-    }
+    },
+    noData: {
+      text: 'No data available for this time frame.',
+      align: 'center',
+      verticalAlign: 'middle',
+      offsetX: 0,
+      offsetY: 0,
+      style: {
+        color: '#0A3690',
+        fontSize: '20px',
+        fontFamily: 'sans-serif'
+      }
+    },
+    responsive: [
+      {
+        breakpoint: 768,
+        options: {
+          chart: {
+            height: 250
+          },
+          xaxis: {
+            categories: collectedDataLimited.dates, // Show only the last 4 entries
+            labels: {
+              style: {
+                fontSize: '8px'
+              }
+            }
+          },
+          yaxis: {
+            labels: {
+              style: {
+                fontSize: '8px'
+              }
+            }
+          }
+        }
+      },
+      {
+        breakpoint: 480,
+        options: {
+          chart: {
+            height: 200
+          },
+          xaxis: {
+            categories: collectedDataLimited.dates, // Show only the last 4 entries
+            labels: {
+              style: {
+                fontSize: '6px'
+              }
+            }
+          },
+          yaxis: {
+            labels: {
+              style: {
+                fontSize: '6px'
+              }
+            }
+          },
+          legend: {
+            fontSize: '10px',
+            markers: {
+              size: 4
+            }
+          },
+          noData: {
+            text: 'No data available for this time frame.',
+            align: 'center',
+            verticalAlign: 'middle',
+            offsetX: 0,
+            offsetY: 0,
+            style: {
+              color: '#0A3690',
+              fontSize: '10px',
+              fontFamily: 'sans-serif'
+            }
+          }
+        }
+      }
+    ]
   };
 
-  // Define bar-specific options
   const barSpecificOptions: ApexOptions = {
     plotOptions: {
       bar: {
@@ -314,7 +385,6 @@ export const prepareChartData = (
     }
   };
 
-  // Define line-specific options
   const lineSpecificOptions: ApexOptions = {
     markers: {
       shape: 'circle',
@@ -340,7 +410,6 @@ export const prepareChartData = (
     }
   };
 
-  // Combine common and specific options
   const options = {
     ...commonOptions,
     ...(chartType === 'bar' ? barSpecificOptions : lineSpecificOptions)
@@ -349,51 +418,18 @@ export const prepareChartData = (
   return { series, options };
 };
 
-export const fetchToken = async () => {
-  let token: string | null = localStorage.getItem('token');
+export function dateDiffInDays(dateTime1: string, dateTime2: string): number {
+  const date1 = new Date(dateTime1);
+  const date2 = new Date(dateTime2);
+  const diffInMilliseconds = Math.abs(date2.getTime() - date1.getTime());
+  const diffInDays = diffInMilliseconds / (1000 * 60 * 60 * 24);
+  return diffInDays;
+}
 
-  if (token) {
-    const decodedToken: any = jwtDecode(token);
-    const currentTime = Date.now() / 1000;
-
-    if (decodedToken.exp < currentTime) {
-      console.log("Token is expired, fetching a new one...");
-      token = await getNewToken();
-    }
-  } else {
-    token = await getNewToken();
-  }
-
-  if (token) {
-    console.log("Token is valid or newly fetched");
-  }
-};
-
-export const getNewToken = async (): Promise<string | null> => {
-  try {
-    const response = await fetch(`${import.meta.env.VITE_HES_BASE_URL}/v1/auth/token`, {
-      method: 'POST',
-      body: JSON.stringify({
-        "authID": "bdf234d4-e1bb-4df3-a27e-433d596b808c"
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'same-origin',
-    });
-
-    const data = await response.json();
-
-    if (data) {
-      const newToken = data?.data?.records[0]?.token;
-      localStorage.setItem('token', newToken);
-      return newToken;
-    } else {
-      console.error("Failed to get the new token");
-      return null;
-    }
-  } catch (error) {
-    console.error("Error fetching new token:", error);
-    return null;
-  }
-};
+export function dateDiffInMonths(dateTime1: string, dateTime2: string): number {
+  const date1 = new Date(dateTime1);
+  const date2 = new Date(dateTime2);
+  const yearsDiff = date2.getFullYear() - date1.getFullYear();
+  const monthsDiff = date2.getMonth() - date1.getMonth();
+  return yearsDiff * 12 + monthsDiff;
+}

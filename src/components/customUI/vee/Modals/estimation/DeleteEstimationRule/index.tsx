@@ -15,7 +15,7 @@ interface DeleteEstimationRuleProps {
 
 const ButtonLogo = () => {
     return <img
-        src="/vee/assets/images/other/trash.png"
+        src="/assets/images/other/trash.png"
         alt="" height="auto"
         style={{ maxWidth: 20 }}
     />
@@ -63,7 +63,7 @@ const DeleteEstimationRule: FC<DeleteEstimationRuleProps> = ({ data, cb }) => {
 
             <DialogHeader>
                 <img
-                    src="/vee/assets/images/other/discovery.png"
+                    src="/assets/images/other/discovery.png"
                     height="auto" loading="lazy"
                     style={{ maxWidth: 70 }}
                     className="mx-auto"

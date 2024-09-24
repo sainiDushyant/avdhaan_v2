@@ -1,47 +1,39 @@
+import { FC } from 'react';
 import CaretLeft from '@/components/svg/CaretLeft'
 import CaretRight from '@/components/svg/CaretRight'
 import Button from '@/components/ui/button';
-import { CursorPaginationProps } from '@/store/vee/types/other';
-import { FC, useCallback,  useState } from 'react';
+import { cn } from '@/lib/utils';
 
-const CursorPagination: FC<CursorPaginationProps> = ({ afterCursor, beforeCursor, prefetchCursor }) => {
+export interface CursorPaginationProps {
+    afterCursor?: string | null;
+    beforeCursor?: string | null;
+    customCss?: string;
+    disabled?: boolean;
+    getOldRecords: (val?: string | null) => void;
+    getNewRecords: (val?: string | null) => void;
+  }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [ selectedFilters, _ ] = useState<CursorPaginationProps>({ 
-        beforeCursor: null, afterCursor: null 
-    });
+const CursorPagination: FC<CursorPaginationProps> = ({ 
+    afterCursor, beforeCursor, 
+    disabled, customCss,
+    getOldRecords, getNewRecords
+}) => {
 
-    const prefetchOldRecords = useCallback((val: string | null) => {
-        if (!val) return;
-        if (!prefetchCursor) return;
-        prefetchCursor({
-            ...selectedFilters, afterCursor: val, beforeCursor: null
-        }, { ifOlderThan: 35 });
-    }, [prefetchCursor, selectedFilters])
-
-    const getOldRecords = useCallback((val: string | null) => {
-        console.log(val);
-    }, []);
-
-    const getNewRecords = useCallback((val: string | null) => {
-        if (!val) return;
-    }, [])
+    if(!afterCursor && !beforeCursor) return null;
 
     return (
-        <div>
+        <div className={cn(customCss)}>
             <Button
                 variant="ghost"
-                disabled={!beforeCursor}
+                disabled={!beforeCursor || disabled}
                 onClick={() => getNewRecords(beforeCursor)}
             >
                 <CaretLeft />
             </Button>
             <Button
                 variant="ghost"
-                disabled={!afterCursor}
+                disabled={!afterCursor || disabled}
                 onClick={() => getOldRecords(afterCursor)}
-                onMouseEnter={() => prefetchOldRecords(afterCursor)}
-
             >
                 <CaretRight />
             </Button>

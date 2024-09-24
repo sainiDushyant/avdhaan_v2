@@ -2,7 +2,7 @@ import { FC, ReactNode, useCallback, useEffect, useState } from "react";
 import SubmitButton from "@/components/customUI/Button/SubmitButton";
 import { Option } from "@/store/vee/types/other";
 import { useSearchParams } from "react-router-dom";
-import { cn, isValidDate } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { FilterPayload } from "@/store/vee/types/other";
 import useGetAcquiredDate from "@/hooks/vee/useGetAcquiredDate";
 import VeeDateFilter from "./VeeDateFilter";
@@ -37,6 +37,7 @@ const VeeFilters: FC<VeeFilterProps> = ({
         label: DEFAULT_LOAD_TYPE_LABEL, 
         value: DEFAULT_LOAD_TYPE 
     }: null);
+
     const [startDate, setStartDate] = useState<string>("");
     const [endDate, setEndDate] = useState<string>("");
 
@@ -67,17 +68,6 @@ const VeeFilters: FC<VeeFilterProps> = ({
         const selectedLoadType = searchParams.get("load_type");
         const defaultLoad = LOAD_TYPE.filter(item => item.value === selectedLoadType);
 
-        const today = new Date().toISOString().split('T')[0];
-        const selectedStartDate = searchParams.get("start_date");
-        let defaultStartDate = !selectedStartDate || !isValidDate(selectedStartDate) ? today : selectedStartDate;
-
-        const selectedEndDate = searchParams.get("end_date");
-        const defaultEndDate = !selectedEndDate || !isValidDate(selectedEndDate) ? today : selectedEndDate;
-
-        if (defaultStartDate && defaultEndDate && new Date(defaultStartDate) > new Date(defaultEndDate)) {
-            defaultStartDate = defaultEndDate;
-        }
-
         setMeterType(defaultMeter.length > 0 ? defaultMeter[0] : setLtMtDefault ? {
             label: DEFAULT_METER_TYPE_LABEL,
             value: DEFAULT_METER_TYPE 
@@ -85,9 +75,7 @@ const VeeFilters: FC<VeeFilterProps> = ({
         setLoadType(defaultLoad.length > 0 ? defaultLoad[0] : setLtMtDefault ? { 
             label: DEFAULT_LOAD_TYPE_LABEL, 
             value: DEFAULT_LOAD_TYPE 
-        }: null)
-        setStartDate(defaultStartDate);
-        setEndDate(defaultEndDate);
+        }: null);
 
     }, [searchParams, setLtMtDefault])
 

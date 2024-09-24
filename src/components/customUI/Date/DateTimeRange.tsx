@@ -1,16 +1,14 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import DateTime from "./DateTime"
 import { DateTimeProps } from "@/store/vee/types/other";
 
 interface DateTimeRangeProps {
     start: DateTimeProps;
     end: DateTimeProps;
+    customCss?: string;
 }
 
-const DateTimeRange: FC<DateTimeRangeProps> = ({ start, end }) => {
-
-    const [startDate, setStartDate] = useState(start.initialValue || "");
-    const [endDate, setEndDate] = useState(end.initialValue || "");
+const DateTimeRange: FC<DateTimeRangeProps> = ({ start, end, customCss }) => {
 
     return (
         <>
@@ -18,16 +16,19 @@ const DateTimeRange: FC<DateTimeRangeProps> = ({ start, end }) => {
                 {...start}
                 placeholder={start.placeholder || "Start Date Time"}
                 name={start.name || "from"}
-                customState={{ val: startDate, setter: setStartDate }}
-                max={endDate}
+                customState={start.customState}
+                max={end.customState?.val || start.max}
+                customCss={customCss}
             />
 
             <DateTime
                 {...end}
                 placeholder={end.placeholder || "End Date Time"}
-                name={start.name || "to"}
-                customState={{ val: endDate, setter: setEndDate }}
-                min={startDate}
+                name={end.name || "to"}
+                customState={end.customState}
+                min={start.customState?.val}
+                max={end.max}
+                customCss={customCss}
             />
         </>
     )

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 export type ActionType<T> = {
   element: FC<{ data: T; cb?: () => void}>;
   colName?: string;
+
   actionCb?: () => void;
 }
 
@@ -31,7 +32,7 @@ function useGetTableColumns<T>({
     const initialRow = cols[0] as T[];
 
     //adding all generic columns
-    const temp: ColumnDef<T>[] = Object.keys(initialRow).filter(
+    const genericCols: ColumnDef<T>[] = Object.keys(initialRow).filter(
       item => !query.includes(item)).map(columnName => {
         return {
           accessorKey: columnName,
@@ -48,7 +49,7 @@ function useGetTableColumns<T>({
 
     //adding select feature
     if (showSelect) {
-      temp.unshift(
+      genericCols.unshift(
         {
           id: "select",
           header: ({ table }) => (
@@ -77,7 +78,7 @@ function useGetTableColumns<T>({
     //adding link feature
     if (getLink) {
       const linkFx = getLink;
-      temp.push(
+      genericCols.push(
         {
           accessorKey: `link_${id}`,
           header: "",
@@ -86,10 +87,12 @@ function useGetTableColumns<T>({
             const linkProps = linkFx(rowId);
             return (
               typeof linkProps === "string" ?
-                <Link className="link-button tertiary-vee-btn px-2" to={linkProps}>
+                <Link className="link-button tertiary-vee-btn px-2" 
+                  to={linkProps}>
                   Details
                 </Link> :
-                <Link className="link-button tertiary-vee-btn px-2" to={linkProps.pathname} state={linkProps.state}>
+                <Link className="link-button tertiary-vee-btn px-2" 
+                  to={linkProps.pathname} state={linkProps.state}>
                   Details
                 </Link>
             )
@@ -102,7 +105,7 @@ function useGetTableColumns<T>({
     if (action && action.length > 0) {
       const actionArr: ColumnDef<T>[] = action.map(actionData => {
         const reactElement = actionData.element
-        const randomKey = (Math.random() + 1).toString(36).substring(7);
+        const randomKey = (Math.random() + 1).toString(36).substring(7) + (actionData.colName || "");
         return {
           accessorKey: `${id}_${randomKey}`,
           header: actionData.colName,
@@ -116,10 +119,10 @@ function useGetTableColumns<T>({
           },
         }
       })
-      temp.push(...actionArr)
+      genericCols.push(...actionArr)
     }
 
-    return temp;
+    return genericCols;
   }, [cols, showSelect, getLink, action, query, id]);
 
   return columns;

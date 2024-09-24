@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { searchParamsToHesFilters } from '@/lib/hes';
 import { HesFilterState } from '@/store/hes/types/records/device-management';
 
-const INITIAL_FILTERS = {
+export const INITIAL_FILTERS = {
     dtr_id: [],
     feeder_id: [],
     pss_id: [],

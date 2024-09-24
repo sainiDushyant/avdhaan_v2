@@ -11,7 +11,7 @@ interface EditEstimationRuleProps {
 
 const ButtonLogo = () => {
     return <img
-        src="/vee/assets/images/other/edit.png"
+        src="/assets/images/other/edit.png"
         alt="" height="auto"
         style={{ maxWidth: 20 }}
     />
