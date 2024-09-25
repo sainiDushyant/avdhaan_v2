@@ -1,6 +1,6 @@
-import UpdateCommandForm from '@/components/customUI/Forms/updateConfigureCommand';
 import Spinner from '@/components/customUI/Loaders/Spinner';
 import BaseModal from '@/components/customUI/Modals';
+import UpdateCommandForm from '@/components/customUI/hes/updateConfigureCommand';
 import { ConfigureCommandRecord } from '@/store/hes/types/records/configure-command';
 import { FC, useCallback, useState, Suspense } from 'react';
 
