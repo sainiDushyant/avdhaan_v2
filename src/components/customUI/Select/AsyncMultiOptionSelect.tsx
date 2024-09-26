@@ -3,6 +3,8 @@ import { MultiValue } from 'react-select';
 import AsyncSelect from 'react-select/async'
 import { Option } from '@/store/vee/types/other';
 import { cn } from '@/lib/utils';
+import SelectInput from './SelectInput';
+
 
 interface AsyncMultiOptionSelectProps {
     loadOptions: (inputValue: string) => Promise<{ label: string; value: string; }[]>;
@@ -28,6 +30,7 @@ const AsyncMultiOptionSelect: FC<AsyncMultiOptionSelectProps> = ({
             loadOptions={loadOptions}
             value={value}
             onChange={handleChange}
+            components={{ Input: SelectInput }}
             className={cn("md:min-w-[170px] flex-1", customCss)}
             placeholder={`Search ${placeholder}`}
             noOptionsMessage={({ inputValue }) =>
@@ -40,6 +43,7 @@ const AsyncMultiOptionSelect: FC<AsyncMultiOptionSelectProps> = ({
             isLoading={loading}
             required={required}
             isDisabled={isDisabled}
+
         />
     )
 }

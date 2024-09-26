@@ -22,7 +22,7 @@ const HeadGroups = () => {
 
   const columns = useGetTableColumns({
     cols: response?.head_groups || [],
-    query: ["name"],
+    query: ["name", "meter_type", "load_type"],
     getLink: (id) => `/vee/headgroups/${id}`,
   })
 
