@@ -16,17 +16,20 @@ interface AsyncMultiOptionSelectProps {
     customCss?: string;
     required?: boolean;
     cacheOptions?: boolean;
+    defaultOptions?: Option[];
 }
 
 const AsyncMultiOptionSelect: FC<AsyncMultiOptionSelectProps> = ({
     value, loading, placeholder, customCss, 
-    required, cacheOptions, isDisabled,
+    required, cacheOptions, isDisabled, defaultOptions,
     loadOptions, handleChange
 }) => {
+
     return (
         <AsyncSelect
             isMulti
             cacheOptions={cacheOptions !== undefined ? cacheOptions : true}
+            defaultOptions={defaultOptions}
             loadOptions={loadOptions}
             value={value}
             onChange={handleChange}
@@ -43,7 +46,6 @@ const AsyncMultiOptionSelect: FC<AsyncMultiOptionSelectProps> = ({
             isLoading={loading}
             required={required}
             isDisabled={isDisabled}
-
         />
     )
 }
