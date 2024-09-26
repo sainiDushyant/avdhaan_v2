@@ -32,6 +32,7 @@ const useHesPrimaryFilterOptions = (primaryFilters: HesFilterState) => {
     const searchPrimaryFiltersAPIDebounced = pDebounce(searchPrimaryFiltersAPI, 500);
 
     const dtrOptions = useCallback(async (inputValue: string) => {
+        if(inputValue.length < 2 || inputValue.length > 40) return [];
         const higherPriorityParams: HesFilterStateOptional = { 
             pss_id: primaryFilters.pss_id,
             feeder_id: primaryFilters.feeder_id
@@ -43,6 +44,7 @@ const useHesPrimaryFilterOptions = (primaryFilters: HesFilterState) => {
     }, [ primaryFilters ]);
 
     const feederOptions = useCallback(async (inputValue: string) => {
+        if(inputValue.length < 2 || inputValue.length > 40) return [];
         const higherPriorityParams: HesFilterStateOptional = { 
             pss_id: primaryFilters.pss_id
         };
@@ -53,6 +55,7 @@ const useHesPrimaryFilterOptions = (primaryFilters: HesFilterState) => {
     }, [ primaryFilters ]);
 
     const pssOptions = useCallback(async (inputValue: string) => {
+        if(inputValue.length < 2 || inputValue.length > 40) return [];
         const searchData = await searchPrimaryFiltersAPIDebounced("pss", inputValue);
         if(!searchData) return [];
         const pssIds = primaryFilters.pss_id.map(item => item.value);
