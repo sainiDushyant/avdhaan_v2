@@ -67,7 +67,7 @@ const NavBar = () => {
               <AccordionItem
                 value={`item-${index + 1}`}
                 key={`accordion_item_${link.to}_${index}`}
-                className={`border-b-0 p-5   ${
+                className={`border-b-0 p-5 ${
                   isParentActive(link.to, link.children)
                     ? 'bg bg-[#D6EEEBF5]'
                     : ''
@@ -76,7 +76,7 @@ const NavBar = () => {
                 <AccordionTrigger className="text-[#708CC7] py-0 underline-none">
                   <div>
                     <h3
-                      className={`${
+                      className={`text-left text-base  ${
                         isParentActive(link.to, link.children)
                           ? 'text-[#0A3690]'
                           : 'text-[#708CC7]'

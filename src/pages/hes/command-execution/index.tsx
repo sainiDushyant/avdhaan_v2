@@ -60,8 +60,7 @@ const CommandExecution = () => {
 
   return (
     <div className="px-5 py-3 w-full">
-      <HesFilters />
-      <CommandForm refetch={refetchCommandExecutionHistory} />
+      <CommandExecutionModule />
       <div className="flex flex-col py-4">
         <CommandHistoryFilters
           setQuery={setQuery}

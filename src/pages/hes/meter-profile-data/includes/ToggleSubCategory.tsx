@@ -20,22 +20,21 @@ const ToggleCategory: FC<ToggleCategoryProps> = ({ query, setQuery }) => {
       const { after_cursor, before_cursor, ...rest } = prevVal;
       return { ...rest, sub_category: id }
     })
-  }, [ setQuery ]);
+  }, [setQuery]);
 
   return (
-
-        <div className="flex border-b border-gray-300 space-x-8 my-5">
-          {isLoading && <Spinner />}
-          {data && data.map(item => (
-            <div
-              key={item.id}
-              onClick={() => handleTabClick(item.id)}
-              className={cn("cursor-pointer font-bold pb-2 transition-colors duration-300 text-gray-500",
-                query.sub_category === item.id && "text-[#0A3690] font-semibold border-b-2 border-[#0A3690]")}
-            >
-              <p>{meterCategoryData.get(item.name)}</p>
-            </div>
-          ))}
+    <div className="flex border-b border-gray-300 space-x-8 my-5">
+      {isLoading && <Spinner />}
+      {data && data.map(item => (
+        <div
+          key={item.id}
+          onClick={() => handleTabClick(item.id)}
+          className={cn("cursor-pointer font-bold pb-2 transition-colors duration-300 text-gray-500",
+            query.sub_category === item.id && "text-[#0A3690] font-semibold border-b-2 border-[#0A3690]")}
+        >
+          <p>{meterCategoryData.get(item.name)}</p>
+        </div>
+      ))}
     </div>
   );
 };

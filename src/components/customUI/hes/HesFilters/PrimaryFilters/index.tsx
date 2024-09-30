@@ -9,11 +9,13 @@ import DisabledFilter from "./DisabledFilter";
 
 interface PrimaryFiltersProps {
     primaryFilters: HesFilterState;
+    hideDisabledFilters?: boolean;
     setPrimaryFilters: React.Dispatch<React.SetStateAction<HesFilterState>>;
 }
 
 const PrimaryFilters: FC<PrimaryFiltersProps> = ({
-    primaryFilters, setPrimaryFilters
+    primaryFilters, hideDisabledFilters,
+    setPrimaryFilters,
 }) => {
 
     const {
@@ -45,7 +47,7 @@ const PrimaryFilters: FC<PrimaryFiltersProps> = ({
     
     return (
         <>
-            <DisabledFilter />
+            {!hideDisabledFilters && <DisabledFilter />}
             <AsyncMultiOptionSelect
                 loadOptions={pssOptions}
                 handleChange={handleChangePss}

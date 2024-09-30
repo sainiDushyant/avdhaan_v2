@@ -10,11 +10,13 @@ interface DeviceIdentifierProps {
     deviceIdentifier: MultiValue<Option>;
     cacheOptions?: boolean;
     required?: boolean;
+    disabled?: boolean;
     onChange: (selected: MultiValue<Option>) => void;
 }
 
 const DeviceIdentifier: FC<DeviceIdentifierProps> = ({ 
-    primaryFilters, deviceIdentifier, cacheOptions, required, onChange 
+    primaryFilters, deviceIdentifier, cacheOptions, 
+    required, disabled, onChange 
 }) => {
 
     const { 
@@ -32,6 +34,7 @@ const DeviceIdentifier: FC<DeviceIdentifierProps> = ({
             placeholder={"Meter"}
             required={required}
             cacheOptions={cacheOptions}
+            isDisabled={disabled}
         />
     )
 }
