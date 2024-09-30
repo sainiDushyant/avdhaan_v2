@@ -95,16 +95,10 @@ export type ScheduledReportsResponse =
 export type DeviceDataResponse = ResponseBase<DeviceManagementInfoRecord>;
 export type DeviceDetailResponse = ResponseBase<DeviceDetailRecord>;
 export type configureCommandResponse = ResponseBase<ConfigureCommandRecord>;
-<<<<<<< HEAD
 
 export type DownloadCSVResponse =
   ResponseBaseWithOutPagination<DownloadCSVRecord>;
 export type HESTokenResponse = ResponseBaseWithOutPagination<HESAuthToken>;
-
-export type DownloadCSVResponse =
-  ResponseBaseWithOutPagination<DownloadCSVRecord>;
-=======
->>>>>>> afd724d (Adding Config Command Screen)
 
 export interface CustomAPIError {
   description?: string;

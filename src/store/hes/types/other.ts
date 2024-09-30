@@ -1,8 +1,5 @@
 import { ResponseBaseWithOutPagination } from '.';
-<<<<<<< HEAD
-=======
 import { DownloadCSVRecord } from './records/download-csv';
->>>>>>> ddd7b45 (Added download functionality in meter profile data for push data csv and also added the download button in the graphs of meter profile data)
 
 export type CustomHesApiError = {
   status: number;
