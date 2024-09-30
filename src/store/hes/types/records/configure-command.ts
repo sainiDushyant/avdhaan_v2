@@ -6,6 +6,7 @@ export interface ConfigureCommandRecord {
   retryCount: number;
   timeout: number;
   protocol: string;
+  commandID: string;
 }
 export interface UpdateCommandPayload {
   commandId: string;
