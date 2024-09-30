@@ -45,7 +45,7 @@ const ConfigureCommand = () => {
   const tableData = response?.data?.records || [];
   const columns = useGetTableColumns({
     cols: tableData,
-    query: ['argsType', 'argsMode', 'params', 'commandType', 'timeout', 'retryCount'],
+    query: ['argsType', 'argsMode', 'params', 'commandType', 'timeout', 'retryCount', 'commandID'],
     action: deviceActions
   });
 
@@ -56,6 +56,9 @@ const ConfigureCommand = () => {
   return (
     <div className="px-5 py-3 w-full">
       <div className="flex flex-col py-4">
+        <h1 className="capitalize secondary-title lg:main-title">
+          <span className="font-bold text-[#0A3690]">Configure Command</span>
+        </h1>
 
         {
           !isFetching ?

@@ -27,8 +27,6 @@ const UpdateCommandForm: FC<UpdateConfigureCommandProps> = ({ commandInfo, formC
 
     const [updateCommandInfo, { isLoading }] = useUpdateCommandInfoMutation();
 
-    const [priority, setPriority] = useState(PRIORITY_OPTIONS[0]);
-
     const [configCommandInfo, setCommandInfo] = useState({
         retryCount: commandInfo?.retryCount,
         timeout: commandInfo?.timeout,
@@ -65,15 +63,11 @@ const UpdateCommandForm: FC<UpdateConfigureCommandProps> = ({ commandInfo, formC
             e.preventDefault();
 
             const updatePayload: UpdateCommandPayload = {
-                // commandId: commandInfo?.commandId,
-                // protocol: commandInfo?.protocol,
-                retryCount: configCommandInfo?.retryCount,
-                timeout: configCommandInfo?.timeout,
-                commandId: "BILLING",
+                commandId: commandInfo?.commandID,
+                retryCount: configCommandInfo?.retryCount ? Number(configCommandInfo.retryCount) : 0,
+                timeout: configCommandInfo?.timeout ? Number(configCommandInfo.timeout) : 0,       
                 protocol: "DLMS"
             };
-
-
             handleUpdateDevice(updatePayload);
         },
         [configCommandInfo, handleUpdateDevice]
@@ -85,17 +79,21 @@ const UpdateCommandForm: FC<UpdateConfigureCommandProps> = ({ commandInfo, formC
 
             <div className="grid grid-cols-3 gap-4">
                 <Input
+                    type="number"
                     placeholder="Retry Count"
                     value={configCommandInfo.retryCount || ''}
                     onChange={(e) => handleCommandInfoChange(e, "retryCount")}
+                    min={0}
+                    max={10}
                 />
                 <Input
+                    type="number"
                     placeholder="Timeout"
                     value={configCommandInfo.timeout || ''}
                     onChange={(e) => handleCommandInfoChange(e, "timeout")}
                 />
                 <SingleOptionSelect
-                    value={priority}
+                    value={{ label: "High", value: "high" }}
                     data={PRIORITY_OPTIONS}
                     name="priority"
                     disabled={true}

@@ -1,8 +1,8 @@
 export interface DeviceSimInfo {
-    tspName: string;
+    tspName?: string;
     simNo: string;
-    imsiNumber: string;
-    iccid: string;
+    imsiNumber?: string;
+    iccid?: string;
     ipv6Address: string;
     port: number;
   }
