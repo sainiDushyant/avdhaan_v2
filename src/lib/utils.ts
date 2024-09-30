@@ -152,18 +152,20 @@ export type DataType = {
   color?: string;
   totalCount?: number;
   data_timestamp: string | Date | number;
-}
+};
 
 export type ChartData = {
   [key: string]: DataType[];
-}
+};
 
 export const prepareChartData = (
   data: ChartData,
   chartType: 'bar' | 'line',
   dateType: 'days' | 'time' | 'month'
 ) => {
-
+  const location = window && window?.location?.href?.split('/');
+  const fileName =
+    (location && `${location[location.length - 1]} data`) || 'data';
   const transformDataForChart = (data: DataType[]) => {
     const sortedData = [...data].sort(
       (a, b) =>
@@ -175,8 +177,8 @@ export const prepareChartData = (
       dateType === 'month'
         ? 'MMM YYYY'
         : dateType === 'days'
-          ? 'D MMM'
-          : 'h:mm A';
+        ? 'D MMM'
+        : 'h:mm A';
 
     return {
       dates: sortedData.map((item) =>
@@ -221,7 +223,23 @@ export const prepareChartData = (
       type: chartType,
       height: 350,
       toolbar: {
-        show: false
+        offsetY: -45,
+        tools: {
+          download:
+            '<img src="/graphDownload.svg " class="graph-download-icon"> </img>'
+        },
+        show: true,
+        export: {
+          csv: {
+            filename: fileName
+          },
+          svg: {
+            filename: fileName
+          },
+          png: {
+            filename: fileName
+          }
+        }
       }
     },
     yaxis: {
@@ -251,8 +269,8 @@ export const prepareChartData = (
           dateType === 'month'
             ? 'MMM yyyy'
             : dateType === 'days'
-              ? 'd MMM'
-              : 'h:mm TT'
+            ? 'd MMM'
+            : 'h:mm TT'
       }
     },
     legend: {

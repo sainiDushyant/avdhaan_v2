@@ -8,8 +8,10 @@ import { useSelector } from '@/store';
 
 const PeriodicPushTable = () => {
   const { search } = useLocation();
-  const [query, setQuery] = useState<MeterProfileQueryParams>({ sub_category: 1 });
-  const mainFilterLoading = useSelector(state => state.hes.mainFilterLoading);
+  const [query, setQuery] = useState<MeterProfileQueryParams>({
+    sub_category: 1
+  });
+  const mainFilterLoading = useSelector((state) => state.hes.mainFilterLoading);
 
   const urlSearchParams = useMemo(() => {
     return getCommandExecutionHistoryUrlSearchParams({ query, search });
@@ -27,15 +29,21 @@ const PeriodicPushTable = () => {
     { skip: mainFilterLoading }
   );
 
-  return <MetricProfileTable
-    response={response}
-    isLoading={isLoading}
-    isFetching={isFetching}
-    isError={isError} error={error}
-    query={query} setQuery={setQuery}
-    refresh={refresh} 
-    filterType={'datetime'}  
-  />
+  return (
+    <MetricProfileTable
+      parentName="periodic-push"
+      showDownloadButton={true}
+      response={response}
+      isLoading={isLoading}
+      isFetching={isFetching}
+      isError={isError}
+      error={error}
+      query={query}
+      setQuery={setQuery}
+      refresh={refresh}
+      filterType={'datetime'}
+    />
+  );
 };
 
 export default PeriodicPushTable;

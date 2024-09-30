@@ -7,10 +7,11 @@ import { MeterProfileQueryParams } from '@/store/hes/types/records/meter-profile
 import { useSelector } from '@/store';
 
 const BillingTable = () => {
-
   const { search } = useLocation();
-  const [query, setQuery] = useState<MeterProfileQueryParams>({ sub_category: 1 });
-  const mainFilterLoading = useSelector(state => state.hes.mainFilterLoading);
+  const [query, setQuery] = useState<MeterProfileQueryParams>({
+    sub_category: 1
+  });
+  const mainFilterLoading = useSelector((state) => state.hes.mainFilterLoading);
 
   const urlSearchParams = useMemo(() => {
     return getCommandExecutionHistoryUrlSearchParams({ query, search });
@@ -28,15 +29,21 @@ const BillingTable = () => {
     { skip: mainFilterLoading }
   );
 
-  return <MetricProfileTable
-    response={response}
-    isLoading={isLoading}
-    isFetching={isFetching}
-    isError={isError} error={error}
-    query={query} setQuery={setQuery}
-    refresh={refresh} 
-    filterType={"monthyear"}  
-  />
+  return (
+    <MetricProfileTable
+      showDownloadButton={true}
+      parentName="billing"
+      response={response}
+      isLoading={isLoading}
+      isFetching={isFetching}
+      isError={isError}
+      error={error}
+      query={query}
+      setQuery={setQuery}
+      refresh={refresh}
+      filterType={'monthyear'}
+    />
+  );
 };
 
 export default BillingTable;
