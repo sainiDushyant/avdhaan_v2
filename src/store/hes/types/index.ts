@@ -96,6 +96,9 @@ export type DeviceDataResponse = ResponseBase<DeviceManagementInfoRecord>;
 export type DeviceDetailResponse = ResponseBase<DeviceDetailRecord>;
 export type configureCommandResponse = ResponseBase<ConfigureCommandRecord>;
 
+export type DownloadCSVResponse =
+  ResponseBaseWithOutPagination<DownloadCSVRecord>;
+
 export interface CustomAPIError {
   description?: string;
   // Define other properties if needed

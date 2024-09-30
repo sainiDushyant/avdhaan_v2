@@ -226,7 +226,7 @@ export const prepareChartData = (
         offsetY: -45,
         tools: {
           download:
-            '<img src="/graphDownload.svg " class="graph-download-icon"> </img>'
+            '<img src="/assets/images/other/graphDownload.svg " class="graph-download-icon"> </img>'
         },
         show: true,
         export: {

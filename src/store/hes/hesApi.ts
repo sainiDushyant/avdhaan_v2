@@ -1,13 +1,21 @@
-import { BaseQueryFn, createApi, EndpointBuilder, FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from '@reduxjs/toolkit/query/react';
+import {
+  BaseQueryFn,
+  createApi,
+  EndpointBuilder,
+  FetchArgs,
+  FetchBaseQueryError,
+  FetchBaseQueryMeta
+} from '@reduxjs/toolkit/query/react';
 import { customBaseQuery, HES_TAG_TYPES } from '../utils';
 import { scheduledReportsEndpoints } from './endpoints/scheduled-reports';
 import { deviceManagementEndpoints } from './endpoints/device-management';
 import { meterProfileData } from './endpoints/meter-profile-data';
 import { commandExecutionEndpoints } from './endpoints/command-execution';
+import { commandExecutionEndpoints } from './endpoints/command-execution';
 import { DeviceInfoEndpoints } from './endpoints/device-info';
-import { ConfigureCommandEndpoints } from "./endpoints/configure-command";
-
+import { ConfigureCommandEndpoints } from './endpoints/configure-command';
 import { loginEndpoints } from './endpoints/login';
+import { downloadDataEndpoints } from './endpoints/download-data';
 import { downloadDataEndpoints } from './endpoints/download-data';
 
 const hesApi = createApi({
@@ -23,6 +31,10 @@ const hesApi = createApi({
         'Authorization',
         sessionStorage.getItem('hes_token') as string
       );
+      headers.set(
+        'Authorization',
+        sessionStorage.getItem('hes_token') as string
+      );
       return headers;
     }
   }),
@@ -34,7 +46,7 @@ const hesApi = createApi({
     ...meterProfileData(builder),
     ...commandExecutionEndpoints(builder),
     ...DeviceInfoEndpoints(builder),
-    ...ConfigureCommandEndpoints(builder),,
+    ...ConfigureCommandEndpoints(builder),
     ...loginEndpoints(builder),
     ...downloadDataEndpoints(builder)
   })
@@ -64,8 +76,8 @@ export const {
   useUpdateTokenForAuthMutation,
   useGetCommandExecutionHistoryDetailsQuery,
   useLazyDownloadCSVDataQuery,
+  useLazyDownloadCSVDataQuery,
   usePrefetch
 } = hesApi;
 
 export default hesApi;
-
