@@ -1,6 +1,4 @@
 import { useMemo, useState } from "react";
-import HesFilters from "@/components/customUI/hes/HesFilters"
-import CommandForm from "./includes/CommandForm"
 import { useGetBatchCommandExecutionHistoryQuery } from "@/store/hes/hesApi"
 import EmptyScreen from "@/components/customUI/EmptyScreen";
 import ErrorScreen from "@/components/customUI/ErrorScreen";
@@ -17,6 +15,7 @@ import {
   BatchCommandHistoryRecord, CommandHistoryQueryParams 
 } from "@/store/hes/types/records/command-execution";
 import { useSelector } from "@/store";
+import CommandExecutionModule from "./includes/CommandExecutionModule";
 
 const CommandExecution = () => {
 
@@ -55,8 +54,7 @@ const CommandExecution = () => {
 
   return (
     <div className="px-5 py-3 w-full">
-      <HesFilters />
-      <CommandForm refetch={refetchCommandExecutionHistory} />
+      <CommandExecutionModule />
       <div className="flex flex-col py-4">
         <CommandHistoryFilters
           setQuery={setQuery}
