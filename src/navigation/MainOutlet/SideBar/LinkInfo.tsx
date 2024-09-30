@@ -14,6 +14,7 @@ const LinkInfo = () => {
                 <img
                     width="auto" className="max-h-[25px] lg:max-h-[40px]"
                     src="/assets/images/sidebar/name.png"
+                    loading="lazy"
                 />
             </Link>
 

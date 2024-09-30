@@ -1,6 +1,8 @@
-import { FC } from 'react'
-import DateItem from '@/components/customUI/Date/DateItem'
-import MonthYearPicker from '@/components/customUI/Date/MonthYear'
+import { FC, useEffect } from 'react'
+import DateRange from '@/components/customUI/Date/DateRange';
+import { useSearchParams } from 'react-router-dom';
+import { isValidDate } from '@/lib/utils';
+import MonthYearRange from '@/components/customUI/Date/MonthYearRange';
 
 interface VeeDateFilterProps {
     loadTypeVal?: string;
@@ -11,47 +13,67 @@ interface VeeDateFilterProps {
 }
 
 const VeeDateFilter: FC<VeeDateFilterProps> = ({
-    loadTypeVal, startDate, setStartDate, endDate, setEndDate
+    loadTypeVal, startDate, endDate,
+    setStartDate, setEndDate
 }) => {
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [searchParams, _] = useSearchParams();
+
+    const today = new Date().toISOString().slice(0, 10);
+
+    useEffect(() => {
+
+        const selectedStartDate = searchParams.get("start_date");
+        const today = new Date().toISOString().split('T')[0];
+
+        let defaultStartDate = !selectedStartDate || !isValidDate(selectedStartDate) ? today : selectedStartDate;
+
+        const selectedEndDate = searchParams.get("end_date");
+        const defaultEndDate = !selectedEndDate || !isValidDate(selectedEndDate) ? today : selectedEndDate;
+
+        if (defaultStartDate && defaultEndDate && new Date(defaultStartDate) > new Date(defaultEndDate)) {
+            defaultStartDate = defaultEndDate;
+        }
+
+        setStartDate(defaultStartDate);
+        setEndDate(defaultEndDate);
+    }, [])
+
     return (
         <>
             {loadTypeVal !== "ML" ?
-                <>
-                    <DateItem
-                        placeholder="Enter Start Date"
-                        customState={{
+                <DateRange 
+                    start={{
+                        customState: {
                             val: startDate,
                             setter: setStartDate
-                        }}
-                    />
-                    <DateItem
-                        placeholder="Enter End Date"
-                        customState={{
+                        } 
+                    }} 
+                    end={{
+                        max: today,
+                        customState: {
                             val: endDate,
                             setter: setEndDate
-                        }}
-                        min={startDate}
-                    />
-                </>
+                        } 
+                    }} 
+                />
                 :
-                <>
-                    <MonthYearPicker
-                        placeholder="Enter Start Month"
-                        customState={{
+                <MonthYearRange 
+                    start={{
+                        customState: {
                             val: startDate,
                             setter: setStartDate
-                        }}
-                    />
-
-                    <MonthYearPicker
-                        placeholder="Enter End Month"
-                        customState={{
+                        } 
+                    }} 
+                    end={{
+                        max: today,
+                        customState: {
                             val: endDate,
                             setter: setEndDate
-                        }}
-                        min={startDate}
-                    />
-                </>
+                        } 
+                    }} 
+                />
             }
         </>
     )

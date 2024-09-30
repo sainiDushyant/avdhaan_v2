@@ -5,9 +5,7 @@ import {
   FetchBaseQueryMeta
 } from '@reduxjs/toolkit/query';
 import { BaseQueryFn } from '@reduxjs/toolkit/query';
-import { formatDate } from '@/lib/utils';
-import { PeriodicPushResponse } from '../../types';
-import { FlatenedPeriodicPushRecord } from '../../types/records/meter-profile/periodic-push';
+import { MeterProfileDataTableNewResponse, MeterProfileDataTableOgResponse } from '../../types';
 
 export const PeriodicPushEndpoints = (
   builder: EndpointBuilder<
@@ -22,33 +20,23 @@ export const PeriodicPushEndpoints = (
     'hesApi'
   >
 ) => ({
-  getPeriodicPushData: builder.query<FlatenedPeriodicPushRecord, { searchQuery: string }>({
+  getPeriodicPushData: builder.query<MeterProfileDataTableNewResponse, { searchQuery: string }>({
     query: ({ searchQuery }) => ({
       url: `/push-data/periodic-push${searchQuery}`,
       method: 'GET'
     }),
-    transformResponse: (response: PeriodicPushResponse): FlatenedPeriodicPushRecord => {
-      if(!response.data.records) return { records: [] , cursor: { before: null, after: null } }
-      let records: any[] = [];
-      response.data.records.map((item) => {
-        records.push({
-          meter_number: item.device_identifier,
-          date: formatDate(item.data_timestamp, 'DD-MM-YYYY'),
-          time: formatDate(item.data_timestamp, 'HH:mm'),
-          MD_W: item.data.MD_W,
-          MD_VA: item.data.MD_VA,
-          export_Wh: item.data.export_Wh,
-          export_VAh: item.data.export_VAh,
-          phase_current: item.data.phase_current,
-          push_counter: item.data.push_counter,
-          push_obis: item.data.push_obis,
-          push_triggered_time: item.data.push_triggered_time
-        });
-      });
+    transformResponse: (response: MeterProfileDataTableOgResponse): MeterProfileDataTableNewResponse => {
+      const records = !response.data.records ? [] : response.data.records.map(record => {
+          const { data, ...rest } = record
+          return { ...rest, ...data }
+      })
       return {
-        records: records,
-        cursor: response.data.cursor
-      };
-    }
+          ...response,
+          data: {
+              ...response.data,
+              records: records
+          }
+      }
+  },
   })
 });

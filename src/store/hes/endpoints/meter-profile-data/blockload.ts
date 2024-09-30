@@ -1,7 +1,7 @@
 import { EndpointBuilder } from "@reduxjs/toolkit/query";
 import { FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from "@reduxjs/toolkit/query";
 import { BaseQueryFn } from "@reduxjs/toolkit/query";
-import { APIResponse, TransformedResponse } from '@/store/hes/types/records/meter-profile/blockLoad';
+import { MeterProfileDataTableOgResponse, MeterProfileDataTableNewResponse } from "../../types";
 
 export const BlockLoadEndPoints = (
     builder: EndpointBuilder<
@@ -16,31 +16,22 @@ export const BlockLoadEndPoints = (
         "hesApi"
     >
 ) => ({
-    getBlockLoadPushData: builder.query<TransformedResponse, { searchQuery: string }>({
+    getBlockLoadPushData: builder.query<MeterProfileDataTableNewResponse, { searchQuery: string }>({
         query: ({ searchQuery }) => ({
             url: `/push-data/blockload${searchQuery}`,
             method: "GET"
         }),
-        transformResponse: (response: APIResponse) => {
-            let records: any = [];
-            if (response.data.records && response.data.records.length) {
-                response.data.records.forEach(item => {
-                    records.push({
-                        meter_number: item.device_identifier,
-                        datetime: item.data.blockload_datetime,
-                        export_wh: item.data.export_Wh,
-                        import_wh: item.data.import_Wh,
-                        export_vah: item.data.export_VAh,
-                        import_vah: item.data.import_VAh,
-                        avg_current: item.data.avg_current,
-                        avg_voltage: item.data.avg_voltage,
-                        temperature: item.data.temperature,
-                    })
-                })
-            }
+        transformResponse: (response: MeterProfileDataTableOgResponse): MeterProfileDataTableNewResponse => {
+            const records = !response.data.records ? [] : response.data.records.map(record => {
+                const { data, ...rest } = record
+                return { ...rest, ...data }
+            })
             return {
-                records: records,
-                cursor: response.data.cursor,
+                ...response,
+                data: {
+                    ...response.data,
+                    records: records
+                }
             }
         },
     })

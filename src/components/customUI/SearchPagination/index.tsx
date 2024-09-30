@@ -1,5 +1,5 @@
 import { useSearchPagination, DOTS } from '@/hooks/useSearchPagination';
-import { useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 type SearchPaginationProps = {
@@ -7,17 +7,19 @@ type SearchPaginationProps = {
     siblingCount?: number;
     pageSize: number;
     className?: string;
+    pageKey?: string;
 };
 
-const SearchPagination: React.FC<SearchPaginationProps> = ({
+const SearchPagination: FC<SearchPaginationProps> = ({
     totalCount,
     siblingCount = 1,
     pageSize,
-    className
+    className,
+    pageKey,
 }) => {
 
     const [searchParams, setSearchParams] = useSearchParams();
-    const currentPage = parseInt(searchParams.get("pageNo") || "1", 10);
+    const currentPage = parseInt(searchParams.get(pageKey || "pageNo") || "1", 10);
 
     const paginationRange = useSearchPagination({
         currentPage,
@@ -28,24 +30,19 @@ const SearchPagination: React.FC<SearchPaginationProps> = ({
 
     const handlePageChange = useCallback((page: number) => {
         if (page !== currentPage) {
-            searchParams.set("pageNo", page.toString());
-            setSearchParams(searchParams);
+            searchParams.set(pageKey || "pageNo", page.toString());
+            setSearchParams(searchParams, { replace: true });
         }
     }, [currentPage, searchParams, setSearchParams]);
 
-    if (currentPage === 0 || paginationRange.length < 2) {
-        return null;
-    }
+    if (currentPage === 0 || paginationRange.length < 2) return null;
 
-    const onNext = () => {
-        handlePageChange(currentPage + 1);
-    };
+    const onNext = () => handlePageChange(currentPage + 1);
 
-    const onPrevious = () => {
-        handlePageChange(currentPage - 1);
-    };
+    const onPrevious = () => handlePageChange(currentPage - 1);
 
     const lastPage = paginationRange[paginationRange.length - 1];
+    
     return (
         <ul className={`pagination-container ${className}`}>
             <li

@@ -22,7 +22,7 @@ const Dashboard = () => {
 
   if (deviceMetaInfoMetricsLoading) return <FullScreen hasSpinner={true} />;
   if (deviceMetaInfoMetricsHasError) return <ErrorScreen error={deviceMetaInfoMetricsError} />
-  if (!deviceMetaInfoMetricsResponse) return ( <EmptyScreen title={`deviceMetaInfoMetricsResponse not available`} /> );
+  if (!deviceMetaInfoMetricsResponse) return ( <EmptyScreen title={`device meta info metrics data not available`} /> );
   
   return (
     <div className="px-5 py-3 w-full">

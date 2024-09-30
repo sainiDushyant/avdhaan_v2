@@ -8,6 +8,7 @@ import FullScreen from "@/components/customUI/Loaders/FullScreen";
 import MainOutlet from "./MainOutlet";
 
 const Home = lazy(() => import("@/pages/home"));
+const Login = lazy(() => import("@/pages/login"));
 import HesRoutes from "./routes/Hes";
 import VeeRoutes from "./routes/Vee";
 
@@ -22,6 +23,7 @@ function Navigation() {
         <Route path="/" element={<MainOutlet />}>
 
             <Route index element={<Home />} />
+            <Route path='/login' element={<Login />} />
 
             {HesRoutes}
             {VeeRoutes}

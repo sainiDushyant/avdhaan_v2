@@ -9,24 +9,27 @@ export type LocationHierarchyRecord = {
   device_identifier?: Option[];
 };
 
-export type DeviceInfoRecord = {
-  id: number;
-  deviceIdentifier: string;
-  deviceIP: string;
-  deviceSerial: 99987704;
-  deviceCategory: string;
-  deviceSubCategory: string;
-  communicationProtocol: string;
-  communicationChannel: string;
-  connectionInfo: {
-    dcu_address: string;
-    meter_address: string;
-  };
-  make: string;
-  firmwareVersion: string;
-  simInformation: string | null;
-  isRegistered: boolean;
-};
+export type DeviceManagementInfoRecord = {
+    id: number;
+    deviceIdentifier: string;
+    deviceIP: string;
+    deviceSerial: string;
+    deviceCategory: string;
+    deviceSubCategory: string;
+    communicationProtocol: string;
+    communicationChannel: string;
+    connectionInfo: {
+        dcu_address: string;
+        meter_address: string
+    };
+    make: string;
+    firmwareVersion: string;
+    simInformation: string | null;
+    isRegistered: boolean;
+}
+
+export type DeviceManagementInfoRecordTransformed = DeviceManagementInfoRecord & Option;
+
 
 export type DeviceMetaInfoMetricsRecord = {
   [key: string]: GraphData;
@@ -46,9 +49,11 @@ export type HesFilterState = {
   device_identifier: MultiValue<Option>;
 };
 
+export type MeterName = "1P" | "3P" | "LTCT" | "HTCT"
+
 export type DeviceSubCategoryRecord = {
   id: number;
-  name: string;
+  name: MeterName
 };
 
 export type HesFilterStateOptional = Partial<HesFilterState>;

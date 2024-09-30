@@ -19,17 +19,16 @@ type NavBarItem = {
 };
 
 const NavBar = () => {
-  const location = useLocation();
-
+  
+  const { pathname } = useLocation();
   const basePath = useGetBasePath(0);
-  if (basePath !== 'hes') return <div className="no-navbar"></div>;
 
   // Checks if the link or any of its children is active
-  const isActive = (linkTo: string) => location.pathname === linkTo;
+  const isActive = (linkTo: string) => (pathname === linkTo || pathname === `${linkTo}\\`);
 
   const isParentActive = (linkTo: string, children?: NavBarItem[]) => {
     // Check if the current location matches any child or the parent itself
-    if (location.pathname.startsWith(linkTo)) return true;
+    if (pathname.startsWith(linkTo)) return true;
     if (children && children.some((child) => isActive(child.to))) return true;
     return false;
   };
@@ -74,7 +73,7 @@ const NavBar = () => {
                     : ''
                 } `}
               >
-                <AccordionTrigger className="text-[#708CC7] underline-none">
+                <AccordionTrigger className="text-[#708CC7] py-0 underline-none">
                   <div>
                     <h3
                       className={`${
@@ -117,8 +116,10 @@ const NavBar = () => {
         </Accordion>
       );
     },
-    [location.pathname]
+    [pathname]
   );
+
+  if (basePath !== 'hes') return <div className="no-navbar"></div>;
 
   return (
     <div className="custom-navbar fixed left-[100px] top-[75px] hidden lg:flex bg-white min-h-full ">

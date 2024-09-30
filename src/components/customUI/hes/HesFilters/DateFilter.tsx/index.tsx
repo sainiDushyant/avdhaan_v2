@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SubmitButton from '@/components/customUI/Button/SubmitButton';
-import DateTime from '../../../Date/DateTime';
+import DateTime from '@/components/customUI/Date/DateTime';
 
 const DateFilters = () => {
   const [searchParams, setSearchParams] = useSearchParams();

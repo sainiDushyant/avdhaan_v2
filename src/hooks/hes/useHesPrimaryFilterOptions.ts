@@ -9,27 +9,11 @@ import {
     HesFilterState, 
     HesFilterStateOptional 
 } from "@/store/hes/types/records/device-management";
-import { useLazyGetDeviceIdentifierQuery, useLazyGetLocationHierarchyQuery } from "@/store/hes/hesApi";
+import { useLazyGetLocationHierarchyQuery } from "@/store/hes/hesApi";
 
 const useHesPrimaryFilterOptions = (primaryFilters: HesFilterState) => {
 
     const [ getLocationHierarchy, { isLoading: primaryFilterLoading } ] = useLazyGetLocationHierarchyQuery();
-
-    const [ getDeviceIdentifers, { isLoading: deviceIdentifierLoading } ] = useLazyGetDeviceIdentifierQuery();
-
-    const searchDeviceIdentifierAPI = useCallback(async(
-        key: keyof LocationHierarchyRecord,
-        value: string, 
-        higherPriorityParams: HesFilterStateOptional = {},
-    ) => {
-        const higherOrderParamsObj = hesFiltersStateToObject(higherPriorityParams);
-        const urlParams = objectToUrlParams(higherOrderParamsObj);
-        urlParams.set(key, value);
-        const response = await getDeviceIdentifers({ searchQuery: urlParams.toString()});
-        const data = response.data;
-        if(!data) return [];
-        return data[key]
-    }, [])
 
     const searchPrimaryFiltersAPI = useCallback(async (
         key: keyof LocationHierarchyRecord,
@@ -46,20 +30,6 @@ const useHesPrimaryFilterOptions = (primaryFilters: HesFilterState) => {
     }, []);
 
     const searchPrimaryFiltersAPIDebounced = pDebounce(searchPrimaryFiltersAPI, 500);
-    const searchDeviceIdentifierAPIDebounced = pDebounce(searchDeviceIdentifierAPI, 500);
-
-    const deviceIdentifierOptions = useCallback(async (inputValue: string) => {
-        const higherPriorityParams: HesFilterStateOptional = { 
-            pss_id: primaryFilters.pss_id,
-            feeder_id: primaryFilters.feeder_id,
-            dtr_id: primaryFilters.dtr_id
-        };
-        const searchData = await searchDeviceIdentifierAPIDebounced(
-            "device_identifier", inputValue, higherPriorityParams
-        );
-        if(!searchData) return [];
-        return searchData
-    }, [ primaryFilters ]);
 
     const dtrOptions = useCallback(async (inputValue: string) => {
         const higherPriorityParams: HesFilterStateOptional = { 
@@ -68,7 +38,8 @@ const useHesPrimaryFilterOptions = (primaryFilters: HesFilterState) => {
         };
         const searchData = await searchPrimaryFiltersAPIDebounced("dtr", inputValue, higherPriorityParams);
         if(!searchData) return [];
-        return searchData
+        const dtrIds = primaryFilters.dtr_id.map(item => item.value);
+        return searchData.filter(item => !dtrIds.includes(String(item.value)));
     }, [ primaryFilters ]);
 
     const feederOptions = useCallback(async (inputValue: string) => {
@@ -77,17 +48,19 @@ const useHesPrimaryFilterOptions = (primaryFilters: HesFilterState) => {
         };
         const searchData = await searchPrimaryFiltersAPIDebounced("feeder", inputValue, higherPriorityParams);
         if(!searchData) return [];
-        return searchData
+        const feederIds = primaryFilters.feeder_id.map(item => item.value);
+        return searchData.filter(item => !feederIds.includes(String(item.value)));
     }, [ primaryFilters ]);
 
     const pssOptions = useCallback(async (inputValue: string) => {
         const searchData = await searchPrimaryFiltersAPIDebounced("pss", inputValue);
         if(!searchData) return [];
-        return searchData
+        const pssIds = primaryFilters.pss_id.map(item => item.value);
+        return searchData.filter(item => !pssIds.includes(String(item.value)));
     }, [ primaryFilters ]);
 
     return {
-        deviceIdentifierOptions,
+        primaryFilterLoading,
         dtrOptions,
         feederOptions,
         pssOptions,

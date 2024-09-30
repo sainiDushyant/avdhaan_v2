@@ -1,3 +1,10 @@
+import { ResponseBaseWithOutPagination } from '.';
+
+export type CustomHesApiError = {
+  status: number;
+  data: ResponseBaseWithOutPagination<null>;
+};
+
 export type GraphItem = {
   name: string;
   count: number;
@@ -42,14 +49,9 @@ export interface RefetchDataProps {
   refetch: () => void;
 }
 
-export type Cursor = string | null;
-
-export interface CursorPaginationProps {
-  countApiPath?: string;
-  after_cursor: Cursor;
-  before_cursor: Cursor;
-  prefetchCursor?: (
-    arg1: { after_cursor: Cursor; before_cursor: Cursor },
-    args2?: { [k: string]: string | number }
-  ) => void;
+export interface DownloadButtonProps {
+  downloadCSV: () => void;
+  isLoading: boolean;
 }
+
+export type Cursor = string | null;

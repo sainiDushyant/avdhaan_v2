@@ -10,10 +10,14 @@ interface MultiOptionSelectProps {
     placeholder: string;
     data: Option[];
     customCss?: string;
+    name?: string;
+    required?: boolean,
 }
 
 const MultiOptionSelect: FC<MultiOptionSelectProps> = ({
-    value, loading, placeholder, handleChange, data, customCss
+    value, loading, placeholder, 
+    handleChange, data, customCss, 
+    name, required
 }) => {
     return (
         <Select
@@ -31,6 +35,8 @@ const MultiOptionSelect: FC<MultiOptionSelectProps> = ({
             value={value}
             onChange={handleChange}
             options={data}
+            name={name}
+            required={required}
         />
     )
 }

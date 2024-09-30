@@ -1,12 +1,13 @@
-import { useState } from 'react';
-import BillingTable from './includes/BillingTable';
+import { lazy, Suspense, useState } from 'react';
 import BillingGraph from './includes/BillingGraph';
 import ToggleView from '@/components/customUI/ToggleView';
 import HesFilters from '@/components/customUI/hes/HesFilters';
-import ToggleCategory from '@/components/customUI/hes/ToggleSubCategory';
+
+const BillingTable = lazy(() => import('./includes/BillingTable'));
 
 const Billing = () => {
-  const [view, setView] = useState<string>('graph');
+
+  const [view, setView] = useState<"graph" | "table">('graph');
 
   return (
     <div className="px-5 w-full">
@@ -17,16 +18,15 @@ const Billing = () => {
           </h1>
           <ToggleView view={view} setView={setView} />
         </div>
-        <div className="float-left">
-          <HesFilters />
-        </div>
+        <HesFilters />
         <div className="overflow-x-scroll">
-          {view === 'table' && (
-            <>
-              <ToggleCategory />
+          {view === 'table' &&
+            <Suspense
+              fallback={<div className='min-h-[60vh] flex items-center justify-center' />}
+            >
               <BillingTable />
-            </>
-          )}
+            </Suspense>
+          }
           {view === 'graph' && <BillingGraph />}
         </div>
       </div>

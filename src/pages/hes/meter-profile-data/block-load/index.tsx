@@ -1,12 +1,13 @@
-import BlockLoadTable from './includes/BlockLoadTable';
-import { useState } from 'react';
-import BlockLoadGraph from './includes/BlockloadGraph';
+import { Suspense, useState, lazy } from 'react';
+import BlockLoadGraph from './includes/BlockLoadGraph';
 import ToggleView from '@/components/customUI/ToggleView';
 import HesFilters from '@/components/customUI/hes/HesFilters';
-import ToggleCategory from '@/components/customUI/hes/ToggleSubCategory';
+
+const BlockLoadTable = lazy(() => import('./includes/BlockLoadTable'));
 
 const BlockLoad = () => {
-  const [view, setView] = useState<string>('graph');
+
+  const [view, setView] = useState<"graph" | "table">('graph');
 
   return (
     <div className="px-5 w-full">
@@ -19,12 +20,13 @@ const BlockLoad = () => {
         </div>
         <HesFilters />
         <div className="overflow-x-scroll">
-          {view === 'table' && (
-            <>
-              <ToggleCategory />
+          {view === 'table' &&
+            <Suspense
+              fallback={<div className='min-h-[60vh] flex items-center justify-center' />}
+            >
               <BlockLoadTable />
-            </>
-          )}
+            </Suspense>
+          }
           {view === 'graph' && <BlockLoadGraph />}
         </div>
       </div>
