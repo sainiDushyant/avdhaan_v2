@@ -1,5 +1,4 @@
 import { ResponseBaseWithOutPagination } from '.';
-import { DownloadCSVRecord } from './records/download-csv';
 
 export type CustomHesApiError = {
   status: number;

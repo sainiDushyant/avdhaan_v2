@@ -11,11 +11,10 @@ import { scheduledReportsEndpoints } from './endpoints/scheduled-reports';
 import { deviceManagementEndpoints } from './endpoints/device-management';
 import { meterProfileData } from './endpoints/meter-profile-data';
 import { commandExecutionEndpoints } from './endpoints/command-execution';
-import { commandExecutionEndpoints } from './endpoints/command-execution';
+
 import { DeviceInfoEndpoints } from './endpoints/device-info';
 import { ConfigureCommandEndpoints } from './endpoints/configure-command';
 import { loginEndpoints } from './endpoints/login';
-import { downloadDataEndpoints } from './endpoints/download-data';
 import { downloadDataEndpoints } from './endpoints/download-data';
 
 const hesApi = createApi({
@@ -75,7 +74,6 @@ export const {
   useUpdateCommandInfoMutation,
   useUpdateTokenForAuthMutation,
   useGetCommandExecutionHistoryDetailsQuery,
-  useLazyDownloadCSVDataQuery,
   useLazyDownloadCSVDataQuery,
   usePrefetch
 } = hesApi;

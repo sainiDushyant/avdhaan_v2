@@ -98,6 +98,7 @@ export type configureCommandResponse = ResponseBase<ConfigureCommandRecord>;
 
 export type DownloadCSVResponse =
   ResponseBaseWithOutPagination<DownloadCSVRecord>;
+export type HESTokenResponse = ResponseBaseWithOutPagination<HESAuthToken>;
 
 export interface CustomAPIError {
   description?: string;
