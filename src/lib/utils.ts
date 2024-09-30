@@ -226,7 +226,11 @@ export const prepareChartData = (
         offsetY: -45,
         tools: {
           download:
+<<<<<<< HEAD
             '<img src="/assets/images/other/graphDownload.svg " class="graph-download-icon"> </img>'
+=======
+            '<img src="/graphDownload.svg " class="graph-download-icon"> </img>'
+>>>>>>> ddd7b45 (Added download functionality in meter profile data for push data csv and also added the download button in the graphs of meter profile data)
         },
         show: true,
         export: {

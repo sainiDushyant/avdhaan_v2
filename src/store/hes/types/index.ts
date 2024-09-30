@@ -100,6 +100,9 @@ export type DownloadCSVResponse =
   ResponseBaseWithOutPagination<DownloadCSVRecord>;
 export type HESTokenResponse = ResponseBaseWithOutPagination<HESAuthToken>;
 
+export type DownloadCSVResponse =
+  ResponseBaseWithOutPagination<DownloadCSVRecord>;
+
 export interface CustomAPIError {
   description?: string;
   // Define other properties if needed

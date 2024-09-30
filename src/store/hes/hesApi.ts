@@ -23,10 +23,6 @@ const hesApi = createApi({
         'Authorization',
         sessionStorage.getItem('hes_token') as string
       );
-      headers.set(
-        'Authorization',
-        sessionStorage.getItem('hes_token') as string
-      );
       return headers;
     }
   }),
