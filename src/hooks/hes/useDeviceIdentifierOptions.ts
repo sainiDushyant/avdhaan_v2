@@ -25,6 +25,7 @@ const useDeviceIdentifierOptions = (primaryFilters: HesFilterStateOptional) => {
     const searchDeviceIdentifierAPIDebounced = pDebounce(searchDeviceIdentifierAPI, 500);
 
     const deviceIdentifierOptions = useCallback(async (inputValue: string) => {
+        if(inputValue.length < 2 || inputValue.length > 40) return [];
         const { device_identifier, ...rest } =  primaryFilters;
         const searchData = await searchDeviceIdentifierAPIDebounced(
             "device_identifier", inputValue, rest

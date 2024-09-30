@@ -6,6 +6,7 @@ import {
   FetchBaseQueryError,
   FetchBaseQueryMeta
 } from '@reduxjs/toolkit/query/react';
+
 import { customBaseQuery, HES_TAG_TYPES } from '../utils';
 import { scheduledReportsEndpoints } from './endpoints/scheduled-reports';
 import { deviceManagementEndpoints } from './endpoints/device-management';
@@ -45,6 +46,7 @@ const hesApi = createApi({
     ...meterProfileData(builder),
     ...commandExecutionEndpoints(builder),
     ...DeviceInfoEndpoints(builder),
+    ...ConfigureCommandEndpoints(builder),
     ...ConfigureCommandEndpoints(builder),
     ...loginEndpoints(builder),
     ...downloadDataEndpoints(builder)
