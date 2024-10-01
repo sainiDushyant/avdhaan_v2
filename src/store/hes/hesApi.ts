@@ -48,6 +48,7 @@ const hesApi = createApi({
     ...DeviceInfoEndpoints(builder),
     ...ConfigureCommandEndpoints(builder),
     ...ConfigureCommandEndpoints(builder),
+    ...ConfigureCommandEndpoints(builder),
     ...loginEndpoints(builder),
     ...downloadDataEndpoints(builder)
   })

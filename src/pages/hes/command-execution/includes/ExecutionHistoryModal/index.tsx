@@ -51,7 +51,7 @@ const ExecutionHistory: FC<ExecutionHistoryProps> = ({ data }) => {
         customId: "executionId",
         query: ["executionStatus", "colorCode", "args"],
         action: batchCommandHistoryActions,
-        // getLink: (id) => `/hes/command-execution/${id}`,
+        getLink: (id) => `/hes/command-execution/${id}`,
     });
 
     if (!batchId) return <EyeClose />

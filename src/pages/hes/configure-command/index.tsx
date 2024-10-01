@@ -54,7 +54,8 @@ const ConfigureCommand = () => {
       'params',
       'commandType',
       'timeout',
-      'retryCount'
+      'retryCount',
+      'commandID'
     ],
     action: deviceActions
   });
@@ -66,6 +67,10 @@ const ConfigureCommand = () => {
   return (
     <div className="px-5 py-3 w-full">
       <div className="flex flex-col py-4">
+        <h1 className="capitalize secondary-title lg:main-title">
+          <span className="font-bold text-[#0A3690]">Configure Command</span>
+        </h1>
+
         {!isFetching ? (
           <DataTable columns={columns} data={tableData} />
         ) : (
