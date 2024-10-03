@@ -38,6 +38,10 @@ export const navbarLinkData = [
       { to: '/hes/meter-profile-data/periodic-push', title: 'Periodic Push' }
     ]
   },
+<<<<<<< HEAD
+=======
+  { to: '/hes/command-execution', title: 'Command Execution' },
+>>>>>>> d90a1f9 (Refacotring Command execution according to the Figma)
   {
     to: '/hes/command',
     title: 'Command',

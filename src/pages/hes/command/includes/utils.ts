@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 import { ExecutionHistoryDetailsResponseModified } from '@/store/hes/types';
 import {
   CommandHistoryQueryParams,
   ExecutionHistoryDetailsRecordModified
 } from '@/store/hes/types/records/command-execution';
+=======
+import { CommandHistoryQueryParams } from '@/store/hes/types/records/command-execution';
+>>>>>>> d90a1f9 (Refacotring Command execution according to the Figma)
 
 type ExecutionHistoryParams = {
   query: CommandHistoryQueryParams;
@@ -57,6 +61,7 @@ export const getCommandExecutionHistoryUrlSearchParams = ({
   return newQuery + (newQuery ? `&${postFix}` : `?${postFix}`);
 };
 
+<<<<<<< HEAD
 type ExecutionHistoryDetailRecordModified = {
   [key: string]: string | number;
 };
@@ -95,4 +100,55 @@ export const groupEventDataByDataType = (
   return Object.keys(eventGroups).length > 0
     ? Object.values(eventGroups)
     : results;
+=======
+type Payload = {
+  data_type?: string;
+  [key: string]: any;
+};
+
+type ResponseData = {
+  cmd_name: string;
+  payload: Payload;
+};
+
+type RecordResponse = {
+  response: {
+    responseData: ResponseData;
+    [key: string]: any;
+  };
+  pendingStatusReason?: {
+    reason: string;
+  };
+  [key: string]: any;
+};
+
+type ExecutionHistoryDetailsRecordModified = {
+  [key: string]: any;
+};
+
+/**
+ * Group records by data_type for cmd_name "EVENTS"
+ */
+export const groupEventDataByDataType = (
+  records: RecordResponse[]
+): ExecutionHistoryDetailsRecordModified[][] | undefined => {
+  const eventGroups: Record<string, ExecutionHistoryDetailsRecordModified[]> =
+    {};
+
+  if (!records) {
+    return;
+  }
+  records.forEach((record) => {
+    if (record.cmd_name === 'EVENTS') {
+      const dataType = record.payload?.data_type || 'default';
+      if (!eventGroups[dataType]) {
+        eventGroups[dataType] = [];
+      }
+      eventGroups[dataType].push(record.payload);
+    }
+  });
+
+  // Return grouped records as an array of arrays
+  return Object.values(eventGroups);
+>>>>>>> d90a1f9 (Refacotring Command execution according to the Figma)
 };
