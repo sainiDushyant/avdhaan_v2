@@ -1,19 +1,35 @@
 import { lazy } from 'react';
 import { Route, Outlet } from 'react-router-dom';
 import HesOutlet from '@/navigation/HesOutlet';
+import ExecutionHistory from '@/pages/hes/command/includes/ExecutionHistory';
 
 const Dashboard = lazy(() => import('@/pages/hes/dashboard'));
-const BlockLoad = lazy(() => import('@/pages/hes/meter-profile-data/block-load'));
-const DailyLoad = lazy(() => import('@/pages/hes/meter-profile-data/daily-load'));
-const MonthlyBilling = lazy(() => import('@/pages/hes/meter-profile-data/monthly-billing'));
-const InstantaneousProfile = lazy(() => import('@/pages/hes/meter-profile-data/instantaneous-profile'));
-const PeriodicPush = lazy(() => import('@/pages/hes/meter-profile-data/periodic-push'));
+const BlockLoad = lazy(
+  () => import('@/pages/hes/meter-profile-data/block-load')
+);
+const DailyLoad = lazy(
+  () => import('@/pages/hes/meter-profile-data/daily-load')
+);
+const MonthlyBilling = lazy(
+  () => import('@/pages/hes/meter-profile-data/monthly-billing')
+);
+const InstantaneousProfile = lazy(
+  () => import('@/pages/hes/meter-profile-data/instantaneous-profile')
+);
+const PeriodicPush = lazy(
+  () => import('@/pages/hes/meter-profile-data/periodic-push')
+);
 
 const ScheduledReads = lazy(() => import('@/pages/hes/scheduled-reads'));
 const CommandExecution = lazy(() => import('@/pages/hes/command-execution'));
-const CommandExecutionDetails = lazy(() => import('@/pages/hes/command-execution/details'));
+const CommandExecutionDetails = lazy(
+  () => import('@/pages/hes/command-execution/details')
+);
 const DeviceInformation = lazy(() => import('@/pages/hes/device-information'));
 const ConfigureCommand = lazy(() => import('@/pages/hes/configure-command'));
+const CommandExecutionHistory = lazy(
+  () => import('@/pages/hes/command/includes/command-execution-history')
+);
 
 const HesRoutes = (
   <Route path="/hes" element={<HesOutlet />}>
@@ -31,6 +47,16 @@ const HesRoutes = (
     <Route path="command-execution" element={<Outlet />}>
       <Route index element={<CommandExecution />} />
       <Route path=":commandId" element={<CommandExecutionDetails />} />
+    </Route>
+    <Route path="command">
+      <Route
+        path="command-execution-history"
+        element={<CommandExecutionHistory />}
+      />
+      <Route
+        path="batch-command-execution-details"
+        element={<ExecutionHistory />}
+      />
     </Route>
     <Route path="scheduled-reads" element={<ScheduledReads />} />
     <Route path="device-information" element={<DeviceInformation />} />

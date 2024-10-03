@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import HesFilters from '@/components/customUI/hes/HesFilters';
-import CommandForm from './includes/CommandForm';
 import { useGetBatchCommandExecutionHistoryQuery } from '@/store/hes/hesApi';
 import EmptyScreen from '@/components/customUI/EmptyScreen';
 import ErrorScreen from '@/components/customUI/ErrorScreen';
@@ -8,18 +7,18 @@ import FullScreen from '@/components/customUI/Loaders/FullScreen';
 import useGetTableColumns, { ActionType } from '@/hooks/useGetTableColumns';
 import Spinner from '@/components/customUI/Loaders/Spinner';
 import DataTable from '@/components/customUI/DataTable';
-import CommandHistoryFilters from '../command/includes/CommandHistoryFilters';
+import CommandHistoryFilters from '../CommandHistoryFilters';
 import { useLocation } from 'react-router-dom';
-import { getCommandExecutionHistoryUrlSearchParams } from './includes/utils';
-import ExecutionHistoryModal from '../command/includes/ExecutionHistory';
+import { getCommandExecutionHistoryUrlSearchParams } from '../utils';
 import SearchPagination from '@/components/customUI/SearchPagination';
 import {
   BatchCommandHistoryRecord,
   CommandHistoryQueryParams
 } from '@/store/hes/types/records/command-execution';
 import { useSelector } from '@/store';
+import Navigator from '../ExecutionHistory/Navigator';
 
-const CommandExecution = () => {
+const CommandExecutionHistory = () => {
   const { search } = useLocation();
   const [query, setQuery] = useState<CommandHistoryQueryParams>({});
   const mainFilterLoading = useSelector((state) => state.hes.mainFilterLoading);
@@ -43,7 +42,7 @@ const CommandExecution = () => {
   );
 
   const commandHistoryActions: ActionType<BatchCommandHistoryRecord>[] = [
-    { element: ExecutionHistoryModal, colName: '' }
+    { element: Navigator, colName: '' }
   ];
 
   const columns = useGetTableColumns({
@@ -60,8 +59,12 @@ const CommandExecution = () => {
 
   return (
     <div className="px-5 py-3 w-full">
+      <h1 className="capitalize secondary-title lg:main-title">
+        <span className="font-bold text-[#0A3690]">
+          Command Execution History{' '}
+        </span>
+      </h1>
       <HesFilters />
-      <CommandForm refetch={refetchCommandExecutionHistory} />
       <div className="flex flex-col py-4">
         <CommandHistoryFilters
           setQuery={setQuery}
@@ -92,4 +95,4 @@ const CommandExecution = () => {
   );
 };
 
-export default CommandExecution;
+export default CommandExecutionHistory;
