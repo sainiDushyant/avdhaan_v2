@@ -21,6 +21,7 @@ import { ScheduledCommandRecord } from './records/reports';
 import { ConfigureCommandRecord } from './records/configure-command';
 import { HESAuthToken } from './records/login';
 import { DownloadCSVRecord } from './records/download-csv';
+import { RestorationOccuranceMetricsRecord } from './records/alarms';
 
 export type HesAPIError = {
   errorMsg: string;
@@ -99,6 +100,8 @@ export type configureCommandResponse = ResponseBase<ConfigureCommandRecord>;
 export type DownloadCSVResponse =
   ResponseBaseWithOutPagination<DownloadCSVRecord>;
 export type HESTokenResponse = ResponseBaseWithOutPagination<HESAuthToken>;
+export type RestorationOccuranceMetricsResponse =
+  ResponseBaseWithOutPagination<RestorationOccuranceMetricsRecord>;
 
 export interface CustomAPIError {
   description?: string;

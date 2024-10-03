@@ -38,7 +38,8 @@ export const navbarLinkData = [
       { to: '/hes/meter-profile-data/periodic-push', title: 'Periodic Push' }
     ]
   },
+  { to: '/hes/alarms', title: 'Alarms' },
   { to: '/hes/command-execution', title: 'Command Execution' },
   { to: '/hes/device-information', title: 'Device Information' },
-  { to: '/hes/configure-command', title: 'Configure Command ' },
+  { to: '/hes/configure-command', title: 'Configure Command ' }
 ];
