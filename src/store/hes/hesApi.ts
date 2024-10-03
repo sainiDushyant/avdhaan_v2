@@ -17,6 +17,7 @@ import { DeviceInfoEndpoints } from './endpoints/device-info';
 import { ConfigureCommandEndpoints } from './endpoints/configure-command';
 import { loginEndpoints } from './endpoints/login';
 import { downloadDataEndpoints } from './endpoints/download-data';
+import { alarmsEndPoints } from './endpoints/alarms';
 
 const hesApi = createApi({
   reducerPath: 'hesApi',
@@ -50,7 +51,8 @@ const hesApi = createApi({
     ...ConfigureCommandEndpoints(builder),
     ...ConfigureCommandEndpoints(builder),
     ...loginEndpoints(builder),
-    ...downloadDataEndpoints(builder)
+    ...downloadDataEndpoints(builder),
+    ...alarmsEndPoints(builder)
   })
 });
 
@@ -78,6 +80,7 @@ export const {
   useUpdateTokenForAuthMutation,
   useGetCommandExecutionHistoryDetailsQuery,
   useLazyDownloadCSVDataQuery,
+  useGetRestorationOccuranceMetricsQuery,
   usePrefetch
 } = hesApi;
 
