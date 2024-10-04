@@ -14,6 +14,23 @@ type ExecutionHistoryParams = {
   postFix?: string;
 };
 
+interface PrimaryFilters {
+  pss_id: Option[];
+  feeder_id: Option[];
+  dtr_id: Option[];
+  device_identifier: Option[];
+}
+
+interface Option {
+  value: string | number;
+  label: string;
+}
+
+/**
+ * Function to add or update tableData with PSS, Feeder, or DTR data.
+ * The total_count will include only the length of the device_identifier array.
+ */
+
 export const getCommandExecutionHistoryUrlSearchParams = ({
   query,
   search,
@@ -151,4 +168,37 @@ export const groupEventDataByDataType = (
   // Return grouped records as an array of arrays
   return Object.values(eventGroups);
 >>>>>>> d90a1f9 (Refacotring Command execution according to the Figma)
+};
+
+export const getSelectionData = (
+  currentStep: number,
+  primaryFilters: PrimaryFilters
+) => {
+  if (!primaryFilters) {
+    return;
+  }
+  console.log(primaryFilters, 'primary filters in utils');
+  const meters = primaryFilters.device_identifier.map((device) => device.value);
+  if (currentStep === 1) {
+    return {
+      pss_list: primaryFilters.pss_id.map((pss) => pss.label),
+      meters
+    };
+  }
+
+  if (currentStep === 2) {
+    return {
+      feeder_list: primaryFilters.feeder_id.map((feeder) => feeder.label),
+      meters
+    };
+  }
+
+  if (currentStep === 3) {
+    return {
+      dtr_list: primaryFilters.dtr_id.map((dtr) => dtr.label),
+      meters
+    };
+  }
+
+  return { meters };
 };

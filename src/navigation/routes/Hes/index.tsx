@@ -21,10 +21,10 @@ const PeriodicPush = lazy(
 );
 
 const ScheduledReads = lazy(() => import('@/pages/hes/scheduled-reads'));
-const CommandExecution = lazy(() => import('@/pages/hes/command-execution'));
-const CommandExecutionDetails = lazy(
-  () => import('@/pages/hes/command-execution/details')
+const CommandExecution = lazy(
+  () => import('@/pages/hes/command/includes/command-execution')
 );
+
 const DeviceInformation = lazy(() => import('@/pages/hes/device-information'));
 const ConfigureCommand = lazy(() => import('@/pages/hes/configure-command'));
 const CommandExecutionHistory = lazy(
@@ -44,11 +44,8 @@ const HesRoutes = (
       <Route path="periodic-push" element={<PeriodicPush />} />
     </Route>
 
-    <Route path="command-execution" element={<Outlet />}>
-      <Route index element={<CommandExecution />} />
-      <Route path=":commandId" element={<CommandExecutionDetails />} />
-    </Route>
-    <Route path="command">
+    <Route path="command" element={<Outlet />}>
+      <Route path="command-execution" element={<CommandExecution />} />
       <Route
         path="command-execution-history"
         element={<CommandExecutionHistory />}

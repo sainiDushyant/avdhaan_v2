@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react';
 import { useGetCommandExecutionHistoryQuery } from '@/store/hes/hesApi';
-import { getCommandExecutionHistoryUrlSearchParams } from '../../../command-execution/includes/utils';
+import { getCommandExecutionHistoryUrlSearchParams } from '../utils';
 import useGetTableColumns, { ActionType } from '@/hooks/useGetTableColumns';
 import DataTable from '@/components/customUI/DataTable';
 import CommandHistoryHelper from './CommandHistoryHelper';

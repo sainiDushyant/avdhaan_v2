@@ -111,7 +111,7 @@ const CommandDetailsModal: FC<CommandDetailsModalProps> = ({ data }) => {
 
 <<<<<<< HEAD
   const handleModal = () => {
-    if (data.executionStatus !== 'FAILED') {
+    if (allowedStatus.includes(data.executionStatus)) {
       setOpen(!open);
     }
   };
@@ -121,16 +121,16 @@ const CommandDetailsModal: FC<CommandDetailsModalProps> = ({ data }) => {
       open={open}
       setOpen={handleModal}
       modalClass="max-w-[80vw] max-h-[80vh]  py-0 flex flex-col"
-      ButtonLogo={data.executionStatus === 'FAILED' ? EyeClose : Eye}
+      ButtonLogo={allowedStatus.includes(data.executionStatus) ? Eye : EyeClose}
     >
       <DialogTitle className="font-semibold text-xl mt-5 text-[#0A3690]">
         Command Response Payload
         <DialogDescription>
-          <span className="text-[#708CC7] text-sm">{`Meter: ${data.deviceSerial}, Command: ${data.commandName}, Execution: ${data.startTime} `}</span>{' '}
+          <span className="text-[#708CC7] text-sm">{`Meter: ${data.deviceSerial}, Command: ${data.commandName}, Execution: ${data.startTime} `}</span>
         </DialogDescription>
       </DialogTitle>
-      <div className="overflow-y-scroll w-full">
-        <div className="flex flex-col">
+      <div className="overflow-y-scroll w-full p-2 mb-2">
+        <div className="flex flex-col gap-3">
           {!isFetching ? (
             newData?.map((ele, i) => {
               return (
