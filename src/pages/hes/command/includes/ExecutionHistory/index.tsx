@@ -44,7 +44,7 @@ const ExecutionHistory: FC = () => {
   );
 
   const batchCommandHistoryActions: ActionType<CommandHistoryRecord>[] = [
-    { element: BatchStatus },
+    { element: BatchStatus, colName: 'STATUS' },
     { element: CommandDetailsModal }
   ];
 

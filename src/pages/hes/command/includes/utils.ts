@@ -1,4 +1,8 @@
-import { CommandHistoryQueryParams } from '@/store/hes/types/records/command-execution';
+import { ExecutionHistoryDetailsResponseModified } from '@/store/hes/types';
+import {
+  CommandHistoryQueryParams,
+  ExecutionHistoryDetailsRecordModified
+} from '@/store/hes/types/records/command-execution';
 
 type ExecutionHistoryParams = {
   query: CommandHistoryQueryParams;
@@ -53,53 +57,42 @@ export const getCommandExecutionHistoryUrlSearchParams = ({
   return newQuery + (newQuery ? `&${postFix}` : `?${postFix}`);
 };
 
-type Payload = {
-  data_type?: string;
-  [key: string]: any;
+type ExecutionHistoryDetailRecordModified = {
+  [key: string]: string | number;
 };
 
-type ResponseData = {
-  cmd_name: string;
-  payload: Payload;
-};
-
-type RecordResponse = {
-  response: {
-    responseData: ResponseData;
-    [key: string]: any;
-  };
-  pendingStatusReason?: {
-    reason: string;
-  };
-  [key: string]: any;
-};
-
-type ExecutionHistoryDetailsRecordModified = {
-  [key: string]: any;
-};
-
-/**
- * Group records by data_type for cmd_name "EVENTS"
- */
 export const groupEventDataByDataType = (
-  records: RecordResponse[]
-): ExecutionHistoryDetailsRecordModified[][] | undefined => {
-  const eventGroups: Record<string, ExecutionHistoryDetailsRecordModified[]> =
+  records: ExecutionHistoryDetailsRecordModified[]
+):
+  | ExecutionHistoryDetailRecordModified[][]
+  | ExecutionHistoryDetailRecordModified[]
+  | undefined => {
+  const eventGroups: Record<string, ExecutionHistoryDetailRecordModified[]> =
     {};
 
-  if (!records) {
+  if (!records || records.length === 0) {
     return;
   }
-  records.forEach((record) => {
-    if (record.cmd_name === 'EVENTS') {
-      const dataType = record.payload?.data_type || 'default';
-      if (!eventGroups[dataType]) {
-        eventGroups[dataType] = [];
-      }
-      eventGroups[dataType].push(record.payload);
-    }
-  });
 
-  // Return grouped records as an array of arrays
-  return Object.values(eventGroups);
+  const results: ExecutionHistoryDetailRecordModified[] = records
+    .map((record) => {
+      if (record.cmd_name === 'EVENTS' && record.payload) {
+        const dataType =
+          (record.payload as { data_type?: string }).data_type || 'default';
+        if (!eventGroups[dataType]) {
+          eventGroups[dataType] = [];
+        }
+        eventGroups[dataType].push(record.payload);
+        return undefined; // Exclude from the results array since it's grouped
+      } else if (record.payload) {
+        return record.payload; // Return payload for non-'EVENTS' records
+      }
+    })
+    .filter(
+      (payload): payload is ExecutionHistoryDetailRecordModified => !!payload
+    ); // Filter out undefined
+
+  return Object.keys(eventGroups).length > 0
+    ? Object.values(eventGroups)
+    : results;
 };
