@@ -19,7 +19,7 @@ const PrimaryFilters: FC<PrimaryFiltersProps> = ({
 }) => {
 
     const {
-        primaryFilterLoading,
+        primaryFilterLoading, defaultOptions,
         dtrOptions, feederOptions, pssOptions,
     } = useHesPrimaryFilterOptions(primaryFilters);
 
@@ -51,24 +51,29 @@ const PrimaryFilters: FC<PrimaryFiltersProps> = ({
             <AsyncMultiOptionSelect
                 loadOptions={pssOptions}
                 handleChange={handleChangePss}
+                defaultOptions={defaultOptions.pss}
                 value={primaryFilters.pss_id}
                 loading={primaryFilterLoading}
                 customCss="flex-none md:min-w-[220px] max-w-[70vw]"
                 placeholder={"Sub-Station"}
                 cacheOptions={false}
             />
+
             <AsyncMultiOptionSelect
                 loadOptions={feederOptions}
                 handleChange={handleChangeFeeder}
+                defaultOptions={defaultOptions.feeder}
                 value={primaryFilters.feeder_id}
                 loading={primaryFilterLoading}
                 customCss="flex-none md:min-w-[220px] max-w-[70vw]"
                 placeholder={"Feeder"}
                 cacheOptions={false}
             />
+            
             <AsyncMultiOptionSelect
                 loadOptions={dtrOptions}
                 handleChange={handleChangeDtr}
+                defaultOptions={defaultOptions.dtr}
                 value={primaryFilters.dtr_id}
                 loading={primaryFilterLoading}
                 customCss="flex-none md:min-w-[220px] max-w-[70vw]"

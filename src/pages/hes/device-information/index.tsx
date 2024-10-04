@@ -7,7 +7,7 @@ const DeviceData = () => {
       <div className="flex relative flex-col mt-8">
         <div className="flex justify-between items-center mb-2 ">
           <h1 className="capitalize secondary-title lg:main-title">
-            <span className="font-bold text-[#0A3690]">Block Load</span>
+            <span className="font-bold text-[#0A3690]">Device Information</span>
           </h1>
         </div>
         <HesFilters />

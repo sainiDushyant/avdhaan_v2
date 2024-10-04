@@ -1,6 +1,6 @@
-import UpdateDeviceForm from '@/components/customUI/Forms/updateDeviceInformation';
 import Spinner from '@/components/customUI/Loaders/Spinner';
 import BaseModal from '@/components/customUI/Modals';
+import UpdateDeviceForm from '@/components/customUI/hes/updateDeviceInformation';
 import { DeviceDetailRecord } from '@/store/hes/types/records/device-information';
 import { FC, useCallback, useState, Suspense } from 'react'
 
