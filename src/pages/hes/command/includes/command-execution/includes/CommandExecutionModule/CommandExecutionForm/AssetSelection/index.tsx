@@ -257,7 +257,7 @@ const AssetSelection: FC<AssetSelectionProps> = ({
             disabled={primaryFilters.device_identifier.length === 0}
             onClick={handleAddClick}
           >
-            Add
+            {assetsSelected.device_identifier.length > 0 ? 'Update' : 'Add'}
           </Button>
         </div>
       )}

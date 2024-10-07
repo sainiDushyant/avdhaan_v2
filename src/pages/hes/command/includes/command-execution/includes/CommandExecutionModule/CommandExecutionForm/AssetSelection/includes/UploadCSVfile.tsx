@@ -34,13 +34,14 @@ const UploadCSVfile: FC = () => {
     } else {
       try {
         const response = await uploadCSV(formData);
+        console.log(response, 'response');
         if (response.data?.success) {
           console.log(response.data.data.records);
-        } else if (response.data?.error) {
+        } else if (response.error) {
           toast({
             variant: 'default',
             title: 'Upload error!',
-            description: response.data.error.errorMsg
+            description: 'There was an error while uploading the file.'
           });
         }
       } catch (error) {

@@ -44,7 +44,7 @@ export const navbarLinkData = [
     children: [
       {
         to: '/hes/command/command-execution-history',
-        title: 'Command Execution History'
+        title: 'Cmd Execution History'
       },
       { to: '/hes/command/command-execution', title: 'Command Execution' }
     ]

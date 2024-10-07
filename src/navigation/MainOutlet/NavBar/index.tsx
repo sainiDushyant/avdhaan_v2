@@ -19,12 +19,12 @@ type NavBarItem = {
 };
 
 const NavBar = () => {
-  
   const { pathname } = useLocation();
   const basePath = useGetBasePath(0);
 
   // Checks if the link or any of its children is active
-  const isActive = (linkTo: string) => (pathname === linkTo || pathname === `${linkTo}\\`);
+  const isActive = (linkTo: string) =>
+    pathname === linkTo || pathname === `${linkTo}\\`;
 
   const isParentActive = (linkTo: string, children?: NavBarItem[]) => {
     // Check if the current location matches any child or the parent itself

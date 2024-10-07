@@ -25,25 +25,23 @@ const CommandExecutionTable: FC<CommandExecutionProps> = ({
     dtr: { key: 'dtr_id', label: 'DTR' }
   };
 
-  // Check if currentAsset is valid
-  if (!currentAsset || !toggleAssets[currentAsset]) {
-    return (
-      <div>
-        <p>No valid asset selected.</p>
-      </div>
-    );
-  }
+  // Determine current step key and label
+  const currentStepKey = currentAsset ? toggleAssets[currentAsset]?.key : null;
+  const currentStepLabel = currentAsset
+    ? toggleAssets[currentAsset]?.label
+    : '';
 
-  const currentStepKey = toggleAssets[currentAsset].key;
-  const currentStepLabel = toggleAssets[currentAsset].label;
-
-  // Check if the currentStep toggle has corresponding data
-  const currentStepAssets = assetsSelected[currentStepKey] || [];
+  // Get corresponding data for the current asset
+  const currentStepAssets = currentStepKey
+    ? assetsSelected[currentStepKey]
+    : [];
 
   return (
     <div className="table-container mb-5">
       <div className="flex justify-between">
-        <span className="text-[#0A3690] text-lg">{`${currentStepLabel} and Meter`}</span>
+        <span className="text-[#0A3690] text-lg">
+          {currentAsset ? `${currentStepLabel} and Meters` : 'Meters'}
+        </span>
         <div className="space-x-2">
           <span className="text-[#0A3690] text-lg">
             Total meters: {assetsSelected.device_identifier.length}
@@ -70,33 +68,51 @@ const CommandExecutionTable: FC<CommandExecutionProps> = ({
           </Button>
         </div>
       </div>
+
       <table className="table-auto border-collapse w-full mt-4">
         <thead>
-          <tr className="bg-blue-200">
-            <th className="border px-4 py-2 text-[#0A3690] text-left">
-              Device Identifier
-            </th>
-            <th className="border px-4 py-2 text-[#0A3690] text-left">
-              {currentStepLabel}
-            </th>
+          <tr className="table-header">
+            {currentAsset ? (
+              <>
+                <th className="border px-4 py-2 text-[#0A3690] text-left">
+                  Device Identifier
+                </th>
+                <th className="border px-4 py-2 text-[#0A3690] text-left">
+                  {currentStepLabel}
+                </th>
+              </>
+            ) : (
+              <th className="border px-4 py-2 text-[#0A3690] text-left">
+                Meters
+              </th>
+            )}
           </tr>
         </thead>
       </table>
-      {/* Scrollable body */}
+
       <div className="overflow-y-auto max-h-64">
         <table className="table-auto border-collapse w-full">
           <tbody>
-            {assetsSelected.device_identifier.map((device, index) => (
-              <tr
-                key={index}
-                className={index % 2 === 0 ? 'bg-white' : 'bg-blue-50'}
-              >
-                <td className="border px-4 py-2">{device.value}</td>
-                <td className="border px-4 py-2">
-                  {currentStepAssets[index]?.label || '--'}
-                </td>
-              </tr>
-            ))}
+            {currentAsset
+              ? assetsSelected.device_identifier.map((device, index) => (
+                  <tr
+                    key={index}
+                    className={index % 2 === 0 ? 'bg-[#F3F9F9]' : 'bg-white'}
+                  >
+                    <td className="border px-4 py-2">{device.value}</td>
+                    <td className="border px-4 py-2">
+                      {currentStepAssets[index]?.label || '--'}
+                    </td>
+                  </tr>
+                ))
+              : assetsSelected.device_identifier.map((device, index) => (
+                  <tr
+                    key={index}
+                    className={index % 2 === 0 ? 'bg-white' : 'bg-blue-50'}
+                  >
+                    <td className="border px-4 py-2">{device.value}</td>
+                  </tr>
+                ))}
           </tbody>
         </table>
       </div>

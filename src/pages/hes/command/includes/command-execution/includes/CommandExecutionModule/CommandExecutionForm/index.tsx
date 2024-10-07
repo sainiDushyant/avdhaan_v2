@@ -5,6 +5,7 @@ import { INITIAL_FILTERS } from '@/hooks/hes/useHesPrimaryFilterState';
 import { HesFilterState } from '@/store/hes/types/records/device-management';
 import CommandExecutionTable from '../../command-execution-table';
 import ToggleStep from '../../command-execution-table/includes/ToggleStep';
+import CommandForm from '../../CommandForm';
 
 interface CommandExecutionFormProps {
   currentStep: number;
@@ -52,14 +53,26 @@ const CommandExecutionForm: FC<CommandExecutionFormProps> = ({
           setPrimaryFilters={setPrimaryFilters}
         />
       </form>
-      <CommandExecutionTable
-        setPrimaryFilters={setPrimaryFilters}
-        setAssets={setAssetsSelected}
-        assetsSelected={assetsSelected}
-        currentAsset={selectedFilter}
-      />
+      {currentStep === 1 && (
+        <CommandExecutionTable
+          setPrimaryFilters={setPrimaryFilters}
+          setAssets={setAssetsSelected}
+          assetsSelected={assetsSelected}
+          currentAsset={selectedFilter}
+        />
+      )}
+      {currentStep === 2 && (
+        <CommandForm
+          identifiers={assetsSelected.device_identifier.map((e) => e.value)}
+        />
+      )}
+
       <div className="flex justify-end">
-        <ToggleStep currentStep={1} setCurrentStep={setCurrentStep} />
+        <ToggleStep
+          currentStep={currentStep}
+          identifiers={assetsSelected.device_identifier}
+          setCurrentStep={setCurrentStep}
+        />
       </div>
     </>
   );
