@@ -9,15 +9,16 @@ import { HesFilterState } from '@/store/hes/types/records/device-management';
 import { MultiValue } from 'react-select';
 import { Option } from '@/store/vee/types/other';
 import BaseModal from '@/components/customUI/Modals';
-import { getSelectionData } from '@/pages/hes/command/includes/utils';
-import { CommandExecutionTableProps } from '../../../command-execution-table/types';
+import { Input } from '@/components/ui/input';
+import UploadCSVfile from './includes/UploadCSVfile';
 
 interface AssetSelectionProps {
   currentStep: number;
   selectedFilter: HigherOrderFilterType;
   primaryFilters: HesFilterState;
   setPrimaryFilters: React.Dispatch<React.SetStateAction<HesFilterState>>;
-  setData: React.Dispatch<React.SetStateAction<CommandExecutionTableProps>>;
+  setAssetsSelected: React.Dispatch<React.SetStateAction<HesFilterState>>;
+  assetsSelected: HesFilterState;
 }
 
 const UploadCsvButton = () => {
@@ -33,7 +34,8 @@ const AssetSelection: FC<AssetSelectionProps> = ({
   selectedFilter,
   primaryFilters,
   setPrimaryFilters,
-  setData
+  setAssetsSelected,
+  assetsSelected
 }) => {
   const [openCsvModal, setOpenCsvModal] = useState(false);
 
@@ -72,7 +74,6 @@ const AssetSelection: FC<AssetSelectionProps> = ({
   }, []);
 
   const handleChangePss = useCallback((selected: MultiValue<Option>) => {
-    console.log('setting primary pss filters');
     setPrimaryFilters((prevData) => ({
       ...prevData,
       pss_id: selected,
@@ -83,8 +84,49 @@ const AssetSelection: FC<AssetSelectionProps> = ({
   }, []);
 
   const handleAddClick = () => {
-    const updatedData = getSelectionData(currentStep, primaryFilters);
-    setData(updatedData);
+    setAssetsSelected((prevAssetsSelected) => ({
+      ...prevAssetsSelected,
+      // Merge device_identifier
+      device_identifier: [
+        ...prevAssetsSelected.device_identifier,
+        ...primaryFilters.device_identifier.filter(
+          (newDevice) =>
+            !prevAssetsSelected.device_identifier.some(
+              (existingDevice) => existingDevice.value === newDevice.value
+            )
+        )
+      ],
+      // Merge pss_id
+      pss_id: [
+        ...prevAssetsSelected.pss_id,
+        ...primaryFilters.pss_id.filter(
+          (newPss) =>
+            !prevAssetsSelected.pss_id.some(
+              (existingPss) => existingPss.value === newPss.value
+            )
+        )
+      ],
+      // Merge feeder_id
+      feeder_id: [
+        ...prevAssetsSelected.feeder_id,
+        ...primaryFilters.feeder_id.filter(
+          (newFeeder) =>
+            !prevAssetsSelected.feeder_id.some(
+              (existingFeeder) => existingFeeder.value === newFeeder.value
+            )
+        )
+      ],
+      // Merge dtr_id
+      dtr_id: [
+        ...prevAssetsSelected.dtr_id,
+        ...primaryFilters.dtr_id.filter(
+          (newDtr) =>
+            !prevAssetsSelected.dtr_id.some(
+              (existingDtr) => existingDtr.value === newDtr.value
+            )
+        )
+      ]
+    }));
   };
 
   return (
@@ -159,7 +201,9 @@ const AssetSelection: FC<AssetSelectionProps> = ({
           setOpen={setOpenCsvModal}
           ButtonLogo={UploadCsvButton}
           dialogTitle={'Upload Meter Csv'}
-        ></BaseModal>
+        >
+          <UploadCSVfile />
+        </BaseModal>
       </div>
 
       {currentStep === 1 && (

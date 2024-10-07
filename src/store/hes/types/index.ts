@@ -15,7 +15,8 @@ import {
   CommandHistoryRecord,
   CommandInfoRecord,
   ExecutionHistoryDetailsRecord,
-  ExecutionHistoryDetailsRecordModified
+  ExecutionHistoryDetailsRecordModified,
+  UploadCSVFileRecord
 } from './records/command-execution';
 import { ScheduledCommandRecord } from './records/reports';
 import { ConfigureCommandRecord } from './records/configure-command';
@@ -97,6 +98,8 @@ export type configureCommandResponse = ResponseBase<ConfigureCommandRecord>;
 
 export type HESTokenResponse = ResponseBaseWithOutPagination<HESAuthToken>;
 
+export type UploadCSVFileResponse =
+  ResponseBaseWithOutPagination<UploadCSVFileRecord>;
 export interface CustomAPIError {
   description?: string;
   // Define other properties if needed

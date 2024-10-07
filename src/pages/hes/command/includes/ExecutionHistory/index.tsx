@@ -44,11 +44,7 @@ const ExecutionHistory: FC = () => {
   );
 
   const batchCommandHistoryActions: ActionType<CommandHistoryRecord>[] = [
-<<<<<<< HEAD
     { element: BatchStatus, colName: 'STATUS' },
-=======
-    { element: BatchStatus },
->>>>>>> d90a1f9 (Refacotring Command execution according to the Figma)
     { element: CommandDetailsModal }
   ];
 
