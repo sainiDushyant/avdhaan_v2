@@ -26,9 +26,6 @@ const ScheduledReads = lazy(() => import('@/pages/hes/scheduled-reads'));
 const CommandExecution = lazy(
   () => import('@/pages/hes/command/includes/command-execution')
 );
-const CommandExecutionDetails = lazy(
-  () => import('@/pages/hes/command-execution/details')
-);
 const DeviceInformation = lazy(() => import('@/pages/hes/device-information'));
 const ConfigureCommand = lazy(() => import('@/pages/hes/configure-command'));
 const CommandExecutionHistory = lazy(
