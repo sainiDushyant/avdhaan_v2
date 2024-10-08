@@ -2,9 +2,8 @@ import { lazy } from 'react';
 import { Route, Outlet } from 'react-router-dom';
 import HesOutlet from '@/navigation/HesOutlet';
 import ExecutionHistory from '@/pages/hes/command/includes/ExecutionHistory';
-import Alarms from '@/pages/hes/alarms';
 
-
+const Alarms = lazy(() => import('@/pages/hes/alarms'));
 const Dashboard = lazy(() => import('@/pages/hes/dashboard'));
 const BlockLoad = lazy(
   () => import('@/pages/hes/meter-profile-data/block-load')
