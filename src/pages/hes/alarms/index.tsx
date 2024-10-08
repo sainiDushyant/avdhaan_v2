@@ -9,7 +9,7 @@ import FullScreen from '@/components/customUI/Loaders/FullScreen';
 import ErrorScreen from '@/components/customUI/ErrorScreen';
 import Header from './includes/Header';
 import { AlarmsQueryParams } from '@/store/hes/types/records/alarms';
-import { getCommandExecutionHistoryUrlSearchParams } from '../command-execution/includes/utils';
+import { getCommandExecutionHistoryUrlSearchParams } from '../command/includes/utils';
 import { getDateRangesFor7Days } from '@/lib/utils';
 
 const Alarms = () => {
