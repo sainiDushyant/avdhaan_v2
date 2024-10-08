@@ -7,10 +7,11 @@ import { MeterProfileQueryParams } from '@/store/hes/types/records/meter-profile
 import { useSelector } from '@/store';
 
 const DailyLoadTable = () => {
-
   const { search } = useLocation();
-  const [query, setQuery] = useState<MeterProfileQueryParams>({ sub_category: 1 });
-  const mainFilterLoading = useSelector(state => state.hes.mainFilterLoading);
+  const [query, setQuery] = useState<MeterProfileQueryParams>({
+    sub_category: 1
+  });
+  const mainFilterLoading = useSelector((state) => state.hes.mainFilterLoading);
 
   const urlSearchParams = useMemo(() => {
     return getCommandExecutionHistoryUrlSearchParams({ query, search });
@@ -28,15 +29,21 @@ const DailyLoadTable = () => {
     { skip: mainFilterLoading }
   );
 
-  return <MetricProfileTable
-    response={response}
-    isLoading={isLoading}
-    isFetching={isFetching}
-    isError={isError} error={error}
-    query={query} setQuery={setQuery}
-    refresh={refresh} 
-    filterType={'datetime'} 
-  />
+  return (
+    <MetricProfileTable
+      parentName="dailyload"
+      showDownloadButton={true}
+      response={response}
+      isLoading={isLoading}
+      isFetching={isFetching}
+      isError={isError}
+      error={error}
+      query={query}
+      setQuery={setQuery}
+      refresh={refresh}
+      filterType={'datetime'}
+    />
+  );
 };
 
 export default DailyLoadTable;

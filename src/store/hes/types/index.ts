@@ -5,24 +5,28 @@ import {
   DeviceMetaInfoMetricsRecord,
   DeviceSubCategoryRecord
 } from './records/device-management';
-import { 
-  LiveDataMetricsRecord, MeterProfileDataTableRecord, 
-  MeterProfileDataTableRecordTransformed 
+import {
+  LiveDataMetricsRecord,
+  MeterProfileDataTableRecord,
+  MeterProfileDataTableRecordTransformed
 } from './records/meter-profile-data-metrics';
-import { 
-  BatchCommandHistoryRecord, CommandHistoryRecord, 
-  CommandInfoRecord, 
+import {
+  BatchCommandHistoryRecord,
+  CommandHistoryRecord,
+  CommandInfoRecord,
   ExecutionHistoryDetailsRecord,
   ExecutionHistoryDetailsRecordModified
-} from "./records/command-execution";
+} from './records/command-execution';
 import { ScheduledCommandRecord } from './records/reports';
 import { ConfigureCommandRecord } from './records/configure-command';
 import { HESAuthToken } from './records/login';
+import { DownloadCSVRecord } from './records/download-csv';
+import { RestorationOccuranceMetricsRecord } from './records/alarms';
 
 export type HesAPIError = {
   errorMsg: string;
   errorCode: string;
-}
+};
 
 export type ResponseBaseWithOffsetPagination<T> = {
   success: boolean;
@@ -60,28 +64,44 @@ export type ResponseBaseWithOutPagination<T> = {
   error: HesAPIError | null;
 };
 
-export type DeviceSubCategoryResponse = ResponseBaseWithOutPagination<DeviceSubCategoryRecord>;
-export type DeviceMetaInfoMetricsResponse = ResponseBaseWithOutPagination<DeviceMetaInfoMetricsRecord>;
-export type LocationHierarchyResponse = ResponseBaseWithOutPagination<LocationHierarchyRecord>;
-export type DeviceInfoResponse = ResponseBaseWithOutPagination<DeviceManagementInfoRecord>;
-export type LiveDataMetricsResponse = ResponseBaseWithOutPagination<LiveDataMetricsRecord>;
+export type DeviceSubCategoryResponse =
+  ResponseBaseWithOutPagination<DeviceSubCategoryRecord>;
+export type DeviceMetaInfoMetricsResponse =
+  ResponseBaseWithOutPagination<DeviceMetaInfoMetricsRecord>;
+export type LocationHierarchyResponse =
+  ResponseBaseWithOutPagination<LocationHierarchyRecord>;
+export type DeviceInfoResponse =
+  ResponseBaseWithOutPagination<DeviceManagementInfoRecord>;
+export type LiveDataMetricsResponse =
+  ResponseBaseWithOutPagination<LiveDataMetricsRecord>;
 
-export type CommandInfoResponse = ResponseBaseWithOutPagination<CommandInfoRecord>;
+export type CommandInfoResponse =
+  ResponseBaseWithOutPagination<CommandInfoRecord>;
 export type CommandHistoryResponse = ResponseBase<CommandHistoryRecord>;
-export type BatchCommandHistoryResponse = ResponseBaseWithOffsetPagination<BatchCommandHistoryRecord>;
-export type ExecutionHistoryDetailsResponse = ResponseBase<ExecutionHistoryDetailsRecord>
-export type ExecutionHistoryDetailsResponseModified = ResponseBase<ExecutionHistoryDetailsRecordModified>
+export type BatchCommandHistoryResponse =
+  ResponseBaseWithOffsetPagination<BatchCommandHistoryRecord>;
+export type ExecutionHistoryDetailsResponse =
+  ResponseBase<ExecutionHistoryDetailsRecord>;
+export type ExecutionHistoryDetailsResponseModified =
+  ResponseBase<ExecutionHistoryDetailsRecordModified>;
 
-export type MeterProfileDataTableOgResponse = ResponseBase<MeterProfileDataTableRecord>;
-export type MeterProfileDataTableNewResponse = ResponseBase<MeterProfileDataTableRecordTransformed>;
+export type MeterProfileDataTableOgResponse =
+  ResponseBase<MeterProfileDataTableRecord>;
+export type MeterProfileDataTableNewResponse =
+  ResponseBase<MeterProfileDataTableRecordTransformed>;
 
-export type ScheduledReportsResponse = ResponseBaseWithOutPagination<ScheduledCommandRecord>
+export type ScheduledReportsResponse =
+  ResponseBaseWithOutPagination<ScheduledCommandRecord>;
 
 export type DeviceDataResponse = ResponseBase<DeviceManagementInfoRecord>;
 export type DeviceDetailResponse = ResponseBase<DeviceDetailRecord>;
 export type configureCommandResponse = ResponseBase<ConfigureCommandRecord>;
 
+export type DownloadCSVResponse =
+  ResponseBaseWithOutPagination<DownloadCSVRecord>;
 export type HESTokenResponse = ResponseBaseWithOutPagination<HESAuthToken>;
+export type RestorationOccuranceMetricsResponse =
+  ResponseBaseWithOutPagination<RestorationOccuranceMetricsRecord>;
 
 export interface CustomAPIError {
   description?: string;
