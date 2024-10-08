@@ -1,9 +1,9 @@
-import { ResponseBaseWithOutPagination } from ".";
+import { ResponseBaseWithOutPagination } from '.';
 
 export type CustomHesApiError = {
   status: number;
   data: ResponseBaseWithOutPagination<null>;
-}
+};
 
 export type GraphItem = {
   name: string;
@@ -47,6 +47,11 @@ export interface Option {
 
 export interface RefetchDataProps {
   refetch: () => void;
+}
+
+export interface DownloadButtonProps {
+  downloadCSV: () => void;
+  isLoading: boolean;
 }
 
 export type Cursor = string | null;

@@ -2,6 +2,8 @@ import { lazy } from 'react';
 import { Route, Outlet } from 'react-router-dom';
 import HesOutlet from '@/navigation/HesOutlet';
 import ExecutionHistory from '@/pages/hes/command/includes/ExecutionHistory';
+import Alarms from '@/pages/hes/alarms';
+
 
 const Dashboard = lazy(() => import('@/pages/hes/dashboard'));
 const BlockLoad = lazy(
@@ -24,7 +26,9 @@ const ScheduledReads = lazy(() => import('@/pages/hes/scheduled-reads'));
 const CommandExecution = lazy(
   () => import('@/pages/hes/command/includes/command-execution')
 );
-
+const CommandExecutionDetails = lazy(
+  () => import('@/pages/hes/command-execution/details')
+);
 const DeviceInformation = lazy(() => import('@/pages/hes/device-information'));
 const ConfigureCommand = lazy(() => import('@/pages/hes/configure-command'));
 const CommandExecutionHistory = lazy(
@@ -58,6 +62,7 @@ const HesRoutes = (
     <Route path="scheduled-reads" element={<ScheduledReads />} />
     <Route path="device-information" element={<DeviceInformation />} />
     <Route path="configure-command" element={<ConfigureCommand />} />
+    <Route path="alarms" element={<Alarms />} />
   </Route>
 );
 

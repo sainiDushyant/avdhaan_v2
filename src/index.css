@@ -245,6 +245,11 @@
     font-size: 14px;
   }
 
+  .graph-download-icon{
+    max-width: none !important;
+    width: 40px;
+  }
+
   .special-div > svg {
     filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
   }

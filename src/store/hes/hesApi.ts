@@ -1,4 +1,12 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
+import {
+  BaseQueryFn,
+  createApi,
+  EndpointBuilder,
+  FetchArgs,
+  FetchBaseQueryError,
+  FetchBaseQueryMeta
+} from '@reduxjs/toolkit/query/react';
+
 import { customBaseQuery, HES_TAG_TYPES } from '../utils';
 import { scheduledReportsEndpoints } from './endpoints/scheduled-reports';
 import { deviceManagementEndpoints } from './endpoints/device-management';
@@ -7,6 +15,8 @@ import { commandExecutionEndpoints } from './endpoints/command-execution';
 import { DeviceInfoEndpoints } from './endpoints/device-info';
 import { ConfigureCommandEndpoints } from './endpoints/configure-command';
 import { loginEndpoints } from './endpoints/login';
+import { downloadDataEndpoints } from './endpoints/download-data';
+import { alarmsEndPoints } from './endpoints/alarms';
 
 const hesApi = createApi({
   reducerPath: 'hesApi',
@@ -15,6 +25,7 @@ const hesApi = createApi({
       import.meta.env.VITE_HES_API_VERSION
     }/`,
     credentials: 'same-origin',
+
     setHeaders: (headers, { endpoint }) => {
       if (endpoint === 'uploadCSVfile') {
         headers.set('Content-Type', 'multipart/form-data');
@@ -37,7 +48,10 @@ const hesApi = createApi({
     ...commandExecutionEndpoints(builder),
     ...DeviceInfoEndpoints(builder),
     ...ConfigureCommandEndpoints(builder),
-    ...loginEndpoints(builder)
+    ...loginEndpoints(builder),
+    ...downloadDataEndpoints(builder),
+    ...alarmsEndPoints(builder)
+
   })
 });
 
@@ -65,6 +79,8 @@ export const {
   useUpdateTokenForAuthMutation,
   useGetCommandExecutionHistoryDetailsQuery,
   useUploadCSVfileMutation,
+  useLazyDownloadCSVDataQuery,
+  useGetRestorationOccuranceMetricsQuery,
   usePrefetch
 } = hesApi;
 

@@ -17,10 +17,13 @@ import {
   ExecutionHistoryDetailsRecord,
   ExecutionHistoryDetailsRecordModified,
   UploadCSVFileRecord
+
 } from './records/command-execution';
 import { ScheduledCommandRecord } from './records/reports';
 import { ConfigureCommandRecord } from './records/configure-command';
 import { HESAuthToken } from './records/login';
+import { DownloadCSVRecord } from './records/download-csv';
+import { RestorationOccuranceMetricsRecord } from './records/alarms';
 
 export type HesAPIError = {
   errorMsg: string;
@@ -96,7 +99,11 @@ export type DeviceDataResponse = ResponseBase<DeviceManagementInfoRecord>;
 export type DeviceDetailResponse = ResponseBase<DeviceDetailRecord>;
 export type configureCommandResponse = ResponseBase<ConfigureCommandRecord>;
 
+export type DownloadCSVResponse =
+  ResponseBaseWithOutPagination<DownloadCSVRecord>;
 export type HESTokenResponse = ResponseBaseWithOutPagination<HESAuthToken>;
+export type RestorationOccuranceMetricsResponse =
+  ResponseBaseWithOutPagination<RestorationOccuranceMetricsRecord>;
 
 export type UploadCSVFileResponse =
   ResponseBaseWithOutPagination<UploadCSVFileRecord>;

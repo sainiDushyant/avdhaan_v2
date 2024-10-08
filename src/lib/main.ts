@@ -49,6 +49,7 @@ export const navbarLinkData = [
       { to: '/hes/command/command-execution', title: 'Command Execution' }
     ]
   },
+  { to: '/hes/alarms', title: 'Alarms' },
   { to: '/hes/device-information', title: 'Device Information' },
   { to: '/hes/configure-command', title: 'Configure Command ' }
 ];

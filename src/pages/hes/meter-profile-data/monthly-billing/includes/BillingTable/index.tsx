@@ -31,6 +31,8 @@ const BillingTable = () => {
 
   return (
     <MetricProfileTable
+      showDownloadButton={true}
+      parentName="billing"
       response={response}
       isLoading={isLoading}
       isFetching={isFetching}

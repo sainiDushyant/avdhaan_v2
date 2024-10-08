@@ -133,6 +133,11 @@ export const formatDate = (
       options.month = '2-digit';
       options.year = 'numeric';
       break;
+    case 'MM-DD-YYYY':
+      options.month = '2-digit';
+      options.day = '2-digit';
+      options.year = 'numeric';
+      break;
     case 'HH:mm':
       options.hour = '2-digit';
       options.minute = '2-digit';
@@ -145,6 +150,64 @@ export const formatDate = (
   return new Intl.DateTimeFormat('en-US', options).format(new Date(date));
 };
 
+export function formatDateInLocalStr(dateStr: string) {
+  if (!dateStr) {
+    return;
+  }
+  const date = new Date(dateStr);
+
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  };
+
+  return date.toLocaleDateString('en-US', options);
+}
+
+export function getDateRangesFor7Days(): {
+  todayStart: string;
+  sevenDaysAgoStart: string;
+} {
+  const now = new Date();
+
+  // Helper function to format date in "YYYY-MM-DD HH:mm:ss"
+  function formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+
+  // Today at 00:00:00
+  const todayStart = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    0,
+    0,
+    0
+  );
+
+  // 7 days before today at 00:00:00
+  const sevenDaysAgoStart = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() - 7,
+    0,
+    0,
+    0
+  );
+
+  return {
+    todayStart: formatDate(todayStart),
+    sevenDaysAgoStart: formatDate(sevenDaysAgoStart)
+  };
+}
+
 export type DataType = {
   title?: string;
   value: number;
@@ -152,18 +215,20 @@ export type DataType = {
   color?: string;
   totalCount?: number;
   data_timestamp: string | Date | number;
-}
+};
 
 export type ChartData = {
   [key: string]: DataType[];
-}
+};
 
 export const prepareChartData = (
   data: ChartData,
   chartType: 'bar' | 'line',
   dateType: 'days' | 'time' | 'month'
 ) => {
-
+  const location = window && window?.location?.href?.split('/');
+  const fileName =
+    (location && `${location[location.length - 1]} data`) || 'data';
   const transformDataForChart = (data: DataType[]) => {
     const sortedData = [...data].sort(
       (a, b) =>
@@ -175,8 +240,8 @@ export const prepareChartData = (
       dateType === 'month'
         ? 'MMM YYYY'
         : dateType === 'days'
-          ? 'D MMM'
-          : 'h:mm A';
+        ? 'D MMM'
+        : 'h:mm A';
 
     return {
       dates: sortedData.map((item) =>
@@ -221,7 +286,23 @@ export const prepareChartData = (
       type: chartType,
       height: 350,
       toolbar: {
-        show: false
+        offsetY: -45,
+        tools: {
+          download:
+            '<img src="/assets/images/other/graphDownload.svg " class="graph-download-icon"> </img>'
+        },
+        show: true,
+        export: {
+          csv: {
+            filename: fileName
+          },
+          svg: {
+            filename: fileName
+          },
+          png: {
+            filename: fileName
+          }
+        }
       }
     },
     yaxis: {
@@ -251,8 +332,8 @@ export const prepareChartData = (
           dateType === 'month'
             ? 'MMM yyyy'
             : dateType === 'days'
-              ? 'd MMM'
-              : 'h:mm TT'
+            ? 'd MMM'
+            : 'h:mm TT'
       }
     },
     legend: {

@@ -31,6 +31,8 @@ const DailyLoadTable = () => {
 
   return (
     <MetricProfileTable
+      parentName="dailyload"
+      showDownloadButton={true}
       response={response}
       isLoading={isLoading}
       isFetching={isFetching}

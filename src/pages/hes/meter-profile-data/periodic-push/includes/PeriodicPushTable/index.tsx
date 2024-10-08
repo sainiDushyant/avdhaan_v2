@@ -31,6 +31,8 @@ const PeriodicPushTable = () => {
 
   return (
     <MetricProfileTable
+      parentName="periodic-push"
+      showDownloadButton={true}
       response={response}
       isLoading={isLoading}
       isFetching={isFetching}

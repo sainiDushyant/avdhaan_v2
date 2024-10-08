@@ -31,6 +31,8 @@ const InstantaneousTable = () => {
 
   return (
     <MetricProfileTable
+      parentName="profile-instant"
+      showDownloadButton={true}
       response={response}
       isLoading={isLoading}
       isFetching={isFetching}
