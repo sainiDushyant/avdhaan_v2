@@ -1,7 +1,9 @@
 import { lazy } from 'react';
 import { Route, Outlet } from 'react-router-dom';
 import HesOutlet from '@/navigation/HesOutlet';
+import ExecutionHistory from '@/pages/hes/command/includes/ExecutionHistory';
 import Alarms from '@/pages/hes/alarms';
+
 
 const Dashboard = lazy(() => import('@/pages/hes/dashboard'));
 const BlockLoad = lazy(
@@ -21,12 +23,17 @@ const PeriodicPush = lazy(
 );
 
 const ScheduledReads = lazy(() => import('@/pages/hes/scheduled-reads'));
-const CommandExecution = lazy(() => import('@/pages/hes/command-execution'));
+const CommandExecution = lazy(
+  () => import('@/pages/hes/command/includes/command-execution')
+);
 const CommandExecutionDetails = lazy(
   () => import('@/pages/hes/command-execution/details')
 );
 const DeviceInformation = lazy(() => import('@/pages/hes/device-information'));
 const ConfigureCommand = lazy(() => import('@/pages/hes/configure-command'));
+const CommandExecutionHistory = lazy(
+  () => import('@/pages/hes/command/includes/command-execution-history')
+);
 
 const HesRoutes = (
   <Route path="/hes" element={<HesOutlet />}>
@@ -41,9 +48,16 @@ const HesRoutes = (
       <Route path="periodic-push" element={<PeriodicPush />} />
     </Route>
 
-    <Route path="command-execution" element={<Outlet />}>
-      <Route index element={<CommandExecution />} />
-      <Route path=":commandId" element={<CommandExecutionDetails />} />
+    <Route path="command" element={<Outlet />}>
+      <Route path="command-execution" element={<CommandExecution />} />
+      <Route
+        path="command-execution-history"
+        element={<CommandExecutionHistory />}
+      />
+      <Route
+        path="batch-command-execution-details"
+        element={<ExecutionHistory />}
+      />
     </Route>
     <Route path="scheduled-reads" element={<ScheduledReads />} />
     <Route path="device-information" element={<DeviceInformation />} />

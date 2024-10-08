@@ -12,7 +12,6 @@ import { scheduledReportsEndpoints } from './endpoints/scheduled-reports';
 import { deviceManagementEndpoints } from './endpoints/device-management';
 import { meterProfileData } from './endpoints/meter-profile-data';
 import { commandExecutionEndpoints } from './endpoints/command-execution';
-
 import { DeviceInfoEndpoints } from './endpoints/device-info';
 import { ConfigureCommandEndpoints } from './endpoints/configure-command';
 import { loginEndpoints } from './endpoints/login';
@@ -26,12 +25,13 @@ const hesApi = createApi({
       import.meta.env.VITE_HES_API_VERSION
     }/`,
     credentials: 'same-origin',
-    setHeaders: (headers) => {
-      headers.set('Content-Type', 'application/json');
-      headers.set(
-        'Authorization',
-        sessionStorage.getItem('hes_token') as string
-      );
+
+    setHeaders: (headers, { endpoint }) => {
+      if (endpoint === 'uploadCSVfile') {
+        headers.set('Content-Type', 'multipart/form-data');
+      } else {
+        headers.set('Content-Type', 'application/json');
+      }
       headers.set(
         'Authorization',
         sessionStorage.getItem('hes_token') as string
@@ -48,11 +48,10 @@ const hesApi = createApi({
     ...commandExecutionEndpoints(builder),
     ...DeviceInfoEndpoints(builder),
     ...ConfigureCommandEndpoints(builder),
-    ...ConfigureCommandEndpoints(builder),
-    ...ConfigureCommandEndpoints(builder),
     ...loginEndpoints(builder),
     ...downloadDataEndpoints(builder),
     ...alarmsEndPoints(builder)
+
   })
 });
 
@@ -79,6 +78,7 @@ export const {
   useUpdateCommandInfoMutation,
   useUpdateTokenForAuthMutation,
   useGetCommandExecutionHistoryDetailsQuery,
+  useUploadCSVfileMutation,
   useLazyDownloadCSVDataQuery,
   useGetRestorationOccuranceMetricsQuery,
   usePrefetch
