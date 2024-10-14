@@ -6,26 +6,27 @@ import {
   TableState,
   useReactTable,
   type SortingState
-} from "@tanstack/react-table";
-import Header from "./includes/Header";
-import MainTable from "./includes/MainTable";
-import { type DataTableProps } from "./types";
-import { useMemo, useState } from "react";
-import Footer from "./includes/Footer";
+} from '@tanstack/react-table';
+import Header from './includes/Header';
+import MainTable from './includes/MainTable';
+import { type DataTableProps } from './types';
+import { useMemo, useState } from 'react';
+import Footer from './includes/Footer';
 
 function DataTable<T>({
-  data, columns,
+  data,
+  columns,
   showFilter,
   filterBy,
   search,
   selectComponent: SelectComponent,
   hasInternalPagination,
   onSelectSubmit,
+  columnOrder,
+  columnPinning
 }: DataTableProps<T>) {
-
-  filterBy = filterBy || ["name"];
+  filterBy = filterBy || ['name'];
   const showSelectedInfo = SelectComponent !== undefined;
-
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
 
@@ -38,18 +39,21 @@ function DataTable<T>({
 
   const tableState: Partial<TableState> = {
     sorting,
-    rowSelection
-  }
+    rowSelection,
+    columnOrder: columnOrder || [],
+    columnPinning: columnPinning || {}
+  };
 
   if (!hasInternalPagination) {
     tableState['pagination'] = {
       pageIndex: 0,
-      pageSize: data.length,
-    }
+      pageSize: data.length
+    };
   }
 
   const table = useReactTable({
-    data, columns,
+    data,
+    columns,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -62,8 +66,7 @@ function DataTable<T>({
   return (
     <>
       <div className="overflow-scroll flex-1 relative scrollable-content">
-        {
-          table &&
+        {table && (
           <Header
             search={search}
             dataLength={data.length}
@@ -71,27 +74,22 @@ function DataTable<T>({
             filterBy={filterBy}
             table={table}
           />
-        }
+        )}
 
-        {showSelectedInfo &&
+        {showSelectedInfo && (
           <div className="relative h-[50px] w-full">
             <SelectComponent
               selected={selectedItems}
               onSelectSubmit={onSelectSubmit}
             />
           </div>
-        }
+        )}
 
-        <MainTable
-          table={table}
-          columns={columns}
-        />
+        <MainTable table={table} columns={columns} />
       </div>
-      {hasInternalPagination &&
-        data.length > 10 && <Footer table={table} />
-      }
+      {hasInternalPagination && data.length > 10 && <Footer table={table} />}
     </>
-  )
+  );
 }
 
 export default DataTable;

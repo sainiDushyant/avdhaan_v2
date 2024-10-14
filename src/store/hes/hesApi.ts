@@ -27,11 +27,11 @@ const hesApi = createApi({
     credentials: 'same-origin',
 
     setHeaders: (headers, { endpoint }) => {
-      if (endpoint === 'uploadCSVfile') {
-        headers.set('Content-Type', 'multipart/form-data');
-      } else {
-        headers.set('Content-Type', 'application/json');
-      }
+      // if (endpoint === 'uploadCSVfile') {
+      //   headers.set('Content-Type', 'multipart/form-data');
+      // } else {
+      //   headers.set('Content-Type', 'application/json');
+      // }
       headers.set(
         'Authorization',
         sessionStorage.getItem('hes_token') as string
@@ -51,7 +51,6 @@ const hesApi = createApi({
     ...loginEndpoints(builder),
     ...downloadDataEndpoints(builder),
     ...alarmsEndPoints(builder)
-
   })
 });
 
