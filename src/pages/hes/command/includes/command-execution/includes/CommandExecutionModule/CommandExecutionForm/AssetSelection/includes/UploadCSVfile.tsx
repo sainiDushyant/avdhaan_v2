@@ -96,9 +96,9 @@ const UploadCSVfile: FC<UploadCSVfileProps> = ({
           errorMsg = errorObj.data.error.errorMsg;
         }
         toast({
-          variant: 'destructive',
-          title: 'Uh oh! Upload Error',
-          description: errorMsg
+          variant: 'default',
+          title: 'Upload error!',
+          description: 'An unexpected error occurred.'
         });
       }
     }
