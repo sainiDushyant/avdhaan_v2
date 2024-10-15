@@ -16,8 +16,8 @@ import {
   CommandInfoRecord,
   ExecutionHistoryDetailsRecord,
   ExecutionHistoryDetailsRecordModified,
-  UploadCSVFileRecord
-
+  UploadCSVFileRecord,
+  UploadCSVFileRecordModified
 } from './records/command-execution';
 import { ScheduledCommandRecord } from './records/reports';
 import { ConfigureCommandRecord } from './records/configure-command';
@@ -107,6 +107,9 @@ export type RestorationOccuranceMetricsResponse =
 
 export type UploadCSVFileResponse =
   ResponseBaseWithOutPagination<UploadCSVFileRecord>;
+
+export type UploadCSVFileResponseModified =
+  ResponseBaseWithOutPagination<UploadCSVFileRecordModified>;
 export interface CustomAPIError {
   description?: string;
   // Define other properties if needed

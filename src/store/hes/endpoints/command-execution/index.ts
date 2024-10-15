@@ -84,11 +84,7 @@ export const commandExecutionEndpoints = (
     query: (data) => ({
       url: 'device-management/upload-device-identifier-list',
       method: 'POST',
-      body: data,
-      headers: {
-        // Let the browser set the boundary for multipart/form-data
-        'Content-Type': 'multipart/form-data'
-      }
+      body: data
     })
   }),
 

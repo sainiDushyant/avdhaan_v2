@@ -11,12 +11,15 @@ const CommandExecutionModule = () => {
 
   return (
     <div>
-      <FilterSelector
-        selected={higherOrderFilter}
-        setSelected={setHigherOrderFilter}
-      />
+      {step === 1 && (
+        <FilterSelector
+          selected={higherOrderFilter}
+          setSelected={setHigherOrderFilter}
+        />
+      )}
 
       <CommandExecutionForm
+        setSelectedFilter={setHigherOrderFilter}
         setCurrentStep={setStep}
         currentStep={step}
         selectedFilter={higherOrderFilter}

@@ -1,4 +1,4 @@
-import { FC, SetStateAction, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import Button from '@/components/ui/button';
 import DeviceIdentifier from '@/components/customUI/hes/HesFilters/PrimaryFilters/DeviceIdentifier';
 import AsyncMultiOptionSelect from '@/components/customUI/Select/AsyncMultiOptionSelect';
@@ -9,8 +9,8 @@ import { HesFilterState } from '@/store/hes/types/records/device-management';
 import { MultiValue } from 'react-select';
 import { Option } from '@/store/vee/types/other';
 import BaseModal from '@/components/customUI/Modals';
-import { Input } from '@/components/ui/input';
 import UploadCSVfile from './includes/UploadCSVfile';
+import Upload from '@/components/svg/Upload';
 
 interface AssetSelectionProps {
   currentStep: number;
@@ -19,12 +19,15 @@ interface AssetSelectionProps {
   setPrimaryFilters: React.Dispatch<React.SetStateAction<HesFilterState>>;
   setAssetsSelected: React.Dispatch<React.SetStateAction<HesFilterState>>;
   assetsSelected: HesFilterState;
+  setSelectedFilter: React.Dispatch<
+    React.SetStateAction<HigherOrderFilterType>
+  >;
 }
 
 const UploadCsvButton = () => {
   return (
-    <Button className="date-filter-color self-end" type="button">
-      Upload Meter CSV
+    <Button className="date-filter-color flex gap-2 self-end " type="button">
+      <Upload /> Upload Meter CSV
     </Button>
   );
 };
@@ -35,7 +38,8 @@ const AssetSelection: FC<AssetSelectionProps> = ({
   primaryFilters,
   setPrimaryFilters,
   setAssetsSelected,
-  assetsSelected
+  assetsSelected,
+  setSelectedFilter
 }) => {
   const [openCsvModal, setOpenCsvModal] = useState(false);
 
@@ -154,7 +158,14 @@ const AssetSelection: FC<AssetSelectionProps> = ({
                   currentStep === 1 && 'text-[#0A3690]'
                 )}
               >
-                Add {selectedFilter !== null ? `${selectedFilter} and` : 'a'}{' '}
+                Add{' '}
+                {selectedFilter !== null
+                  ? `${
+                      selectedFilter === 'pss' || selectedFilter === 'dtr'
+                        ? selectedFilter.toUpperCase()
+                        : selectedFilter
+                    } and`
+                  : 'a'}{' '}
                 meter
               </p>
               <p className="font-medium text-[#A3B2CF] font-sm">Select Asset</p>
@@ -196,14 +207,20 @@ const AssetSelection: FC<AssetSelectionProps> = ({
           </Button>
         </div>
 
-        <BaseModal
-          open={openCsvModal}
-          setOpen={setOpenCsvModal}
-          ButtonLogo={UploadCsvButton}
-          dialogTitle={'Upload Meter Csv'}
-        >
-          <UploadCSVfile />
-        </BaseModal>
+        {selectedFilter === null && (
+          <BaseModal
+            open={openCsvModal}
+            setOpen={setOpenCsvModal}
+            ButtonLogo={UploadCsvButton}
+            dialogTitle={'Upload Meter Csv'}
+          >
+            <UploadCSVfile
+              setOpenCsvModal={setOpenCsvModal}
+              setSelectedFilter={setSelectedFilter}
+              setAssetsSelected={setAssetsSelected}
+            />
+          </BaseModal>
+        )}
       </div>
 
       {currentStep === 1 && (
