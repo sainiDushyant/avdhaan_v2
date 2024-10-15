@@ -7,7 +7,6 @@ import MonthYearRange from '@/components/customUI/Date/MonthYearRange';
 import DownloadData from '@/components/customUI/hes/DownloadData';
 import { AlarmsQueryParams } from '@/store/hes/types/records/alarms';
 import {
-  formatDate,
   formatDateInLocalStr,
   getDateRangesFor7Days
 } from '@/lib/utils';
@@ -34,8 +33,12 @@ const Header: FC<HeaderProps> = ({
   showDownloadButton
 }) => {
   const { toast } = useToast();
-  const date = new Date().toISOString();
-  const max = date.split('T')[0] + 'T00:00';
+  
+  const today = new Date();
+  const currentDate = today.toISOString().slice(0, 10);
+  const localeTime = today.toLocaleTimeString()
+  const max = `${currentDate}T${localeTime.slice(0, 8)}`
+
   const { todayStart, sevenDaysAgoStart } = getDateRangesFor7Days();
 
   const [startDateTime, setStartDateTime] = useState<string>(query?.from || '');

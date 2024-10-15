@@ -45,7 +45,10 @@ const TimeRangeBlockLoad = () => {
         setEndTime("");
     }, [setQuery, setStartTime, setEndTime]);
 
-    const max = new Date().toISOString().split('T')[0] + 'T23:59';
+    const today = new Date();
+    const localeTime = today.toLocaleTimeString()
+    const max = localeTime.slice(0, 8)
+
     const blockLoadChartData = blockLoadData ?
         prepareChartData(blockLoadData.blockLoadMetrics, 'line', 'time') : null;
 
