@@ -6,7 +6,7 @@ import { useUploadCSVfileMutation } from '@/store/hes/hesApi';
 import { HigherOrderFilterType } from '../../..';
 import { setDeviceIdentifiers } from '@/store/hes';
 import { useAppDispatch } from '@/store';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { CustomHesApiError } from '@/store/hes/types/other';
 
 type UploadCSVfileProps = {
   setSelectedFilter: React.Dispatch<
@@ -104,10 +104,19 @@ const UploadCSVfile: FC<UploadCSVfileProps> = ({
           }
         }
       } catch (error) {
+        const errorObj = error as CustomHesApiError;
+        let errorMsg = 'Failed to execute command';
+        if (
+          errorObj.data &&
+          errorObj.data.error &&
+          errorObj.data.error.errorMsg
+        ) {
+          errorMsg = errorObj.data.error.errorMsg;
+        }
         toast({
-          variant: 'default',
-          title: 'Upload error!',
-          description: 'An unexpected error occurred.'
+          variant: 'destructive',
+          title: 'Uh oh! Upload Error',
+          description: errorMsg
         });
       }
     }
