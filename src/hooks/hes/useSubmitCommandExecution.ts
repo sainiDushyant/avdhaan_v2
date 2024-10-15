@@ -9,6 +9,7 @@ import {
   ExecuteCommandPayload
 } from '@/store/hes/types/records/command-execution';
 import { CustomHesApiError } from '@/store/hes/types/other';
+import { useNavigate } from 'react-router-dom';
 
 interface useSubmitCommandExecutionProps {
   command: CommandInfoRecordTransformed;
@@ -22,6 +23,7 @@ const useSubmitCommandExecution = ({
   resetCommandForm
 }: useSubmitCommandExecutionProps) => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const [executeCommand, { isLoading }] = useExecuteCommandMutation();
 
@@ -54,6 +56,7 @@ const useSubmitCommandExecution = ({
       };
       try {
         await executeCommand(apiPayload).unwrap();
+        navigate('/hes/command/command-execution-history');
         toast({
           variant: 'default',
           description: 'Command executed successfully'

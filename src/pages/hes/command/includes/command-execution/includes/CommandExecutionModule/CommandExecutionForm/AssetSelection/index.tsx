@@ -22,6 +22,7 @@ interface AssetSelectionProps {
   setSelectedFilter: React.Dispatch<
     React.SetStateAction<HigherOrderFilterType>
   >;
+  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const UploadCsvButton = () => {
@@ -39,7 +40,8 @@ const AssetSelection: FC<AssetSelectionProps> = ({
   setPrimaryFilters,
   setAssetsSelected,
   assetsSelected,
-  setSelectedFilter
+  setSelectedFilter,
+  setCurrentStep
 }) => {
   const [openCsvModal, setOpenCsvModal] = useState(false);
 
@@ -217,7 +219,7 @@ const AssetSelection: FC<AssetSelectionProps> = ({
             <UploadCSVfile
               setOpenCsvModal={setOpenCsvModal}
               setSelectedFilter={setSelectedFilter}
-              setAssetsSelected={setAssetsSelected}
+              setCurrentStep={setCurrentStep}
             />
           </BaseModal>
         )}

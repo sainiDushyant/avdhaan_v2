@@ -29,9 +29,10 @@ const hesApi = createApi({
     setHeaders: (headers, { endpoint }) => {
       // if (endpoint === 'uploadCSVfile') {
       //   headers.set('Content-Type', 'multipart/form-data');
-      // } else {
-      //   headers.set('Content-Type', 'application/json');
-      // }
+      // } else
+
+      // headers.set('Content-Type', 'application/json');
+
       headers.set(
         'Authorization',
         sessionStorage.getItem('hes_token') as string
