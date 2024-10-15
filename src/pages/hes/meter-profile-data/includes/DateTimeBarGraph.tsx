@@ -50,7 +50,11 @@ const DateTimeBarGraph: FC<DateTimeBarGraphProps> = ({
         setEndDateTime("");
     }, [setQuery, setStartDateTime, setEndDateTime]);
 
-    const max = new Date().toISOString().slice(0, 19);
+    const today = new Date();
+    const currentDate = today.toISOString().slice(0, 10);
+    const localeTime = today.toLocaleTimeString()
+    const max = `${currentDate}T${localeTime.slice(0, 8)}`
+
     const blockLoadDailyChartData = data ? prepareChartData(data, 'bar', 'days') : null;
 
     return (

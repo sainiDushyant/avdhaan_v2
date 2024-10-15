@@ -33,7 +33,7 @@ const BlockLoadTable = () => {
     <MetricProfileTable
       parentName="blockload"
       showDownloadButton={true}
-     response={response}
+      response={response}
       isLoading={isLoading}
       isFetching={isFetching}
       isError={isError}

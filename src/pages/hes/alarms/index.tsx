@@ -10,7 +10,6 @@ import ErrorScreen from '@/components/customUI/ErrorScreen';
 import Header from './includes/Header';
 import { AlarmsQueryParams } from '@/store/hes/types/records/alarms';
 import { getCommandExecutionHistoryUrlSearchParams } from '../command/includes/utils';
-import { getDateRangesFor7Days } from '@/lib/utils';
 
 const Alarms = () => {
   const { search } = useLocation();
@@ -26,6 +25,7 @@ const Alarms = () => {
   const columns = useGetTableColumns({ cols: data, query: [] });
   if (isLoading) return <FullScreen hasSpinner={true} />;
   if (isError) return <ErrorScreen error={error} />;
+  
   return (
     <div className="px-5 w-full">
       <div className="flex relative flex-col mt-8">
