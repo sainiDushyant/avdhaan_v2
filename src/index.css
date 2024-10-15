@@ -202,7 +202,19 @@
   .graph-border {
     border: 1px solid #56ccf2; /* Adjust border width */
     border-radius: 10px; /* Adjust border radius */
+    overflow: hidden;
   }
+  .arrow_box {
+    position: relative;
+    background: linear-gradient(45deg,#00C4B4, #70EFDE);
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 8px;
+    display: inline-block;
+  }
+  
+ 
 
   .toggle-view-btn {
     background: linear-gradient(to right, #2f80ed 0%, #56ccf2 100%);

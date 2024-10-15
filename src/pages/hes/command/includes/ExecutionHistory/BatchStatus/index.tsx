@@ -20,7 +20,7 @@ const BatchStatus: FC<BatchStatusProps> = ({
       }}
       className="min-w-[180px] flex items-center justify-center  p-3 border-2 font-semibold"
     >
-      {executionStatus}
+      {executionStatus.replaceAll('_', ' ')}
     </div>
   );
 };

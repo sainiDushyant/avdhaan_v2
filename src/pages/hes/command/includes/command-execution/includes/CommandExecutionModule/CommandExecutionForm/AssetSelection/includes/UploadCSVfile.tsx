@@ -3,10 +3,10 @@ import { Input } from '@/components/ui/input';
 import Button from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useUploadCSVfileMutation } from '@/store/hes/hesApi';
-import { HesFilterState } from '@/store/hes/types/records/device-management';
 import { HigherOrderFilterType } from '../../..';
 import { setDeviceIdentifiers } from '@/store/hes';
 import { useAppDispatch } from '@/store';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 type UploadCSVfileProps = {
   setSelectedFilter: React.Dispatch<
@@ -73,17 +73,41 @@ const UploadCSVfile: FC<UploadCSVfileProps> = ({
           setOpenCsvModal(false);
           setCurrentStep(2);
         } else if (response.error) {
-          toast({
-            variant: 'default',
-            title: 'Upload error!',
-            description: 'There was an error while uploading the file.'
-          });
+          const error = response.error;
+          if (error && (error as FetchBaseQueryError).data) {
+            const fetchError = error as FetchBaseQueryError;
+
+            if (
+              typeof fetchError.data === 'object' &&
+              fetchError.data !== null
+            ) {
+              toast({
+                variant: 'default',
+                title: 'Upload error!',
+                description: (
+                  fetchError.data as { error: { errorMsg: string } }
+                ).error.errorMsg
+              });
+            } else {
+              toast({
+                variant: 'default',
+                title: 'Upload error!',
+                description: 'An unexpected error occurred.'
+              });
+            }
+          } else {
+            toast({
+              variant: 'default',
+              title: 'Upload error!',
+              description: 'An unexpected error occurred.'
+            });
+          }
         }
       } catch (error) {
         toast({
           variant: 'default',
           title: 'Upload error!',
-          description: 'An unecpected error occured.'
+          description: 'An unexpected error occurred.'
         });
       }
     }
