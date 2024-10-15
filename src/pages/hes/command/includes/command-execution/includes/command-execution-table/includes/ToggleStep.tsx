@@ -24,14 +24,16 @@ const ToggleStep: FC<ToggleStepProps> = ({
       >
         Back
       </Button>
-      <Button
-        className="bg-[#0A3690]"
-        type="button"
-        disabled={identifiers.length === 0}
-        onClick={() => setCurrentStep(2)}
-      >
-        Next
-      </Button>
+      {currentStep === 1 && (
+        <Button
+          className="bg-[#0A3690]"
+          type="button"
+          disabled={identifiers.length === 0}
+          onClick={() => setCurrentStep(2)}
+        >
+          Next
+        </Button>
+      )}
     </div>
   );
 };

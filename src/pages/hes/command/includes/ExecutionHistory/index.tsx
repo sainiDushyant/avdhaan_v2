@@ -54,6 +54,10 @@ const ExecutionHistory: FC = () => {
     query: ['executionStatus', 'colorCode', 'args'],
     action: batchCommandHistoryActions
   });
+  const columnPinning = {
+    left: ['STATUS'], // This code will display the column with column ID on the leftmost side of the table but it will only work if the id is present in the element in the columns array. In this case there is ID present as it is an action item.
+    right: []
+  };
 
   return (
     <div className="flex flex-col min-h-[74vh] w-full overflow-x-scroll px-3">
@@ -77,7 +81,11 @@ const ExecutionHistory: FC = () => {
 
       {response && !isError && (
         <div className="flex flex-col w-full ">
-          <DataTable columns={columns} data={response.data.records} />
+          <DataTable
+            columns={columns}
+            columnPinning={columnPinning}
+            data={response.data.records}
+          />
           <div className="flex items-center justify-between">
             <ToggleRows limit={limit} setLimit={setLimit} title="Row Count" />
             <CommandHistoryCursor

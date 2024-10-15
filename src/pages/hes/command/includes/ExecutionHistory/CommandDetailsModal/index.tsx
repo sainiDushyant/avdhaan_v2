@@ -93,8 +93,6 @@ const CommandDetailsModal: FC<CommandDetailsModalProps> = ({ data }) => {
       setOpen(!open);
     }
   };
-
-  console.log(newData, 'data');
   return (
     <BaseModal
       open={open}

@@ -141,3 +141,5 @@ export type ExecutionHistoryDetailsRecordModified = {
 export type UploadCSVFileRecord = {
   deviceIdentifier: string[];
 };
+
+export type UploadCSVFileRecordModified = string;

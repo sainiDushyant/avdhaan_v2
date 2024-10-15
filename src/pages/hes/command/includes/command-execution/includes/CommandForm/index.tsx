@@ -7,14 +7,20 @@ import ParametrizedFilters from './ParametrizedFilters';
 import DisabledFilters from './DisabledFilters';
 import useSubmitCommandExecution from '@/hooks/hes/useSubmitCommandExecution';
 import SingleOptionSelect from '@/components/customUI/Select/SingleOptionSelect';
+import { useSelector } from '@/store';
 
 interface CommandFormProps {
   identifiers: string[];
 }
 
 const CommandForm: FC<CommandFormProps> = ({ identifiers }) => {
-  const [deviceIdentifiers, setSelectedDeviceIdentifier] =
-    useState<string[]>(identifiers);
+  const csvParsedDeviceIdentifiers = useSelector(
+    (state) => state.hes.deviceIdentifiers
+  );
+  const [deviceIdentifiers, setSelectedDeviceIdentifier] = useState<string[]>(
+    identifiers.length > 0 ? identifiers : csvParsedDeviceIdentifiers
+  );
+
   const [command, setCommand] = useState<CommandInfoRecordTransformed | null>(
     null
   );

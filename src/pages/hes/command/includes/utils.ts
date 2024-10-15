@@ -113,3 +113,34 @@ export const groupEventDataByDataType = (
     ? Object.values(eventGroups)
     : results;
 };
+
+export function lightenColor(hex: string, percent: number): string {
+  // Helper function to convert hex to RGB
+  function hexToRgb(hex: string): { r: number; g: number; b: number } {
+    hex = hex.replace('#', '');
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    return { r, g, b };
+  }
+
+  // Helper function to convert RGB to hex
+  function rgbToHex(r: number, g: number, b: number): string {
+    const toHex = (component: number) => {
+      const hex = component.toString(16);
+      return hex.length === 1 ? '0' + hex : hex;
+    };
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  }
+
+  // Convert hex to RGB
+  const { r, g, b } = hexToRgb(hex);
+
+  // Lighten the RGB values by the percentage
+  const newR = Math.min(Math.floor(r + (255 - r) * percent), 255);
+  const newG = Math.min(Math.floor(g + (255 - g) * percent), 255);
+  const newB = Math.min(Math.floor(b + (255 - b) * percent), 255);
+
+  // Convert back to hex and return the lighter color
+  return rgbToHex(newR, newG, newB);
+}

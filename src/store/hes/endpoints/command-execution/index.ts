@@ -59,7 +59,8 @@ export const commandExecutionEndpoints = (
     query: ({ searchParams }) => ({
       url: `/command-execution/batch-execution-history${searchParams}`,
       method: 'GET'
-    })
+    }),
+    providesTags: ['batch-execution-history']
   }),
   getCommandExecutionHistory: builder.query<
     CommandHistoryResponse,
@@ -78,17 +79,14 @@ export const commandExecutionEndpoints = (
       url: '/command-execution/execute-command',
       method: 'POST',
       body: data
-    })
+    }),
+    invalidatesTags: ['batch-execution-history']
   }),
   uploadCSVfile: builder.mutation<UploadCSVFileResponse, FormData>({
     query: (data) => ({
       url: 'device-management/upload-device-identifier-list',
       method: 'POST',
-      body: data,
-      headers: {
-        // Let the browser set the boundary for multipart/form-data
-        'Content-Type': 'multipart/form-data'
-      }
+      body: data
     })
   }),
 

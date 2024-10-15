@@ -1,47 +1,22 @@
 import { FC } from 'react';
 import { HesFilterState } from '@/store/hes/types/records/device-management';
-import { HigherOrderFilterType } from '../CommandExecutionModule';
 import Button from '@/components/ui/button';
 
 type CommandExecutionProps = {
   assetsSelected: HesFilterState;
-  currentAsset: HigherOrderFilterType | null;
   setAssets: React.Dispatch<React.SetStateAction<HesFilterState>>;
   setPrimaryFilters: React.Dispatch<React.SetStateAction<HesFilterState>>;
 };
 
 const CommandExecutionTable: FC<CommandExecutionProps> = ({
   assetsSelected,
-  currentAsset,
   setAssets,
   setPrimaryFilters
 }) => {
-  // Define the asset keys and labels in a structured way
-  const toggleAssets: {
-    [key: string]: { key: keyof HesFilterState; label: string };
-  } = {
-    pss: { key: 'pss_id', label: 'PSS' },
-    feeder: { key: 'feeder_id', label: 'Feeder' },
-    dtr: { key: 'dtr_id', label: 'DTR' }
-  };
-
-  // Determine current step key and label
-  const currentStepKey = currentAsset ? toggleAssets[currentAsset]?.key : null;
-  const currentStepLabel = currentAsset
-    ? toggleAssets[currentAsset]?.label
-    : '';
-
-  // Get corresponding data for the current asset
-  const currentStepAssets = currentStepKey
-    ? assetsSelected[currentStepKey]
-    : [];
-
   return (
     <div className="table-container mb-5">
       <div className="flex justify-between">
-        <span className="text-[#0A3690] text-lg">
-          {currentAsset ? `${currentStepLabel} and Meters` : 'Meters'}
-        </span>
+        <span className="text-[#0A3690] text-lg">Meters</span>
         <div className="space-x-2">
           <span className="text-[#0A3690] text-lg">
             Total meters: {assetsSelected.device_identifier.length}
@@ -49,6 +24,7 @@ const CommandExecutionTable: FC<CommandExecutionProps> = ({
           <Button
             className="bg-[#0A3690]"
             type="button"
+            disabled={assetsSelected.device_identifier.length === 0}
             onClick={() => {
               setAssets({
                 pss_id: [],
@@ -68,51 +44,33 @@ const CommandExecutionTable: FC<CommandExecutionProps> = ({
           </Button>
         </div>
       </div>
-
-      <table className="table-auto border-collapse w-full mt-4">
-        <thead>
-          <tr className="table-header">
-            {currentAsset ? (
-              <>
-                <th className="border px-4 py-2 text-[#0A3690] text-left">
-                  Device Identifier
-                </th>
-                <th className="border px-4 py-2 text-[#0A3690] text-left">
-                  {currentStepLabel}
-                </th>
-              </>
-            ) : (
+      {assetsSelected.device_identifier.length > 0 ? (
+        <table className="table-auto border-collapse w-full mt-4">
+          <thead>
+            <tr className="table-header">
               <th className="border px-4 py-2 text-[#0A3690] text-left">
-                Meters
+                Device Identifier
               </th>
-            )}
-          </tr>
-        </thead>
-      </table>
+            </tr>
+          </thead>
+        </table>
+      ) : (
+        <div className="w-100 text-center mt-2 graph-border">
+          <span className="text-sm"> No device identifiers selected... </span>
+        </div>
+      )}
 
       <div className="overflow-y-auto max-h-64">
         <table className="table-auto border-collapse w-full">
           <tbody>
-            {currentAsset
-              ? assetsSelected.device_identifier.map((device, index) => (
-                  <tr
-                    key={index}
-                    className={index % 2 === 0 ? 'bg-[#F3F9F9]' : 'bg-white'}
-                  >
-                    <td className="border px-4 py-2">{device.value}</td>
-                    <td className="border px-4 py-2">
-                      {currentStepAssets[index]?.label || '--'}
-                    </td>
-                  </tr>
-                ))
-              : assetsSelected.device_identifier.map((device, index) => (
-                  <tr
-                    key={index}
-                    className={index % 2 === 0 ? 'bg-white' : 'bg-blue-50'}
-                  >
-                    <td className="border px-4 py-2">{device.value}</td>
-                  </tr>
-                ))}
+            {assetsSelected.device_identifier.map((device, index) => (
+              <tr
+                key={index}
+                className={index % 2 === 0 ? 'bg-[#F3F9F9]' : 'bg-white'}
+              >
+                <td className="border px-4 py-2">{device.value}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
