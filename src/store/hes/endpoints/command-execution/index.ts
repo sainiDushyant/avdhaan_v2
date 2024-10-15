@@ -59,7 +59,8 @@ export const commandExecutionEndpoints = (
     query: ({ searchParams }) => ({
       url: `/command-execution/batch-execution-history${searchParams}`,
       method: 'GET'
-    })
+    }),
+    providesTags: ['batch-execution-history']
   }),
   getCommandExecutionHistory: builder.query<
     CommandHistoryResponse,
@@ -78,7 +79,8 @@ export const commandExecutionEndpoints = (
       url: '/command-execution/execute-command',
       method: 'POST',
       body: data
-    })
+    }),
+    invalidatesTags: ['batch-execution-history']
   }),
   uploadCSVfile: builder.mutation<UploadCSVFileResponse, FormData>({
     query: (data) => ({

@@ -56,6 +56,7 @@ const CommandExecutionForm: FC<CommandExecutionFormProps> = ({
           primaryFilters={primaryFilters}
           setPrimaryFilters={setPrimaryFilters}
           setSelectedFilter={setSelectedFilter}
+          setCurrentStep={setCurrentStep}
         />
       </form>
       {currentStep === 1 && (
@@ -63,7 +64,6 @@ const CommandExecutionForm: FC<CommandExecutionFormProps> = ({
           setPrimaryFilters={setPrimaryFilters}
           setAssets={setAssetsSelected}
           assetsSelected={assetsSelected}
-          currentAsset={selectedFilter}
         />
       )}
       {currentStep === 2 && (
