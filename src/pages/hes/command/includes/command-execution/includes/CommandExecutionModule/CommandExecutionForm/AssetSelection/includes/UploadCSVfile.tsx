@@ -3,10 +3,10 @@ import { Input } from '@/components/ui/input';
 import Button from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useUploadCSVfileMutation } from '@/store/hes/hesApi';
-import { HesFilterState } from '@/store/hes/types/records/device-management';
 import { HigherOrderFilterType } from '../../..';
 import { setDeviceIdentifiers } from '@/store/hes';
 import { useAppDispatch } from '@/store';
+import { CustomHesApiError } from '@/store/hes/types/other';
 
 type UploadCSVfileProps = {
   setSelectedFilter: React.Dispatch<
@@ -80,10 +80,19 @@ const UploadCSVfile: FC<UploadCSVfileProps> = ({
           });
         }
       } catch (error) {
+        const errorObj = error as CustomHesApiError;
+        let errorMsg = 'Failed to execute command';
+        if (
+          errorObj.data &&
+          errorObj.data.error &&
+          errorObj.data.error.errorMsg
+        ) {
+          errorMsg = errorObj.data.error.errorMsg;
+        }
         toast({
-          variant: 'default',
-          title: 'Upload error!',
-          description: 'An unecpected error occured.'
+          variant: 'destructive',
+          title: 'Uh oh! Upload Error',
+          description: errorMsg
         });
       }
     }

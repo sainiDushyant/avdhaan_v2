@@ -9,18 +9,6 @@ type ExecutionHistoryParams = {
   postFix?: string;
 };
 
-interface PrimaryFilters {
-  pss_id: Option[];
-  feeder_id: Option[];
-  dtr_id: Option[];
-  device_identifier: Option[];
-}
-
-interface Option {
-  value: string | number;
-  label: string;
-}
-
 /**
  * Function to add or update tableData with PSS, Feeder, or DTR data.
  * The total_count will include only the length of the device_identifier array.

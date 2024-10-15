@@ -6,7 +6,7 @@ import {
   CommandHistoryQueryParams,
   CommandHistoryRecord
 } from '@/store/hes/types/records/command-execution';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useSelector } from '@/store';
 import { useMemo, useCallback } from 'react';
 import {
@@ -14,7 +14,6 @@ import {
   groupEventDataByDataType
 } from '../../utils';
 import { useGetCommandExecutionHistoryDetailsQuery } from '@/store/hes/hesApi';
-import HesFilters from '@/components/customUI/hes/HesFilters';
 import CursorPagination from '@/components/customUI/CursorPagination';
 import Spinner from '@/components/customUI/Loaders/Spinner';
 import CommandResponseTable from './includes/CommandResponseTable';
@@ -42,10 +41,7 @@ const CommandDetailsModal: FC<CommandDetailsModalProps> = ({ data }) => {
 
   const {
     data: response,
-    isLoading,
     isFetching,
-    isError,
-    error
   } = useGetCommandExecutionHistoryDetailsQuery(
     { searchParams: urlSearchParams },
     { skip: mainFilterLoading || !open }

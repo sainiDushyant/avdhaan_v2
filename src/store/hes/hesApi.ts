@@ -1,12 +1,4 @@
-import {
-  BaseQueryFn,
-  createApi,
-  EndpointBuilder,
-  FetchArgs,
-  FetchBaseQueryError,
-  FetchBaseQueryMeta
-} from '@reduxjs/toolkit/query/react';
-
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { customBaseQuery, HES_TAG_TYPES } from '../utils';
 import { scheduledReportsEndpoints } from './endpoints/scheduled-reports';
 import { deviceManagementEndpoints } from './endpoints/device-management';
@@ -26,13 +18,7 @@ const hesApi = createApi({
     }/`,
     credentials: 'same-origin',
 
-    setHeaders: (headers, { endpoint }) => {
-      // if (endpoint === 'uploadCSVfile') {
-      //   headers.set('Content-Type', 'multipart/form-data');
-      // } else
-
-      // headers.set('Content-Type', 'application/json');
-
+    setHeaders: (headers,) => {
       headers.set(
         'Authorization',
         sessionStorage.getItem('hes_token') as string

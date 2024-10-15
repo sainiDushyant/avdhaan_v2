@@ -1,8 +1,6 @@
 import { useToast } from '@/components/ui/use-toast';
 import { useExecuteCommandMutation } from '@/store/hes/hesApi';
 import { useCallback } from 'react';
-import { MultiValue } from 'react-select';
-import { Option } from '@/store/vee/types/other';
 import { getCommandArgsValue } from '@/lib/hes';
 import {
   CommandInfoRecordTransformed,
