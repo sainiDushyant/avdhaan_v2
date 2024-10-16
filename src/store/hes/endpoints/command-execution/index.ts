@@ -19,6 +19,7 @@ import {
   ExecuteCommandPayload,
   ExecutionHistoryDetailsRecordModified
 } from '../../types/records/command-execution';
+import { hesBaseQuery } from '../../hesApi';
 
 export const commandExecutionEndpoints = (
   builder: EndpointBuilder<
