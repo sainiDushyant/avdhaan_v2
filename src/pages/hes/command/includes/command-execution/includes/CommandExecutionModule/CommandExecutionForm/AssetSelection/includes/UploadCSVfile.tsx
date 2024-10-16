@@ -2,16 +2,15 @@ import { FC, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import Button from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { useUploadCSVfileMutation } from '@/store/hes/hesApi';
+import { useUploadFileWithProgressMutation } from '@/store/hes/hesApi';
 import { HigherOrderFilterType } from '../../..';
 import { setDeviceIdentifiers } from '@/store/hes';
 import { useAppDispatch } from '@/store';
 import { CustomHesApiError } from '@/store/hes/types/other';
+import { Progress } from "@/components/ui/progress"
 
 type UploadCSVfileProps = {
-  setSelectedFilter: React.Dispatch<
-    React.SetStateAction<HigherOrderFilterType>
-  >;
+  setSelectedFilter: React.Dispatch<React.SetStateAction<HigherOrderFilterType>>;
   setOpenCsvModal: React.Dispatch<React.SetStateAction<boolean>>;
   setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
 };
@@ -22,7 +21,9 @@ const UploadCSVfile: FC<UploadCSVfileProps> = ({
   setCurrentStep
 }) => {
   const [formData, setFormData] = useState<FormData | null>(null);
-  const [uploadCSV, uploadCSVResponse] = useUploadCSVfileMutation();
+  const [progress, setProgress] = useState(0)
+  const [uploadCsvWithProgress, { isLoading }] = useUploadFileWithProgressMutation()
+
   const { toast } = useToast();
   const dispatch = useAppDispatch();
 
@@ -62,23 +63,26 @@ const UploadCSVfile: FC<UploadCSVfileProps> = ({
       return;
     } else {
       try {
-        const response = await uploadCSV(formData);
+        const response = await uploadCsvWithProgress({
+          formData,
+          onProgress: function (progress: number): void {
+            setProgress(progress)
+          }
+        })
         if (response.data?.success) {
+          const deviceIds = response.data?.data.records[0].deviceIdentifier;
           setSelectedFilter(null);
-          dispatch(
-            setDeviceIdentifiers(
-              response?.data?.data.records[0].deviceIdentifier
-            )
-          );
+          dispatch(setDeviceIdentifiers(deviceIds));
           setOpenCsvModal(false);
           setCurrentStep(2);
-        } else if (response.error) {
-          toast({
-            variant: 'default',
-            title: 'Upload error!',
-            description: 'There was an error while uploading the file.'
-          });
+          return
         }
+        toast({
+          variant: 'default',
+          title: 'Upload error!',
+          description: 'There was an error while uploading the file.'
+        });
+
       } catch (error) {
         const errorObj = error as CustomHesApiError;
         let errorMsg = 'Failed to execute command';
@@ -103,11 +107,12 @@ const UploadCSVfile: FC<UploadCSVfileProps> = ({
       <Input type="file" accept=".csv" onChange={handleFileChange} />{' '}
       <Button
         className="bg-[#0A3690]"
-        disabled={uploadCSVResponse.isLoading}
+        disabled={isLoading}
         onClick={handleUpload}
       >
-        {uploadCSVResponse.isLoading ? 'Uploading...' : 'Upload'}
+        {isLoading ? 'Uploading...' : 'Upload'}
       </Button>
+      <Progress value={progress} className="w-[60%]" />
     </div>
   );
 };
