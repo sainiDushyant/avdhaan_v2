@@ -5,7 +5,7 @@ import { CACHING_TIME } from "@/store/utils";
 import { DeviceDetailResponse } from "../../types";
 import { UpdateDevicePayload } from "../../types/records/device-information";
 
-export const DeviceInfoEndpoints = (
+export const deviceInfoEndpoints = (
   builder: EndpointBuilder<
     BaseQueryFn<
       string | FetchArgs,

@@ -5,7 +5,7 @@ import { configureCommandResponse } from "../../types";
 import { CACHING_TIME } from "@/store/utils";
 import { UpdateCommandPayload } from "../../types/records/configure-command";
 
-export const ConfigureCommandEndpoints = (
+export const configureCommandEndpoints = (
     builder: EndpointBuilder<
         BaseQueryFn<
             string | FetchArgs,
