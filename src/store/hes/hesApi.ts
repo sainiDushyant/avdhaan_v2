@@ -23,20 +23,7 @@ export const hesBaseQuery = customBaseQuery({
 
 const hesApi = createApi({
   reducerPath: 'hesApi',
-  baseQuery: customBaseQuery({
-    baseUrl: `${import.meta.env.VITE_HES_BASE_URL}/${
-      import.meta.env.VITE_HES_API_VERSION
-    }/`,
-    credentials: 'same-origin',
-
-    setHeaders: (headers) => {
-      headers.set(
-        'Authorization',
-        sessionStorage.getItem('hes_token') as string
-      );
-      return headers;
-    }
-  }),
+  baseQuery: hesBaseQuery,
   tagTypes: HES_TAG_TYPES,
   endpoints: (builder) => ({
     ...deviceManagementEndpoints(builder),
@@ -44,6 +31,8 @@ const hesApi = createApi({
     ...scheduledReportsEndpoints(builder),
     ...meterProfileData(builder),
     ...commandExecutionEndpoints(builder),
+    ...deviceInfoEndpoints(builder),
+    ...configureCommandEndpoints(builder),
     ...deviceInfoEndpoints(builder),
     ...configureCommandEndpoints(builder),
     ...loginEndpoints(builder),
