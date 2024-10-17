@@ -181,6 +181,19 @@
     background: #02c9a8a1;
   }
 
+  .close-icon{
+      border: 1px solid #7C818C;
+      border-radius: 50%;
+      height: 22px;
+      width: 22px;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      background-color: #7C818C;
+  }
+
   .home-text {
     padding: 2px;
     font-size: 20px;

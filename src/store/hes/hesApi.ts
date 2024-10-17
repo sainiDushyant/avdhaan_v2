@@ -15,27 +15,21 @@ export const hesBaseQuery = customBaseQuery({
     import.meta.env.VITE_HES_API_VERSION
   }/`,
   credentials: 'same-origin',
-  setHeaders: (headers,) => {
-    headers.set(
-      'Authorization',
-      sessionStorage.getItem('hes_token') as string
-    );
+  setHeaders: (headers) => {
+    headers.set('Authorization', sessionStorage.getItem('hes_token') as string);
     return headers;
   }
-})
+});
 
 const hesApi = createApi({
   reducerPath: 'hesApi',
-<<<<<<< HEAD
-  baseQuery: hesBaseQuery,
-=======
   baseQuery: customBaseQuery({
     baseUrl: `${import.meta.env.VITE_HES_BASE_URL}/${
       import.meta.env.VITE_HES_API_VERSION
     }/`,
     credentials: 'same-origin',
 
-    setHeaders: (headers,) => {
+    setHeaders: (headers) => {
       headers.set(
         'Authorization',
         sessionStorage.getItem('hes_token') as string
@@ -43,7 +37,6 @@ const hesApi = createApi({
       return headers;
     }
   }),
->>>>>>> 6234859 (UPDATED: removed un-used imports)
   tagTypes: HES_TAG_TYPES,
   endpoints: (builder) => ({
     ...deviceManagementEndpoints(builder),
@@ -86,7 +79,7 @@ export const {
   useLazyDownloadCSVDataQuery,
   useGetRestorationOccuranceMetricsQuery,
   useUploadFileWithProgressMutation,
-  usePrefetch,
+  usePrefetch
 } = hesApi;
 
 export default hesApi;
