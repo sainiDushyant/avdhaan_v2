@@ -18,9 +18,9 @@ const BatchStatus: FC<BatchStatusProps> = ({
         backgroundColor: lightenColor(colorCode, 0.8),
         color: colorCode
       }}
-      className="min-w-[180px] flex items-center justify-center  p-3 border-2 font-semibold"
+      className="min-w-[150px] flex items-center justify-center  p-3 border-2 font-semibold"
     >
-      {executionStatus}
+      {executionStatus.replaceAll('_', ' ')}
     </div>
   );
 };

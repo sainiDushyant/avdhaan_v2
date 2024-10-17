@@ -62,6 +62,7 @@ export interface BatchCommandHistoryRecord {
   updatedAt: string;
   status: string;
   totalMeters: number;
+  colorCode: string;
 }
 
 export interface CommandHistoryRecord {

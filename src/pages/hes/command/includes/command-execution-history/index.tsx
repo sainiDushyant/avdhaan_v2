@@ -43,11 +43,12 @@ const CommandExecutionHistory = () => {
 
   const commandHistoryActions: ActionType<BatchCommandHistoryRecord>[] = [
     { element: Navigator, colName: '' }
+    // { element: BatchStatus, colName: 'STATUS' }
   ];
 
   const columns = useGetTableColumns({
     cols: commandExecutionHistoryResponse?.data.records || [],
-    query: [],
+    query: ['colorCode'],
     action: commandHistoryActions
   });
 
@@ -61,7 +62,7 @@ const CommandExecutionHistory = () => {
     <div className="px-5 py-3 w-full">
       <h1 className="capitalize secondary-title lg:main-title">
         <span className="font-bold text-[#0A3690]">
-          Command Execution History{' '}
+          Command Execution History
         </span>
       </h1>
       <HesFilters />

@@ -82,6 +82,68 @@ export const commandExecutionEndpoints = (
     }),
     invalidatesTags: ['batch-execution-history']
   }),
+  uploadFileWithProgress: builder.mutation<
+    UploadCSVFileResponse,
+    {
+      formData: FormData;
+      onProgress: (progress: number) => void;
+      signal: AbortSignal; // Accept AbortSignal to handle cancellation
+    }
+  >({
+    queryFn: async ({ formData, onProgress, signal }) => {
+      const baseUrl = `${import.meta.env.VITE_HES_BASE_URL}/${
+        import.meta.env.VITE_HES_API_VERSION
+      }/device-management/upload-device-identifier-list`;
+
+      return new Promise((resolve, reject) => {
+        // Initialize XMLHttpRequest
+        const xhr = new XMLHttpRequest();
+
+        // Open the request
+        xhr.open('POST', baseUrl);
+
+        // Set Authorization header if token exists
+        const token = sessionStorage.getItem('hes_token');
+        if (token) {
+          xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+        }
+
+        // Monitor the upload progress
+        xhr.upload.onprogress = function (e: ProgressEvent<EventTarget>) {
+          const percentComplete = Math.ceil((e.loaded / e.total) * 100);
+          onProgress(percentComplete); // Update progress
+        };
+
+        // Handle successful response
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve({ data: JSON.parse(xhr.responseText) });
+          } else {
+            reject({
+              error: { status: xhr.status, data: xhr.responseText }
+            });
+          }
+        };
+
+        // Handle errors during the request
+        xhr.onerror = () => {
+          reject({
+            error: { status: xhr.status, data: xhr.responseText }
+          });
+        };
+
+        // Listen for request cancellation via AbortSignal
+        signal.addEventListener('abort', () => {
+          xhr.abort(); // Abort the XMLHttpRequest
+          reject({ error: { status: xhr.status, data: 'Upload aborted!' } });
+        });
+
+        // Send the formData to the server
+        xhr.send(formData);
+      });
+    }
+  }),
+
   uploadCSVfile: builder.mutation<UploadCSVFileResponse, FormData>({
     query: (data) => ({
       url: 'device-management/upload-device-identifier-list',
@@ -89,7 +151,6 @@ export const commandExecutionEndpoints = (
       body: data
     })
   }),
-
   getCommandExecutionHistoryDetails: builder.query<
     ExecutionHistoryDetailsResponseModified,
     { searchParams: string }

@@ -9,18 +9,6 @@ type ExecutionHistoryParams = {
   postFix?: string;
 };
 
-interface PrimaryFilters {
-  pss_id: Option[];
-  feeder_id: Option[];
-  dtr_id: Option[];
-  device_identifier: Option[];
-}
-
-interface Option {
-  value: string | number;
-  label: string;
-}
-
 /**
  * Function to add or update tableData with PSS, Feeder, or DTR data.
  * The total_count will include only the length of the device_identifier array.
@@ -78,7 +66,8 @@ type ExecutionHistoryDetailRecordModified = {
 };
 
 export const groupEventDataByDataType = (
-  records: ExecutionHistoryDetailsRecordModified[]
+  records: ExecutionHistoryDetailsRecordModified[],
+  commandName?: string
 ):
   | ExecutionHistoryDetailRecordModified[][]
   | ExecutionHistoryDetailRecordModified[]
@@ -92,7 +81,10 @@ export const groupEventDataByDataType = (
 
   const results: ExecutionHistoryDetailRecordModified[] = records
     .map((record) => {
-      if (record.cmd_name === 'EVENTS' && record.payload) {
+      if (
+        (record.cmd_name === 'EVENTS' || commandName?.includes('EVENT')) &&
+        record.payload
+      ) {
         const dataType = (record.payload as { data_type?: string }).data_type;
         if (dataType && !eventGroups[dataType]) {
           eventGroups[dataType] = [];
@@ -144,3 +136,8 @@ export function lightenColor(hex: string, percent: number): string {
   // Convert back to hex and return the lighter color
   return rgbToHex(newR, newG, newB);
 }
+
+export const capitalizeFirstLetter = (str: string): string => {
+  if (!str) return ''; // Handle empty string case
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
