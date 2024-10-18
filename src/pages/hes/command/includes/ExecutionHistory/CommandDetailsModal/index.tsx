@@ -7,7 +7,6 @@ import {
   CommandHistoryRecord
 } from '@/store/hes/types/records/command-execution';
 import { useLocation } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
 import { useSelector } from '@/store';
 import { useMemo, useCallback } from 'react';
 import {
