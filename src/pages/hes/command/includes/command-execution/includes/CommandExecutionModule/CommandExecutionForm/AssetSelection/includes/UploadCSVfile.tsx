@@ -1,5 +1,4 @@
 import { FC, useState, useRef } from 'react';
-import { Input } from '@/components/ui/input';
 import Button from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useUploadFileWithProgressMutation } from '@/store/hes/hesApi';
@@ -9,6 +8,7 @@ import { useAppDispatch } from '@/store';
 import { CustomHesApiError } from '@/store/hes/types/other';
 import ProgressBar from './ProgressBar';
 import CsvFileLogo from '@/components/svg/CsvFileLogo';
+import { Dropzone } from '@/components/ui/dropzone';
 
 type UploadCSVfileProps = {
   setSelectedFilter: React.Dispatch<
@@ -37,7 +37,7 @@ const UploadCSVfile: FC<UploadCSVfileProps> = ({
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      if (file.size > 50 * 1024 * 1024) {
+      if (file.size > 2 * 1024 * 1024) {
         toast({
           variant: 'destructive',
           title: 'File too large!',
@@ -141,10 +141,14 @@ const UploadCSVfile: FC<UploadCSVfileProps> = ({
 
   return (
     <div className="space-y-2">
-      <Input type="file" accept=".csv" onChange={handleFileChange} />{' '}
+      <Dropzone type="file" accept=".csv" onChange={handleFileChange} />
+      <div className="flex justify-between text-sm text-[#A3B2CF] font-semibold">
+        <span>Supported formats: CSV</span>
+        <span>Maximum size: 2MB</span>
+      </div>
       {file && (
-        <>
-          <div className="flex justify-between">
+        <div className="bg-[#F3F5F7] p-5 rounded-lg">
+          <div className="flex justify-between mb-2">
             <div className="flex items-center space-x-2">
               <CsvFileLogo />
               <div className="flex flex-col">
@@ -162,15 +166,15 @@ const UploadCSVfile: FC<UploadCSVfileProps> = ({
               onClick={handleRemove}
               disabled={isLoading}
               type="button"
-              className="close-icon flex justify-center items-center"
+              className="close-icon font-semibold"
             >
               x
             </button>
           </div>
           <ProgressBar progress={progress} />
-        </>
+        </div>
       )}
-      <div className="flex gap-2">
+      <div className="flex gap-2 float-right">
         <Button
           className="bg-[#A3B2CF]"
           disabled={!isLoading}
@@ -180,7 +184,7 @@ const UploadCSVfile: FC<UploadCSVfileProps> = ({
         </Button>
         <Button
           className="bg-[#0A3690]"
-          disabled={isLoading}
+          disabled={isLoading || !file}
           onClick={handleUpload}
         >
           {isLoading ? 'Uploading...' : 'Upload'}

@@ -60,7 +60,7 @@ export interface BatchCommandHistoryRecord {
   batchId: string | null;
   createdAt: string;
   updatedAt: string;
-  status: string;
+  executionStatus: string;
   totalMeters: number;
   colorCode: string;
 }

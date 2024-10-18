@@ -1,9 +1,12 @@
 import { FC } from 'react';
-import { CommandHistoryRecord } from '@/store/hes/types/records/command-execution';
+import {
+  BatchCommandHistoryRecord,
+  CommandHistoryRecord
+} from '@/store/hes/types/records/command-execution';
 import { lightenColor } from '../../utils';
 
 interface BatchStatusProps {
-  data: CommandHistoryRecord;
+  data: CommandHistoryRecord | BatchCommandHistoryRecord;
   cb?: () => void;
 }
 
