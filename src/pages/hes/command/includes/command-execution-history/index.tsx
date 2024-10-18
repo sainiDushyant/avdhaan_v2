@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import HesFilters from '@/components/customUI/hes/HesFilters';
 import { useGetBatchCommandExecutionHistoryQuery } from '@/store/hes/hesApi';
 import EmptyScreen from '@/components/customUI/EmptyScreen';
@@ -13,10 +13,12 @@ import { getCommandExecutionHistoryUrlSearchParams } from '../utils';
 import SearchPagination from '@/components/customUI/SearchPagination';
 import {
   BatchCommandHistoryRecord,
-  CommandHistoryQueryParams
+  CommandHistoryQueryParams,
+  CommandHistoryRecord
 } from '@/store/hes/types/records/command-execution';
 import { useSelector } from '@/store';
 import Navigator from '../ExecutionHistory/Navigator';
+import BatchStatus from '../ExecutionHistory/BatchStatus';
 
 const CommandExecutionHistory = () => {
   const { search } = useLocation();
@@ -41,14 +43,20 @@ const CommandExecutionHistory = () => {
     { skip: mainFilterLoading }
   );
 
-  const commandHistoryActions: ActionType<BatchCommandHistoryRecord>[] = [
-    { element: Navigator, colName: '' }
-    // { element: BatchStatus, colName: 'STATUS' }
+  const commandHistoryActions: ActionType<
+    BatchCommandHistoryRecord | CommandHistoryRecord
+  >[] = [
+    { element: Navigator as FC, colName: '' },
+    { element: BatchStatus, colName: 'STATUS' }
   ];
 
+  const columnPinning = {
+    left: ['STATUS'],
+    right: []
+  };
   const columns = useGetTableColumns({
     cols: commandExecutionHistoryResponse?.data.records || [],
-    query: ['colorCode'],
+    query: ['colorCode', 'executionStatus'],
     action: commandHistoryActions
   });
 
@@ -75,6 +83,7 @@ const CommandExecutionHistory = () => {
         {!commandExecutionHistoryFetching ? (
           <DataTable
             columns={columns}
+            columnPinning={columnPinning}
             data={commandExecutionHistoryResponse.data.records}
           />
         ) : (

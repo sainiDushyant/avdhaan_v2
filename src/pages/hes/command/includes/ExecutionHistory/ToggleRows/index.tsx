@@ -41,11 +41,12 @@ const ToggleRows = ({ limit, setLimit, title }: ToggleRowsProps) => {
       {title && title}
       <SingleOptionSelect
         data={data}
+        isSearchable={false}
         value={currentValue}
         customCss="min-w-[4px]"
         loading={false}
         placeholder="Select rows"
-        handleChange={handleChange} // Now accepts Option | null
+        handleChange={handleChange}
       />
     </div>
   );

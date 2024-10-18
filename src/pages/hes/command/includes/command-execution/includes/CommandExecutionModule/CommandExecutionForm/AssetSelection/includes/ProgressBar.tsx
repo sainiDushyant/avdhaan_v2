@@ -9,8 +9,8 @@ const ProgressBar: FC<ProgressBarProps> = ({ progress }) => {
   return (
     <>
       <div className="flex gap-2 items-center">
-        <Progress value={progress} className="w-[100%]" />
-        <span className="text-[#A3B2CF]">{progress}%</span>
+        <Progress value={progress} className="w-[100%] h-[12px]" />
+        <span className="text-[#708CC7]">{progress}%</span>
       </div>
     </>
   );
