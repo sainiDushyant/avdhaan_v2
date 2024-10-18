@@ -30,9 +30,10 @@ const ToggleRows = ({ limit, setLimit, title }: ToggleRowsProps) => {
 
   const data = [
     { label: '10', value: '10' },
-    { label: '20', value: '20' },
-    { label: '30', value: '30' },
-    { label: '40', value: '40' }
+    { label: '25', value: '25' },
+    { label: '50', value: '50' },
+    { label: '75', value: '75' },
+    { label: '100', value: '100' }
   ];
 
   return (
@@ -40,11 +41,12 @@ const ToggleRows = ({ limit, setLimit, title }: ToggleRowsProps) => {
       {title && title}
       <SingleOptionSelect
         data={data}
+        isSearchable={false}
         value={currentValue}
         customCss="min-w-[4px]"
         loading={false}
         placeholder="Select rows"
-        handleChange={handleChange} // Now accepts Option | null
+        handleChange={handleChange}
       />
     </div>
   );

@@ -11,6 +11,7 @@ import { Option } from '@/store/vee/types/other';
 import BaseModal from '@/components/customUI/Modals';
 import UploadCSVfile from './includes/UploadCSVfile';
 import Upload from '@/components/svg/Upload';
+import { DialogDescription, DialogTitle } from '@/components/ui/dialog';
 
 interface AssetSelectionProps {
   currentStep: number;
@@ -25,14 +26,6 @@ interface AssetSelectionProps {
   setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const UploadCsvButton = () => {
-  return (
-    <Button className="date-filter-color flex gap-2 self-end " type="button">
-      <Upload /> Upload Meter CSV
-    </Button>
-  );
-};
-
 const AssetSelection: FC<AssetSelectionProps> = ({
   currentStep,
   selectedFilter,
@@ -43,7 +36,7 @@ const AssetSelection: FC<AssetSelectionProps> = ({
   setSelectedFilter,
   setCurrentStep
 }) => {
-  const [openCsvModal, setOpenCsvModal] = useState(false);
+  const [openCsvModal, setOpenCsvModal] = useState<boolean>(false);
 
   const mainFilter =
     primaryFilters[`${selectedFilter}_id` as keyof HesFilterState];
@@ -209,19 +202,18 @@ const AssetSelection: FC<AssetSelectionProps> = ({
           </Button>
         </div>
 
-        {selectedFilter === null && (
-          <BaseModal
-            open={openCsvModal}
-            setOpen={setOpenCsvModal}
-            ButtonLogo={UploadCsvButton}
-            dialogTitle={'Upload Meter Csv'}
-          >
-            <UploadCSVfile
-              setOpenCsvModal={setOpenCsvModal}
-              setSelectedFilter={setSelectedFilter}
-              setCurrentStep={setCurrentStep}
-            />
-          </BaseModal>
+        {selectedFilter === null && currentStep === 1 && (
+          <>
+            <div className="float-right">
+              <Button
+                className="date-filter-color flex gap-2"
+                type="button"
+                onClick={() => setOpenCsvModal(true)}
+              >
+                <Upload /> Upload Meter CSV
+              </Button>
+            </div>
+          </>
         )}
       </div>
 
@@ -278,6 +270,19 @@ const AssetSelection: FC<AssetSelectionProps> = ({
           >
             {assetsSelected.device_identifier.length > 0 ? 'Update' : 'Add'}
           </Button>
+          <BaseModal open={openCsvModal} setOpen={setOpenCsvModal}>
+            <DialogTitle className="font-semibold text-xl  text-[#0A3690]">
+              Upload Meter CSV
+            </DialogTitle>
+            <DialogDescription>
+              Upload a CSV file for bulk command execution
+            </DialogDescription>
+            <UploadCSVfile
+              setOpenCsvModal={setOpenCsvModal}
+              setSelectedFilter={setSelectedFilter}
+              setCurrentStep={setCurrentStep}
+            />
+          </BaseModal>
         </div>
       )}
     </div>

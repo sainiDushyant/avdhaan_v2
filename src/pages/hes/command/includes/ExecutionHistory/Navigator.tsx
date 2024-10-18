@@ -1,12 +1,13 @@
 import Eye from '@/components/svg/Eye';
 import EyeClose from '@/components/svg/EyeClose';
 import { BatchCommandHistoryRecord } from '@/store/hes/types/records/command-execution';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
-interface NavigatorProps {
+export interface NavigatorProps {
   data: BatchCommandHistoryRecord;
 }
-const Navigator = ({ data }: NavigatorProps) => {
+const Navigator: FC<NavigatorProps> = ({ data }) => {
   return (
     <>
       {data.batchId && (

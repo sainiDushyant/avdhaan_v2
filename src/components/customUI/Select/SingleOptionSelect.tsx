@@ -12,6 +12,7 @@ interface SingleOptionSelectProps {
   required?: boolean;
   customCss?: string;
   disabled?: boolean;
+  isSearchable?: boolean;
 }
 
 const SingleOptionSelect = ({
@@ -22,7 +23,8 @@ const SingleOptionSelect = ({
   name,
   required,
   customCss,
-  handleChange
+  handleChange,
+  isSearchable
 }: SingleOptionSelectProps) => {
   return (
     <Select
@@ -35,7 +37,7 @@ const SingleOptionSelect = ({
       )}
       isLoading={loading}
       isClearable={true}
-      isSearchable={true}
+      isSearchable={isSearchable}
       value={value}
       onChange={handleChange}
       options={data}

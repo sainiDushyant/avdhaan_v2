@@ -1,6 +1,9 @@
 import { FC, useMemo, useState } from 'react';
 import { useGetCommandExecutionHistoryQuery } from '@/store/hes/hesApi';
-import { getCommandExecutionHistoryUrlSearchParams } from '../utils';
+import {
+  capitalizeFirstLetter,
+  getCommandExecutionHistoryUrlSearchParams
+} from '../utils';
 import useGetTableColumns, { ActionType } from '@/hooks/useGetTableColumns';
 import DataTable from '@/components/customUI/DataTable';
 import CommandHistoryHelper from './CommandHistoryHelper';
@@ -44,7 +47,7 @@ const ExecutionHistory: FC = () => {
   );
 
   const batchCommandHistoryActions: ActionType<CommandHistoryRecord>[] = [
-    { element: BatchStatus, colName: 'STATUS' },
+    { element: BatchStatus as FC, colName: 'STATUS' },
     { element: CommandDetailsModal }
   ];
 
@@ -81,6 +84,25 @@ const ExecutionHistory: FC = () => {
 
       {response && !isError && (
         <div className="flex flex-col w-full ">
+          {response.data.records[0].args &&
+            Object.keys(response.data.records[0].args.value).filter((e) => e)
+              .length > 0 && (
+              <div className="mb-2 flex gap-2 items-center">
+                <div className="font-bold text-[#7C818C]">
+                  Command Arguments
+                </div>
+                <ul className="flex gap-2 text-sm">
+                  {Object.entries(response.data.records[0].args.value).map(
+                    ([key, value]) => (
+                      <li className="" key={key}>
+                        {`${capitalizeFirstLetter(key)} : ${value}`}
+                      </li>
+                    )
+                  )}
+                </ul>
+              </div>
+            )}
+
           <DataTable
             columns={columns}
             columnPinning={columnPinning}

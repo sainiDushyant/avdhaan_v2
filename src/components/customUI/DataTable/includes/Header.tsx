@@ -26,7 +26,7 @@ function Header<T>({
   );
 
   return (
-    <div className=" flex flex-row-reverse my-2 items-center gap-x-3">
+    <div className=" flex flex-row-reverse  items-center gap-x-3">
       {search && (
         <Input
           placeholder={`Search by ${search.searchBy}...`}

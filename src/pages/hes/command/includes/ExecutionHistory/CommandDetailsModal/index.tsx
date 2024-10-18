@@ -7,6 +7,7 @@ import {
   CommandHistoryRecord
 } from '@/store/hes/types/records/command-execution';
 import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useSelector } from '@/store';
 import { useMemo, useCallback } from 'react';
 import {
@@ -39,21 +40,23 @@ const CommandDetailsModal: FC<CommandDetailsModalProps> = ({ data }) => {
     });
   }, [query, search, commandId]);
 
-  const {
-    data: response,
-    isFetching,
-  } = useGetCommandExecutionHistoryDetailsQuery(
-    { searchParams: urlSearchParams },
-    { skip: mainFilterLoading || !open }
-  );
+  const { data: response, isFetching } =
+    useGetCommandExecutionHistoryDetailsQuery(
+      { searchParams: urlSearchParams },
+      { skip: mainFilterLoading || !open }
+    );
 
   const allowedStatus = [
     'PARTIAL_SUCCESS',
     'PARTIAL_SUCCESS_AFTER_TIMEOUT',
     'SUCCESS',
-    'SUCCESS_AFTER_TIMEOUT'
+    'SUCCESS_AFTER_TIMEOUT',
+    'PENDING'
   ];
-  const newData = groupEventDataByDataType(response?.data.records || []);
+  const newData = groupEventDataByDataType(
+    response?.data.records || [],
+    data.commandName
+  );
   const getNewRecords = useCallback(
     (val?: string | null) => {
       if (!val) return;

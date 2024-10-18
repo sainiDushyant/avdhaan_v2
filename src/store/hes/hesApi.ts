@@ -15,14 +15,11 @@ export const hesBaseQuery = customBaseQuery({
     import.meta.env.VITE_HES_API_VERSION
   }/`,
   credentials: 'same-origin',
-  setHeaders: (headers,) => {
-    headers.set(
-      'Authorization',
-      sessionStorage.getItem('hes_token') as string
-    );
+  setHeaders: (headers) => {
+    headers.set('Authorization', sessionStorage.getItem('hes_token') as string);
     return headers;
   }
-})
+});
 
 const hesApi = createApi({
   reducerPath: 'hesApi',
@@ -34,6 +31,8 @@ const hesApi = createApi({
     ...scheduledReportsEndpoints(builder),
     ...meterProfileData(builder),
     ...commandExecutionEndpoints(builder),
+    ...deviceInfoEndpoints(builder),
+    ...configureCommandEndpoints(builder),
     ...deviceInfoEndpoints(builder),
     ...configureCommandEndpoints(builder),
     ...loginEndpoints(builder),
@@ -69,7 +68,7 @@ export const {
   useLazyDownloadCSVDataQuery,
   useGetRestorationOccuranceMetricsQuery,
   useUploadFileWithProgressMutation,
-  usePrefetch,
+  usePrefetch
 } = hesApi;
 
 export default hesApi;
