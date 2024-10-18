@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { prepareChartData } from '@/lib/utils';
+import { getFormattedCurrentDateTime, prepareChartData } from '@/lib/utils';
 import Graph from '@/components/customUI/Graph';
 import Spinner from '@/components/customUI/Loaders/Spinner';
 import TimeRange from '@/components/customUI/Date/TimeRange';
@@ -45,9 +45,7 @@ const TimeRangeBlockLoad = () => {
         setEndTime("");
     }, [setQuery, setStartTime, setEndTime]);
 
-    const today = new Date();
-    const localeTime = today.toLocaleTimeString()
-    const max = localeTime.slice(0, 8)
+    const max = getFormattedCurrentDateTime().split("T")[1];
 
     const blockLoadChartData = blockLoadData ?
         prepareChartData(blockLoadData.blockLoadMetrics, 'line', 'time') : null;

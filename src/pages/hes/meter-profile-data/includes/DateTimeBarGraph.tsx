@@ -2,7 +2,7 @@ import ErrorScreen from "@/components/customUI/ErrorScreen";
 import Graph from "@/components/customUI/Graph";
 import Spinner from "@/components/customUI/Loaders/Spinner";
 import Button from "@/components/ui/button";
-import { dateDiffInDays, prepareChartData } from "@/lib/utils";
+import { dateDiffInDays, getFormattedCurrentDateTime, prepareChartData } from "@/lib/utils";
 import { useState, useCallback, FC } from "react";
 import { MeterProfileQueryParams, ModifiedGroup } from "@/store/hes/types/records/meter-profile-data-metrics";
 import { SerializedError } from "@reduxjs/toolkit";
@@ -50,10 +50,7 @@ const DateTimeBarGraph: FC<DateTimeBarGraphProps> = ({
         setEndDateTime("");
     }, [setQuery, setStartDateTime, setEndDateTime]);
 
-    const today = new Date();
-    const currentDate = today.toISOString().slice(0, 10);
-    const localeTime = today.toLocaleTimeString()
-    const max = `${currentDate}T${localeTime.slice(0, 8)}`
+    const max = getFormattedCurrentDateTime()
 
     const blockLoadDailyChartData = data ? prepareChartData(data, 'bar', 'days') : null;
 

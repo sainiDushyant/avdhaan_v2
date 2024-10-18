@@ -6,6 +6,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { MeterProfileQueryParams } from '@/store/hes/types/records/meter-profile-data-metrics';
 import MonthYearRange from '@/components/customUI/Date/MonthYearRange';
 import DownloadData from '@/components/customUI/hes/DownloadData';
+import { getFormattedCurrentDateTime } from '@/lib/utils';
 
 interface HeaderProps {
   parentName?: string;
@@ -28,10 +29,7 @@ const Header: FC<HeaderProps> = ({
 }) => {
 
   const { toast } = useToast();
-  const today = new Date();
-  const currentDate = today.toISOString().slice(0, 10);
-  const localeTime = today.toLocaleTimeString()
-  const max = `${currentDate}T${localeTime.slice(0, 8)}`
+  const max = getFormattedCurrentDateTime();
 
   const [startDateTime, setStartDateTime] = useState<string>(query.from || '');
   const [endDateTime, setEndDateTime] = useState<string>(query.to || '');

@@ -8,7 +8,8 @@ import DownloadData from '@/components/customUI/hes/DownloadData';
 import { AlarmsQueryParams } from '@/store/hes/types/records/alarms';
 import {
   formatDateInLocalStr,
-  getDateRangesFor7Days
+  getDateRangesFor7Days,
+  getFormattedCurrentDateTime
 } from '@/lib/utils';
 
 interface HeaderProps {
@@ -32,13 +33,9 @@ const Header: FC<HeaderProps> = ({
   refresh,
   showDownloadButton
 }) => {
-  const { toast } = useToast();
   
-  const today = new Date();
-  const currentDate = today.toISOString().slice(0, 10);
-  const localeTime = today.toLocaleTimeString()
-  const max = `${currentDate}T${localeTime.slice(0, 8)}`
-
+  const { toast } = useToast();
+  const max = getFormattedCurrentDateTime()
   const { todayStart, sevenDaysAgoStart } = getDateRangesFor7Days();
 
   const [startDateTime, setStartDateTime] = useState<string>(query?.from || '');

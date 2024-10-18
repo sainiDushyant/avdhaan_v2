@@ -221,6 +221,18 @@ export type ChartData = {
   [key: string]: DataType[];
 };
 
+export const getFormattedCurrentDateTime = () => {
+  const addLeadingZero = (num: number) => (num < 10 ? `0${num}` : num);
+  
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = addLeadingZero(now.getMonth() + 1); // Months are 0-based
+  const day = addLeadingZero(now.getDate());
+  const hours = addLeadingZero(now.getHours()); // 24-hour format by default
+  const minutes = addLeadingZero(now.getMinutes());
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
 export const prepareChartData = (
   data: ChartData,
   chartType: 'bar' | 'line',

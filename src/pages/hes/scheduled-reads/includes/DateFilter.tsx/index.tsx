@@ -15,7 +15,6 @@ const DateFilters: FC<DateFiltersProps> = ({ setQuery, refresh }) => {
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("")
-
   const date = new Date().toISOString();
   const max = date.split("T")[0];
 
